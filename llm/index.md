@@ -1,0 +1,42 @@
+# How LLMs Work
+
+-   Tokenization
+    -   How words and sub-words map to integer token IDs
+    -   Why token count matters for cost and limits
+-   The transformer architecture
+    -   Attention mechanisms
+    -   Predicting the next token from context
+-   Training
+    -   What it means to train on a large corpus
+    -   Why the model stores statistical associations rather than facts
+-   Context windows
+    -   What they are
+    -   Why size matters
+    -   What happens when a conversation exceeds the limit
+-   Temperature and sampling
+    -   Why the same prompt can produce different answers (determinism vs. randomness)
+-   Training data cutoff
+    -   Why LLMs do not know about recent events and may cite outdated library APIs
+-   Hallucination and confabulation
+    -   Why LLMs generate plausible-sounding but incorrect answers
+    -   How common this is
+-   Retrieval-augmented generation (RAG)
+    -   How grounding an LLM in documents or databases reduces hallucination
+-   Checking LLM output
+    -   Does the result have the right shape?
+    -   Are values in a plausible range?
+    -   Does it match an independent source?
+    -   These are the same questions we should have been asking when checking any data analysis
+-   Exercises
+    -   Tokenize the sentence "penguin bill length in millimeters" using an online tokenizer
+        and count the tokens it produces
+    -   Ask an LLM to describe the Polars `read_csv` function
+        -   Check every claim against the Polars documentation and log any discrepancies
+    -   Ask the same question twice using a high-temperature setting
+        -   Record how the answers differ and what this implies for reproducibility
+    -   Ask an LLM to describe an event that occurred after its training cutoff
+        -   Record how it signals (or fails to signal) uncertainty
+    -   Identify one factual claim in an LLM response that you can verify with a web search
+        -   Verify it and record whether it was correct
+    -   Ask an LLM to explain its own limitations
+        -   Evaluate whether the explanation is accurate and complete

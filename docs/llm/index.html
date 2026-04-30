@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>How LLMs Work</title>
+<meta content="AI Data Analysis" name="description"/>
+<link href="../_static/favicon.ico" rel="icon" type="image/x-icon"/>
+<link href="../_static/pygments.css" rel="stylesheet" type="text/css"/>
+<link href="../_static/chota.css" rel="stylesheet" type="text/css"/>
+<link href="../_static/mccole.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<a class="skip-link" href="#main-content">Skip to main content</a>
+<nav aria-label="Site navigation" class="nav">
+<div class="nav-left">
+<a class="brand" href="../">AI Data Analysis</a>
+<div class="dropdown">
+<button aria-controls="nav-lessons" aria-haspopup="true">Lessons</button>
+<ul class="dropdown-content" id="nav-lessons">
+<li><a href="../intro/">Introduction</a></li>
+<li><a class="active" href="../llm/">How LLMs Work</a></li>
+<li><a href="../interact/">Interacting with LLMs</a></li>
+<li><a href="../data/">Finding and Fetching Data</a></li>
+<li><a href="../db/">Working with Databases</a></li>
+<li><a href="../analyze/">Cleaning and Analyzing Data</a></li>
+<li><a href="../visualize/">Visualizing Results</a></li>
+<li><a href="../records/">Keeping Records</a></li>
+<li><a href="../finale/">Conclusion</a></li>
+</ul>
+</div>
+<div class="dropdown">
+<button aria-controls="nav-appendices" aria-haspopup="true">Appendices</button>
+<ul class="dropdown-content" id="nav-appendices">
+<li><a href="../license/">License</a></li>
+<li><a href="../conduct/">Code of Conduct</a></li>
+<li><a href="../contributing/">Contributing</a></li>
+<li><a href="../bibliography/">Bibliography</a></li>
+<li><a href="../glossary/">Glossary</a></li>
+</ul>
+</div>
+<a href="https://github.com/gvwilson/aida">Repository</a>
+</div>
+</nav>
+<main id="main-content">
+<h1>How LLMs Work</h1>
+<ul>
+<li>Tokenization<ul>
+<li>How words and sub-words map to integer token IDs</li>
+<li>Why token count matters for cost and limits</li>
+</ul>
+</li>
+<li>The transformer architecture<ul>
+<li>Attention mechanisms</li>
+<li>Predicting the next token from context</li>
+</ul>
+</li>
+<li>Training<ul>
+<li>What it means to train on a large corpus</li>
+<li>Why the model stores statistical associations rather than facts</li>
+</ul>
+</li>
+<li>Context windows<ul>
+<li>What they are</li>
+<li>Why size matters</li>
+<li>What happens when a conversation exceeds the limit</li>
+</ul>
+</li>
+<li>Temperature and sampling<ul>
+<li>Why the same prompt can produce different answers (determinism vs. randomness)</li>
+</ul>
+</li>
+<li>Training data cutoff<ul>
+<li>Why LLMs do not know about recent events and may cite outdated library APIs</li>
+</ul>
+</li>
+<li>Hallucination and confabulation<ul>
+<li>Why LLMs generate plausible-sounding but incorrect answers</li>
+<li>How common this is</li>
+</ul>
+</li>
+<li>Retrieval-augmented generation (RAG)<ul>
+<li>How grounding an LLM in documents or databases reduces hallucination</li>
+</ul>
+</li>
+<li>Checking LLM output<ul>
+<li>Does the result have the right shape?</li>
+<li>Are values in a plausible range?</li>
+<li>Does it match an independent source?</li>
+<li>These are the same questions we should have been asking when checking any data analysis</li>
+</ul>
+</li>
+<li>Exercises<ul>
+<li>Tokenize the sentence "penguin bill length in millimeters" using an online tokenizer
+    and count the tokens it produces</li>
+<li>Ask an LLM to describe the Polars <code>read_csv</code> function<ul>
+<li>Check every claim against the Polars documentation and log any discrepancies</li>
+</ul>
+</li>
+<li>Ask the same question twice using a high-temperature setting<ul>
+<li>Record how the answers differ and what this implies for reproducibility</li>
+</ul>
+</li>
+<li>Ask an LLM to describe an event that occurred after its training cutoff<ul>
+<li>Record how it signals (or fails to signal) uncertainty</li>
+</ul>
+</li>
+<li>Identify one factual claim in an LLM response that you can verify with a web search<ul>
+<li>Verify it and record whether it was correct</li>
+</ul>
+</li>
+<li>Ask an LLM to explain its own limitations<ul>
+<li>Evaluate whether the explanation is accurate and complete</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</main>
+<footer aria-label="Page navigation">
+<div class="row">
+<div class="col-3 left">
+<span aria-hidden="true">⇐</span> <a href="../intro/">Introduction</a>
+</div>
+<div class="col-6 center">
+<a href="../">AI Data Analysis</a>
+	  ©
+	  <a href="../#acknowledgments">the authors</a>
+</div>
+<div class="col-3 right">
+<a href="../interact/">Interacting with LLMs</a> <span aria-hidden="true">⇒</span>
+</div>
+</div>
+</footer>
+</body>
+</html>

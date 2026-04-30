@@ -1,0 +1,31 @@
+# Working with Databases
+
+-   Connecting to a SQLite database from a Marimo notebook using the `sqlite3` module
+-   Asking an LLM to write queries
+    -   `select`, `where`, `order by`, `group by`, aggregation, `having`, `join`, subqueries
+-   Verifying query results
+    -   Check row counts against known totals
+    -   Spot-check individual values
+    -   Confirm aggregates are in a plausible range
+-   Common errors in LLM-generated SQL
+    -   Schema hallucination: inventing table or column names that do not exist
+    -   Faulty joins: wrong type, missing or ambiguous conditions
+    -   Aggregation mistakes: grouping errors, aggregating the wrong column
+    -   Missing filters: omitting `where` conditions implied by the question
+    -   `null` sorting: mishandling nulls in `order by` or aggregation)
+-   Iterating when the first query is wrong
+    -   Describe the error clearly and ask for a targeted fix
+-   Moving query results into Polars with `pl.read_database()`
+-   Exercises
+    -   Ask an LLM to count the total number of rows in the penguins table
+        -   Verify the result matches `wc -l` on the CSV minus the header
+    -   Ask an LLM to compute average body mass by species
+        -   Check whether each value is in a plausible range for that species
+    -   Ask an LLM to write a query that references a column name you slightly misspell in the prompt
+        -   Does it hallucinate a column or flag the error?
+    -   Ask an LLM to write a join query
+        -   How can you validate that the query is correct?
+    -   Ask an LLM to explain a clause you have not used before (e.g., `coalesce`, `like`, or a window function)
+        -   Write a query using it and verify the output
+    -   Give an LLM an ambiguous table description
+        -   How does the ambiguity affect the generated query and its results?

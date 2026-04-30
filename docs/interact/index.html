@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Interacting with LLMs</title>
+<meta content="AI Data Analysis" name="description"/>
+<link href="../_static/favicon.ico" rel="icon" type="image/x-icon"/>
+<link href="../_static/pygments.css" rel="stylesheet" type="text/css"/>
+<link href="../_static/chota.css" rel="stylesheet" type="text/css"/>
+<link href="../_static/mccole.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<a class="skip-link" href="#main-content">Skip to main content</a>
+<nav aria-label="Site navigation" class="nav">
+<div class="nav-left">
+<a class="brand" href="../">AI Data Analysis</a>
+<div class="dropdown">
+<button aria-controls="nav-lessons" aria-haspopup="true">Lessons</button>
+<ul class="dropdown-content" id="nav-lessons">
+<li><a href="../intro/">Introduction</a></li>
+<li><a href="../llm/">How LLMs Work</a></li>
+<li><a class="active" href="../interact/">Interacting with LLMs</a></li>
+<li><a href="../data/">Finding and Fetching Data</a></li>
+<li><a href="../db/">Working with Databases</a></li>
+<li><a href="../analyze/">Cleaning and Analyzing Data</a></li>
+<li><a href="../visualize/">Visualizing Results</a></li>
+<li><a href="../records/">Keeping Records</a></li>
+<li><a href="../finale/">Conclusion</a></li>
+</ul>
+</div>
+<div class="dropdown">
+<button aria-controls="nav-appendices" aria-haspopup="true">Appendices</button>
+<ul class="dropdown-content" id="nav-appendices">
+<li><a href="../license/">License</a></li>
+<li><a href="../conduct/">Code of Conduct</a></li>
+<li><a href="../contributing/">Contributing</a></li>
+<li><a href="../bibliography/">Bibliography</a></li>
+<li><a href="../glossary/">Glossary</a></li>
+</ul>
+</div>
+<a href="https://github.com/gvwilson/aida">Repository</a>
+</div>
+</nav>
+<main id="main-content">
+<h1>Interacting with LLMs</h1>
+<ul>
+<li>Command-line tools<ul>
+<li>Claude Code, the Anthropic and OpenAI CLIs, and when each is appropriate</li>
+</ul>
+</li>
+<li>Editor and notebook integrations<ul>
+<li>LLM plugins for VS Code</li>
+<li>MCP servers embedded in Marimo</li>
+</ul>
+</li>
+<li>The API<ul>
+<li>When to call it programmatically instead of using a CLI</li>
+<li>Authentication</li>
+<li>Cost and rate limits</li>
+</ul>
+</li>
+<li>Writing effective prompts<ul>
+<li>Being specific</li>
+<li>Providing context</li>
+<li>Asking for step-by-step reasoning</li>
+<li>Iterative refinement</li>
+</ul>
+</li>
+<li>Model Context Protocol (MCP)<ul>
+<li>what it is</li>
+<li>How it gives an LLM structured access to tools such as databases, files, and external APIs</li>
+</ul>
+</li>
+<li>Worked MCP example<ul>
+<li>Connecting an LLM to a local SQLite file and asking questions about the data without writing SQL manually</li>
+</ul>
+</li>
+<li>Agents<ul>
+<li>How they differ from a single prompt</li>
+<li>How they plan and execute multi-step tasks</li>
+<li>Where they go wrong</li>
+</ul>
+</li>
+<li>Skills and extensions<ul>
+<li>Finding and installing them</li>
+<li>Writing a simple skill that automates a repeated prompt pattern</li>
+</ul>
+</li>
+<li>Exercises<ul>
+<li>Use Claude Code in the terminal to ask a question about a file in your project<ul>
+<li>Compare the answer to what you get from the same question typed into a CLI</li>
+</ul>
+</li>
+<li>Install an MCP SQLite server, connect to the penguins database, and ask how many distinct species there are<ul>
+<li>Verify the answer with a direct SQL query</li>
+</ul>
+</li>
+<li>Write a two-sentence skill that instructs an LLM to always check Polars documentation before generating code<ul>
+<li>Test it on a data-loading task and log the result</li>
+</ul>
+</li>
+<li>Ask an agent to find and fix a syntax error in a short Python script<ul>
+<li>Review every change it makes and note which were correct and which were not</li>
+</ul>
+</li>
+<li>Call the LLM API from a short Python script to summarize a dataset<ul>
+<li>Compare the response to one obtained via the CLI</li>
+</ul>
+</li>
+<li>Identify one task from this workshop where an agent would be helpful and one where it would be risky<ul>
+<li>Write a one-sentence justification for each</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</main>
+<footer aria-label="Page navigation">
+<div class="row">
+<div class="col-3 left">
+<span aria-hidden="true">⇐</span> <a href="../llm/">How LLMs Work</a>
+</div>
+<div class="col-6 center">
+<a href="../">AI Data Analysis</a>
+	  ©
+	  <a href="../#acknowledgments">the authors</a>
+</div>
+<div class="col-3 right">
+<a href="../data/">Finding and Fetching Data</a> <span aria-hidden="true">⇒</span>
+</div>
+</div>
+</footer>
+</body>
+</html>

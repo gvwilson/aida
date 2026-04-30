@@ -1,0 +1,33 @@
+# Visualizing Results
+
+-   Altair's grammar of graphics: data, mark, and encoding
+    -   Common mark types: `.mark_point()`, `.mark_bar()`, `.mark_line()`, `.mark_rect()`
+    -   Encoding channels: `x`, `y`, `color`, `size`, `tooltip`, and `facet`
+    -   Interaction: selection
+-   Ask an LLM for Altair code and checking against the documentation before running
+    -   LLMs frequently use outdated APIs
+-   Verify a chart
+    -   Does it show the expected number of points?
+    -   Do axis ranges match the data?
+    -   Does the color legend list all categories?
+-   Save charts as PNG or SVG with `.save()`
+-   Iterating with LLM help
+    -   Add a regression line
+    -   Change axis scale
+    -   Facet by a categorical variable
+-   Accessibility: colorblind-safe color schemes, meaningful axis labels, readable font sizes
+    -   Ask LLM to check charts against these criteria
+    -   Ask LLM to generate alt text describing chart from code and from prompt plus code
+-   Exercises
+    -   Ask an LLM to generate a histogram of body mass
+        -   Verify that the x-axis range matches the min and max from the Polars DataFrame
+    -   Ask an LLM to generate a bar chart of mean bill length by species
+        -   Check that the number of bars matches the number of distinct species
+    -   Ask an LLM to generate Altair code using a method that does not exist
+        -   Identify the error and ask the LLM to fix it using the current API
+    -   Add a `tooltip` encoding showing body mass and island
+        -   Verify that hovering displays both fields correctly
+    -   Replace the default color scheme with a colorblind-safe palette suggested by the LLM
+        -   Verify it against a colorblindness simulator
+    -   Ask an LLM to facet the scatter plot by island
+        -   Confirm that each facet contains only penguins from that island

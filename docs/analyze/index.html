@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Cleaning and Analyzing Data</title>
+<meta content="AI Data Analysis" name="description"/>
+<link href="../_static/favicon.ico" rel="icon" type="image/x-icon"/>
+<link href="../_static/pygments.css" rel="stylesheet" type="text/css"/>
+<link href="../_static/chota.css" rel="stylesheet" type="text/css"/>
+<link href="../_static/mccole.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<a class="skip-link" href="#main-content">Skip to main content</a>
+<nav aria-label="Site navigation" class="nav">
+<div class="nav-left">
+<a class="brand" href="../">AI Data Analysis</a>
+<div class="dropdown">
+<button aria-controls="nav-lessons" aria-haspopup="true">Lessons</button>
+<ul class="dropdown-content" id="nav-lessons">
+<li><a href="../intro/">Introduction</a></li>
+<li><a href="../llm/">How LLMs Work</a></li>
+<li><a href="../interact/">Interacting with LLMs</a></li>
+<li><a href="../data/">Finding and Fetching Data</a></li>
+<li><a href="../db/">Working with Databases</a></li>
+<li><a class="active" href="../analyze/">Cleaning and Analyzing Data</a></li>
+<li><a href="../visualize/">Visualizing Results</a></li>
+<li><a href="../records/">Keeping Records</a></li>
+<li><a href="../finale/">Conclusion</a></li>
+</ul>
+</div>
+<div class="dropdown">
+<button aria-controls="nav-appendices" aria-haspopup="true">Appendices</button>
+<ul class="dropdown-content" id="nav-appendices">
+<li><a href="../license/">License</a></li>
+<li><a href="../conduct/">Code of Conduct</a></li>
+<li><a href="../contributing/">Contributing</a></li>
+<li><a href="../bibliography/">Bibliography</a></li>
+<li><a href="../glossary/">Glossary</a></li>
+</ul>
+</div>
+<a href="https://github.com/gvwilson/aida">Repository</a>
+</div>
+</nav>
+<main id="main-content">
+<h1>Cleaning and Analyzing Data</h1>
+<ul>
+<li>Reading data into Polars<ul>
+<li><code>pl.read_csv()</code>, <code>pl.read_database()</code>, <code>pl.scan_csv()</code> for large files</li>
+</ul>
+</li>
+<li>Inspecting a dataframe<ul>
+<li><code>.schema</code>, <code>.head()</code>, <code>.describe()</code>, <code>.null_count()</code></li>
+</ul>
+</li>
+<li>Identifying problems<ul>
+<li>Missing values</li>
+<li>Wrong data types</li>
+<li>Inconsistent string values</li>
+<li>Implausible outliers</li>
+</ul>
+</li>
+<li>Ask an LLM for Polars code and check that it doesn't use Pandas<ul>
+<li>Llms frequently mix the two</li>
+</ul>
+</li>
+<li>Common cleaning operations<ul>
+<li><code>.drop_nulls()</code>, <code>.fill_null()</code>, <code>.cast()</code>, <code>.str.strip_chars()</code>, <code>.with_columns()</code></li>
+</ul>
+</li>
+<li>Verify cleaning<ul>
+<li>Compare null counts and dataframe shape before and after</li>
+<li>Spot check that no valid rows were dropped</li>
+</ul>
+</li>
+<li>Use an LLM to find and correct code smells<ul>
+<li>Ask it to review a script for repeated logic, hardcoded values, and readability problems</li>
+</ul>
+</li>
+<li>Use <code>ruff</code> to lint LLM-generated Python code before running it<ul>
+<li>Catch unused imports, undefined variables, and style violations</li>
+</ul>
+</li>
+<li>Group statistics and correlation<ul>
+<li><code>.group_by().agg()</code>, <code>pl.pearson_corr()</code></li>
+</ul>
+</li>
+<li>Identify unreliable LLM interpretations<ul>
+<li>Invented significance levels</li>
+<li>Wrong direction of effect</li>
+<li>Conflating correlation with causation</li>
+</ul>
+</li>
+<li>Exercises<ul>
+<li>Load the penguins data into Polars and confirm that row and column counts match the original file</li>
+<li>Ask an LLM to generate code that fills missing body mass values with the species median<ul>
+<li>Verify that the null count decreases by the expected amount</li>
+</ul>
+</li>
+<li>Ask an LLM for a cleaning script<ul>
+<li>Run <code>ruff</code> on it and fix every warning, using the LLM to explain any you do not understand</li>
+</ul>
+</li>
+<li>Ask an LLM to review a ten-line Polars script for code smells<ul>
+<li>Apply one suggested improvement and confirm the output is unchanged</li>
+</ul>
+</li>
+<li>Compute the Pearson correlation between bill length and body mass<ul>
+<li>Ask an LLM to interpret the result</li>
+<li>Evaluate whether its interpretation is justified by the number alone</li>
+</ul>
+</li>
+<li>Identify an LLM interpretation of a group statistic that overstates certainty<ul>
+<li>Rewrite it to accurately reflect what the data show</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</main>
+<footer aria-label="Page navigation">
+<div class="row">
+<div class="col-3 left">
+<span aria-hidden="true">⇐</span> <a href="../db/">Working with Databases</a>
+</div>
+<div class="col-6 center">
+<a href="../">AI Data Analysis</a>
+	  ©
+	  <a href="../#acknowledgments">the authors</a>
+</div>
+<div class="col-3 right">
+<a href="../visualize/">Visualizing Results</a> <span aria-hidden="true">⇒</span>
+</div>
+</div>
+</footer>
+</body>
+</html>

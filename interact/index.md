@@ -1,0 +1,42 @@
+# Interacting with LLMs
+
+-   Command-line tools
+    -   Claude Code, the Anthropic and OpenAI CLIs, and when each is appropriate
+-   Editor and notebook integrations
+    -   LLM plugins for VS Code
+    -   MCP servers embedded in Marimo
+-   The API
+    -   When to call it programmatically instead of using a CLI
+    -   Authentication
+    -   Cost and rate limits
+-   Writing effective prompts
+    -   Being specific
+    -   Providing context
+    -   Asking for step-by-step reasoning
+    -   Iterative refinement
+-   Model Context Protocol (MCP)
+    -   what it is
+    -   How it gives an LLM structured access to tools such as databases, files, and external APIs
+-   Worked MCP example
+    -   Connecting an LLM to a local SQLite file and asking questions about the data without writing SQL manually
+-   Agents
+    -   How they differ from a single prompt
+    -   How they plan and execute multi-step tasks
+    -   Where they go wrong
+-   Skills and extensions
+    -   Finding and installing them
+    -   Writing a simple skill that automates a repeated prompt pattern
+-   Exercises
+    -   Use Claude Code in the terminal to ask a question about a file in your project
+        -   Compare the answer to what you get from the same question typed into a CLI
+    -   Install an MCP SQLite server, connect to the penguins database, and ask how many distinct species there are
+        -   Verify the answer with a direct SQL query
+    -   Write a two-sentence skill that instructs an LLM to always check Polars documentation before generating code
+        -   Test it on a data-loading task and log the result
+    -   Ask an agent to find and fix a syntax error in a short Python script
+        -   Review every change it makes and note which were correct and which were not
+    -   Call the LLM API from a short Python script to summarize a dataset
+        -   Compare the response to one obtained via the CLI
+    -   Identify one task from this workshop where an agent would be helpful and one where it would be risky
+        -   Write a one-sentence justification for each
+

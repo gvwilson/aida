@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Introduction</title>
+<title>Keeping Records</title>
 <meta content="AI Data Analysis" name="description"/>
 <link href="../_static/favicon.ico" rel="icon" type="image/x-icon"/>
 <link href="../_static/pygments.css" rel="stylesheet" type="text/css"/>
@@ -19,14 +19,14 @@
 <div class="dropdown">
 <button aria-controls="nav-lessons" aria-haspopup="true">Lessons</button>
 <ul class="dropdown-content" id="nav-lessons">
-<li><a class="active" href="../intro/">Introduction</a></li>
+<li><a href="../intro/">Introduction</a></li>
 <li><a href="../llm/">How LLMs Work</a></li>
 <li><a href="../interact/">Interacting with LLMs</a></li>
 <li><a href="../data/">Finding and Fetching Data</a></li>
 <li><a href="../db/">Working with Databases</a></li>
 <li><a href="../analyze/">Cleaning and Analyzing Data</a></li>
 <li><a href="../visualize/">Visualizing Results</a></li>
-<li><a href="../records/">Keeping Records</a></li>
+<li><a class="active" href="../records/">Keeping Records</a></li>
 <li><a href="../finale/">Conclusion</a></li>
 </ul>
 </div>
@@ -44,51 +44,54 @@
 </div>
 </nav>
 <main id="main-content">
-<h1>Introduction</h1>
+<h1>Keeping Records</h1>
 <ul>
-<li>What the workshop covers: the full data analysis pipeline from finding data to sharing results</li>
-<li>The tool stack<ul>
-<li>Marimo: computational notebook</li>
-<li>Polars: dataframes</li>
-<li>Altair: visualization</li>
-<li>SQLite: database</li>
-<li>bash: shell</li>
-<li>Git: version control</li>
-<li>Command-line LLM tool such as Claude Code</li>
+<li>Why reproducibility matters<ul>
+<li>Re-run analysis after data updates</li>
+<li>Audit your own work</li>
+<li>Share with reviewers</li>
 </ul>
 </li>
-<li>Setting up the environment<ul>
-<li>Check the <code>uv</code> virtual environment</li>
-<li>Launch Marimo</li>
+<li>Project directory structure<ul>
+<li><code>data/</code>, <code>scripts/</code>, <code>notebooks/</code>, <code>results/</code>, <code>figures/</code>, <code>log/</code></li>
+<li><code>.gitignore</code> patterns for analysis projects</li>
 </ul>
 </li>
-<li>Concerns about LLMs<ul>
-<li>Hallucination and confabulation</li>
-<li>Environmental cost</li>
-<li>Labor issues in training data</li>
-<li>Effects on research employment</li>
+<li>What to put in log files<ul>
+<li>Prompts</li>
+<li>Which LLM outputs were used vs. discarded</li>
+<li>What corrections were made and why</li>
 </ul>
 </li>
-<li>Ground rules<ul>
-<li>Always verify LLM output</li>
-<li>Note which parts of your work are LLM-assisted</li>
-<li>Keep a log: create dated Markdown files in <code>log/</code> to record prompts given and actions taken</li>
+<li>Use an LLM to draft a project README<ul>
+<li>What to ask for</li>
+<li>What to verify: dependencies, method description, accuracy</li>
 </ul>
 </li>
+<li>Documenting LLM use for research integrity</li>
 <li>Exercises<ul>
-<li>Set up your project directory and verify that all required tools are installed and importable</li>
-<li>Create your first log file and record the commands you ran during setup</li>
-<li>Ask Claude Code to explain what each tool in the stack does<ul>
-<li>Compare its answers to the official documentation and note discrepancies</li>
+<li>Review your log files from the day<ul>
+<li>Identify the prompt that required the most iterations and write a note explaining why</li>
 </ul>
 </li>
-<li>Identify one concern about LLM use in research that is not listed above and explain why it matters</li>
-<li>Find and read the license for the Palmer Penguins dataset<ul>
-<li>Record what it permits and prohibits</li>
+<li>Commit your scripts and logs with descriptive messages<ul>
+<li>Ask an LLM to review your commit messages and suggest improvements</li>
 </ul>
 </li>
-<li>Write a prompt asking an LLM to summarize this workshop's goals<ul>
-<li>Evaluate whether the summary is accurate</li>
+<li>Write a <code>.gitignore</code> file for this project<ul>
+<li>Ask an LLM to review it and identify any common patterns you missed</li>
+</ul>
+</li>
+<li>Use an LLM to draft a README for your project<ul>
+<li>Verify that every dependency it lists is actually used and every step it describes actually works</li>
+</ul>
+</li>
+<li>Identify one result in your analysis that you could not reproduce if you deleted the <code>log/</code> directory<ul>
+<li>Describe what the log provides that the code alone does not</li>
+</ul>
+</li>
+<li>Ask an LLM to rewrite a section of your analysis script to be more readable<ul>
+<li>Run <code>ruff</code> on both versions and compare the results</li>
 </ul>
 </li>
 </ul>
@@ -98,6 +101,7 @@
 <footer aria-label="Page navigation">
 <div class="row">
 <div class="col-3 left">
+<span aria-hidden="true">⇐</span> <a href="../visualize/">Visualizing Results</a>
 </div>
 <div class="col-6 center">
 <a href="../">AI Data Analysis</a>
@@ -105,7 +109,7 @@
 	  <a href="../#acknowledgments">the authors</a>
 </div>
 <div class="col-3 right">
-<a href="../llm/">How LLMs Work</a> <span aria-hidden="true">⇒</span>
+<a href="../finale/">Conclusion</a> <span aria-hidden="true">⇒</span>
 </div>
 </div>
 </footer>

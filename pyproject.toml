@@ -16,7 +16,8 @@ dev = [
 
 [tool.mccole]
 skips = [
-    "*~",
+    "**/*~",
     "docs/**",
+    "log/**",
     "uv.lock"
 ]

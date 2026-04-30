@@ -1,0 +1,30 @@
+# Keeping Records
+
+-   Why reproducibility matters
+    -   Re-run analysis after data updates
+    -   Audit your own work
+    -   Share with reviewers
+-   Project directory structure
+    -   `data/`, `scripts/`, `notebooks/`, `results/`, `figures/`, `log/`
+    -   `.gitignore` patterns for analysis projects
+-   What to put in log files
+    -   Prompts
+    -   Which LLM outputs were used vs. discarded
+    -   What corrections were made and why
+-   Use an LLM to draft a project README
+    -   What to ask for
+    -   What to verify: dependencies, method description, accuracy
+-   Documenting LLM use for research integrity
+-   Exercises
+    -   Review your log files from the day
+        -   Identify the prompt that required the most iterations and write a note explaining why
+    -   Commit your scripts and logs with descriptive messages
+        -   Ask an LLM to review your commit messages and suggest improvements
+    -   Write a `.gitignore` file for this project
+        -   Ask an LLM to review it and identify any common patterns you missed
+    -   Use an LLM to draft a README for your project
+        -   Verify that every dependency it lists is actually used and every step it describes actually works
+    -   Identify one result in your analysis that you could not reproduce if you deleted the `log/` directory
+        -   Describe what the log provides that the code alone does not
+    -   Ask an LLM to rewrite a section of your analysis script to be more readable
+        -   Run `ruff` on both versions and compare the results
