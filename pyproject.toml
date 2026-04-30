@@ -1,0 +1,22 @@
+[project]
+name = "aida"
+description = "AI data analysis"
+version = "0.1.0"
+requires-python = ">=3.12"
+dependencies = [
+    "mccole>=2.14.0"
+]
+
+[dependency-groups]
+dev = [
+    "coverage>=7.13.5",
+    "pytest>=9.0.2",
+    "ruff>=0.14.10",
+]
+
+[tool.mccole]
+skips = [
+    "*~",
+    "docs/**",
+    "uv.lock"
+]
