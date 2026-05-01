@@ -64,6 +64,10 @@
 <li>Check row counts against known totals</li>
 <li>Spot-check individual values</li>
 <li>Confirm aggregates are in a plausible range</li>
+<li>Check that a partition covers all rows: subgroup counts must sum to the total, and fractions must sum to 1.0<ul>
+<li>A <code>group by</code> that drops rows (e.g., because of <code>null</code> values in the grouping column) is a common silent error</li>
+</ul>
+</li>
 </ul>
 <h2>Iterate when the first query is wrong</h2>
 <ul>
@@ -95,7 +99,7 @@
 </li>
 <li>Prompt Claude to write a query that cross-tabulates species and island
     in the penguins table (one row per species, one column per island, counts in cells)<ul>
-<li>Sum a row and verify it equals the count for that species from a separate <code>GROUP BY</code> query</li>
+<li>Sum a row and verify it equals the count for that species from a separate <code>group by</code> query</li>
 <li>Sum a column and verify it equals the count for that island</li>
 </ul>
 </li>
@@ -108,7 +112,8 @@
 <li>Prompt Claude to compute what fraction of each species is female
     (<code>sex = 'FEMALE'</code> count divided by total count per species)<ul>
 <li>Verify that the fractions for each species sum to approximately 1.0</li>
-<li>Ask Claude what it did with rows where <code>sex</code> is <code>NULL</code>, then confirm its answer against the query</li>
+<li>Prompt Claude to explain what it did with rows where <code>sex</code> is <code>null</code>,
+    then confirm its answer against the query</li>
 </ul>
 </li>
 </ol>

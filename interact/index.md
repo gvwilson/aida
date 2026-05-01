@@ -26,7 +26,7 @@ $ cat results.txt | claude "Extract all numeric values and list them"
     -   Treat them like fancy autocomplete, not ground truth
 -   Marimo has MCP server support, letting notebooks talk to LLM tools without leaving the notebook interface
     -   marimo-pair can query the contents of Python's memory,
-	    which makes it very powerful for [%g eda "exploratory data analysis" %]
+        which makes it very powerful for [%g eda "exploratory data analysis" %]
 
 ## Writing effective prompts
 
@@ -145,7 +145,7 @@ sqlite3 penguins.db "select count(distinct species) from penguins;"
 ## Agents
 
 -   A single prompt produces one response
-    -   An [%g agent "agent" %] runs a loop: observe → plan → act → observe → ...
+    -   An [%g agent "agent" %] runs a loop: observe → plan → act → observe → …
 -   Agents use tool calls to gather information and take actions: web search, code execution, file read/write
 -   The agent loop continues until the model decides the task is complete or a maximum step count is reached
 -   Agents can take irreversible actions: deleting files, sending requests to external APIs, committing code

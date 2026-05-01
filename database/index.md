@@ -21,6 +21,8 @@
 -   Check row counts against known totals
 -   Spot-check individual values
 -   Confirm aggregates are in a plausible range
+-   Check that a partition covers all rows: subgroup counts must sum to the total, and fractions must sum to 1.0
+    -   A `group by` that drops rows (e.g., because of `null` values in the grouping column) is a common silent error
 
 ## Iterate when the first query is wrong
 
@@ -42,7 +44,7 @@
     -   Write a query using it and verify the output
 1.  Prompt Claude to write a query that cross-tabulates species and island
     in the penguins table (one row per species, one column per island, counts in cells)
-    -   Sum a row and verify it equals the count for that species from a separate `GROUP BY` query
+    -   Sum a row and verify it equals the count for that species from a separate `group by` query
     -   Sum a column and verify it equals the count for that island
 1.  Prompt Claude to write a query that flags penguins whose `body_mass_g`
     is more than two standard deviations from the mean for their species
@@ -51,4 +53,5 @@
 1.  Prompt Claude to compute what fraction of each species is female
     (`sex = 'FEMALE'` count divided by total count per species)
     -   Verify that the fractions for each species sum to approximately 1.0
-    -   Ask Claude what it did with rows where `sex` is `NULL`, then confirm its answer against the query
+    -   Prompt Claude to explain what it did with rows where `sex` is `null`,
+        then confirm its answer against the query

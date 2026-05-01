@@ -36,5 +36,6 @@ the social and environmental impact of these tools in general.
 -   Exercises must mention specific datasets or tools rather than
     generic ones (*not* "a dataset").  Prompt for datasets and tools
 	as needed while working.
+-   Use lower case for SQL keywords, not upper case.
 
 @~/.claude/mccole.md

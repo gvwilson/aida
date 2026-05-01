@@ -146,6 +146,16 @@ df.group_by("species").agg(...)
 -   Does the code actually run without errors?
     -   Try running it
 -   Does the code produce the same result on a small test case you can compute by hand?
+-   Does the code give the right answer on the simplest possible input?
+    -   An empty list, a single row, or all-identical values are the easiest cases to check by hand
+    -   These boundary cases catch off-by-one errors and wrong defaults that plausible-looking inputs hide
+-   Does the code preserve a quantity that should be conserved?
+    -   A cleaning step should not change the total row count unless rows were explicitly dropped
+    -   A normalization step should produce values that sum to 1.0
+    -   A reformatting step should not change the number of records
+-   When deciding whether a number is "close enough," ask whether the difference is smaller than the natural variation in the data
+    -   A discrepancy of 0.1 mm in penguin bill length means something different from a discrepancy of 0.1 in a probability
+    -   If the discrepancy is smaller than the measurement error in your data, it is probably not worth worrying about
 -   Are all package names and function signatures correct for the installed version?
 -   These are the same questions to ask when checking any data analysis, LLM-generated or not
 
@@ -173,3 +183,6 @@ assert abs(llm_answer - actual) < 0.1, f"Mismatch: LLM={llm_answer}, actual={act
     -   Look up the DOIs and/or titles it provides: do the papers exist? Are the citations accurate?
 1.  Prompt Claude to explain its own limitations regarding training data cutoffs
     -   Evaluate whether the explanation is accurate and complete based on what you have learned in this lesson
+1.  Prompt Claude to write a function that computes the mean of a list of numbers
+    -   Test it on an empty list, a list with one element, and a list where all elements are identical
+    -   Record which boundary cases (if any) it handled correctly without being told to

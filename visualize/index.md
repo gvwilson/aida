@@ -18,7 +18,7 @@
 
 ## Save charts as PNG or SVG with `.save()`
 
-## Iterat with Claude Code help
+## Iterate with Claude Code help
 
 -   Add a regression line
 -   Change axis scale

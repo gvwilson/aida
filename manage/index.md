@@ -35,23 +35,18 @@
 
 ## Translating between CSV and JSON
 
-Most datasets arrive as CSV, but many web APIs return JSON, and some tools expect one format
-or the other.  Translating between them by hand is tedious and error-prone, which makes it
-a good job for Claude — as long as you check what it produces.
-
-CSV is a flat table: every row has the same columns, and values cannot be nested.  JSON can
-represent hierarchies, lists within lists, and fields that only exist in some records.
-Converting CSV to JSON is usually straightforward, but going the other way can require
-decisions about how to flatten nested structures, and those decisions are easy to get wrong.
+-   Most datasets arrive as CSV, but many web APIs return JSON, and some tools expect one format or the other
+-   Translating between them by hand is tedious and error-prone, which makes it a good job for Claude — as long as you check what it produces
+-   CSV is a flat table: every row has the same columns, and values cannot be nested
+-   JSON can represent hierarchies, lists within lists, and fields that only exist in some records
+-   Converting CSV to JSON is usually straightforward, but going the other way requires decisions about how to flatten nested structures, and those decisions are easy to get wrong
 
 To ask Claude to translate a file, a prompt like this works well:
 
 > Convert `penguins.csv` to `penguins.json`.  Preserve all column names exactly as they appear
 > in the header row.  Use an array of objects, one per row.  Do not invent or drop fields.
 
-The explicit instructions matter.  Without them, Claude might silently rename columns to
-match some assumed convention, drop rows it considers malformed, or produce a single object
-instead of an array.
+-   The explicit instructions matter: without them, Claude might silently rename columns to match some assumed convention, drop rows it considers malformed, or produce a single object instead of an array
 
 Once Claude returns the converted file, verify it before using it:
 
@@ -64,16 +59,20 @@ Once Claude returns the converted file, verify it before using it:
 -   If the CSV had missing values, check how they appear in the JSON: as `null`,
     as empty strings, or as absent keys.  Pick one and make Claude be consistent.
 
-Going from JSON to CSV adds a step: you need to decide what the columns are.  If the JSON
-is a flat array of uniform objects, Claude can infer them.  If the objects have different
-keys or nested values, tell Claude explicitly how to handle each case, then verify that
-no data was silently dropped in the flattening.
+Going from JSON to CSV:
+
+-   You need to decide what the columns are
+-   If the JSON is a flat array of uniform objects, Claude can infer them
+-   If the objects have different keys or nested values, tell Claude explicitly how to handle each case
+-   Verify that no data was silently dropped in the flattening
 
 ## Why reproducibility matters
 
 -   Re-run analysis after data updates
 -   Audit your own work
 -   Share with reviewers
+-   Set random seeds explicitly in any analysis that involves randomness: sampling, bootstrapping, or splitting data into training and test sets
+    -   Without a fixed seed, two runs of the same script can produce different results, making it impossible to confirm that a change actually fixed a problem
 
 ## Project directory structure
 
@@ -109,7 +108,7 @@ no data was silently dropped in the flattening.
 1.  Prompt Claude to convert `penguins.csv` to JSON.
     -   Count the records in both files and confirm they match.
     -   Check three rows by hand to make sure values were not renamed or dropped.
-    -   Ask Claude what it did with missing values, then verify that answer against the file.
+    -   Prompt Claude to find out what it did with missing values, then verify that answer against the file.
 1.  Prompt Claude to convert the penguins JSON back to CSV.
     -   Compare the result to the original CSV.
     -   If there are any differences, trace where each one came from.
@@ -117,6 +116,9 @@ no data was silently dropped in the flattening.
     -   Identify the prompt that required the most iterations and explain why.
 1.  Commit your scripts and logs with descriptive messages.
     -   Prompt Claude to review your commit messages and suggest improvements.
+1.  Write a short script that samples 20 rows from the penguins dataset with a fixed random seed
+    -   Run it twice and confirm you get the same rows both times
+    -   Change the seed by one and confirm the sample changes
 1.  Write a `.gitignore` file for this project.
     -   Prompt Claude to review it and identify any common patterns you missed.
 1.  Prompt Claude to draft a README for your project.
