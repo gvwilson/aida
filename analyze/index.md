@@ -60,3 +60,16 @@
     -   Evaluate whether its interpretation is justified by the number alone
 1.  Identify a Claude interpretation of a group statistic that overstates certainty
     -   Rewrite it to accurately reflect what the data show
+1.  Filter the penguins data to keep 90% Adelie and 10% Chinstrap penguins
+    -   Prompt Claude to evaluate how well the rule "classify as Adelie if `bill_length_mm < 45`" performs
+    -   Did its first response report accuracy alone? Prompt it specifically for precision and recall
+    -   Check whether it flagged the class imbalance without being asked
+1.  Prompt Claude to fit a linear regression of `body_mass_g` on `bill_length_mm`
+    and interpret the slope
+    -   Did it report a confidence interval for the slope?
+    -   Did it hedge about causation, or did it imply that longer bills cause heavier birds?
+    -   Rewrite its interpretation to accurately reflect what the regression can and cannot show
+1.  Prompt Claude to add a column `mass_outlier` that is `True` where `body_mass_g` is
+    more than two standard deviations from the mean *for that species*
+    -   Ask Claude whether it used the overall mean or the per-species mean, then check the code
+    -   Count the flagged rows and spot-check two or three of them against the species statistics

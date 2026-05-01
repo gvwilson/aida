@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Managing Data</title>
+<meta content="AI for Data Analysis" name="description"/>
+<link href="../_static/favicon.ico" rel="icon" type="image/x-icon"/>
+<link href="../_static/pygments.css" rel="stylesheet" type="text/css"/>
+<link href="../_static/chota.css" rel="stylesheet" type="text/css"/>
+<link href="../_static/mccole.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<a class="skip-link" href="#main-content">Skip to main content</a>
+<nav aria-label="Site navigation" class="nav">
+<div class="nav-left">
+<a class="brand" href="../">AI for Data Analysis</a>
+<div class="dropdown">
+<button aria-controls="nav-lessons" aria-haspopup="true">Lessons</button>
+<ul class="dropdown-content" id="nav-lessons">
+<li><a href="../intro/">Introduction</a></li>
+<li><a href="../llm/">How LLMs Work</a></li>
+<li><a href="../interact/">Interact with LLMs</a></li>
+<li><a class="active" href="../manage/">Managing Data</a></li>
+<li><a href="../database/">Work with Databases</a></li>
+<li><a href="../analyze/">Clean and Analyze Data</a></li>
+<li><a href="../visualize/">Visualize Results</a></li>
+<li><a href="../finale/">Conclusion</a></li>
+</ul>
+</div>
+<div class="dropdown">
+<button aria-controls="nav-appendices" aria-haspopup="true">Appendices</button>
+<ul class="dropdown-content" id="nav-appendices">
+<li><a href="../license/">License</a></li>
+<li><a href="../conduct/">Code of Conduct</a></li>
+<li><a href="../contributing/">Contributing</a></li>
+<li><a href="../bibliography/">Bibliography</a></li>
+<li><a href="../glossary/">Glossary</a></li>
+</ul>
+</div>
+<a href="https://github.com/gvwilson/aida">Repository</a>
+</div>
+</nav>
+<main id="main-content">
+<h1>Managing Data</h1>
+<h2>Where datasets live</h2>
+<ul>
+<li>What we hope for: government data portals, Zenodo, GitHub repositories, institutional repositories</li>
+<li>Reality: other people's laptops and random cloud storage</li>
+</ul>
+<h2>Evaluating a dataset</h2>
+<ul>
+<li>License and provenance</li>
+<li>Documentation</li>
+<li>Size</li>
+<li>Date last updated</li>
+</ul>
+<h2>Shell commands for inspection</h2>
+<ul>
+<li><code>curl -O</code>, <code>head -n</code>, <code>wc -l</code>, <code>cut -d, -f</code>, and <code>file</code></li>
+</ul>
+<h2>Common format tradeoffs</h2>
+<ul>
+<li>CSV: simple but fragile</li>
+<li>JSON: nested but verbose</li>
+<li>SQLite: queryable but not versionable</li>
+<li>Parquet: typed and efficient, also not versionable</li>
+</ul>
+<h2>Use Claude to <em>create</em> a data dictionary from a raw file</h2>
+<ul>
+<li>Ask for column names, infer types and units, summarize plausible value ranges</li>
+</ul>
+<h2>Use Claude to <em>verify</em> a data dictionary</h2>
+<ul>
+<li>Check its descriptions against actual column names, units, and value ranges in the file</li>
+<li>Cross-reference with the source documentation</li>
+<li>Confirm no columns are missing</li>
+</ul>
+<h2>Translating between CSV and JSON</h2>
+<p>Most datasets arrive as CSV, but many web APIs return JSON, and some tools expect one format
+or the other.  Translating between them by hand is tedious and error-prone, which makes it
+a good job for Claude — as long as you check what it produces.</p>
+<p>CSV is a flat table: every row has the same columns, and values cannot be nested.  JSON can
+represent hierarchies, lists within lists, and fields that only exist in some records.
+Converting CSV to JSON is usually straightforward, but going the other way can require
+decisions about how to flatten nested structures, and those decisions are easy to get wrong.</p>
+<p>To ask Claude to translate a file, a prompt like this works well:</p>
+<blockquote>
+<p>Convert <code>penguins.csv</code> to <code>penguins.json</code>.  Preserve all column names exactly as they appear
+in the header row.  Use an array of objects, one per row.  Do not invent or drop fields.</p>
+</blockquote>
+<p>The explicit instructions matter.  Without them, Claude might silently rename columns to
+match some assumed convention, drop rows it considers malformed, or produce a single object
+instead of an array.</p>
+<p>Once Claude returns the converted file, verify it before using it:</p>
+<ul>
+<li>Count the records: <code>wc -l penguins.csv</code> (minus the header) should equal
+    the length of the JSON array.</li>
+<li>Spot-check a few rows by comparing the CSV and JSON values side by side for the
+    same record.</li>
+<li>Confirm that column names in the JSON match the CSV header exactly — casing matters
+    for most tools.</li>
+<li>If the CSV had missing values, check how they appear in the JSON: as <code>null</code>,
+    as empty strings, or as absent keys.  Pick one and make Claude be consistent.</li>
+</ul>
+<p>Going from JSON to CSV adds a step: you need to decide what the columns are.  If the JSON
+is a flat array of uniform objects, Claude can infer them.  If the objects have different
+keys or nested values, tell Claude explicitly how to handle each case, then verify that
+no data was silently dropped in the flattening.</p>
+<h2>Why reproducibility matters</h2>
+<ul>
+<li>Re-run analysis after data updates</li>
+<li>Audit your own work</li>
+<li>Share with reviewers</li>
+</ul>
+<h2>Project directory structure</h2>
+<ul>
+<li><code>data/</code>, <code>scripts/</code>, <code>notebooks/</code>, <code>results/</code>, <code>figures/</code>, <code>log/</code></li>
+<li><code>.gitignore</code> patterns for analysis projects</li>
+</ul>
+<h2>What to put in log files</h2>
+<ul>
+<li>Prompts</li>
+<li>Which LLM outputs were used vs. discarded</li>
+<li>What corrections were made and why</li>
+</ul>
+<h2>Prompt Claude to draft a project README</h2>
+<ul>
+<li>What to ask for</li>
+<li>What to verify: dependencies, method description, accuracy</li>
+</ul>
+<h2>Document LLM use for research integrity</h2>
+<ul>
+<li>FIXME</li>
+</ul>
+<h2>Exercises</h2>
+<ol>
+<li>Prompt Claude to download the Palmer Penguins CSV and confirm that the file arrived intact.<ul>
+<li>How does it check the latter?</li>
+</ul>
+</li>
+<li>Prompt Claude to extract one column and count how many distinct values it contains.<ul>
+<li>Did Claude Code use shell commands, Python, or something else?</li>
+<li>Were you able to read and validate its method?</li>
+</ul>
+</li>
+<li>Prompt Claude to generate a data dictionary for the penguins CSV.<ul>
+<li>Verify its claims against the actual file.</li>
+</ul>
+</li>
+<li>Prompt Claude to describe the squirrels dataset.<ul>
+<li>Then prompt it to evaluate its own answer.</li>
+</ul>
+</li>
+<li>Prompt Claude to convert <code>penguins.csv</code> to JSON.<ul>
+<li>Count the records in both files and confirm they match.</li>
+<li>Check three rows by hand to make sure values were not renamed or dropped.</li>
+<li>Ask Claude what it did with missing values, then verify that answer against the file.</li>
+</ul>
+</li>
+<li>Prompt Claude to convert the penguins JSON back to CSV.<ul>
+<li>Compare the result to the original CSV.</li>
+<li>If there are any differences, trace where each one came from.</li>
+</ul>
+</li>
+<li>Review your log files from the day.<ul>
+<li>Identify the prompt that required the most iterations and explain why.</li>
+</ul>
+</li>
+<li>Commit your scripts and logs with descriptive messages.<ul>
+<li>Prompt Claude to review your commit messages and suggest improvements.</li>
+</ul>
+</li>
+<li>Write a <code>.gitignore</code> file for this project.<ul>
+<li>Prompt Claude to review it and identify any common patterns you missed.</li>
+</ul>
+</li>
+<li>Prompt Claude to draft a README for your project.<ul>
+<li>Verify that every dependency it lists is actually used and every step it describes actually works.</li>
+</ul>
+</li>
+</ol>
+</main>
+<footer aria-label="Page navigation">
+<div class="row">
+<div class="col-3 left">
+<span aria-hidden="true">⇐</span> <a href="../interact/">Interact with LLMs</a>
+</div>
+<div class="col-6 center">
+<a href="../">AI for Data Analysis</a>
+	  ©
+	  <a href="../#acknowledgments">the authors</a>
+</div>
+<div class="col-3 right">
+<a href="../database/">Work with Databases</a> <span aria-hidden="true">⇒</span>
+</div>
+</div>
+</footer>
+</body>
+</html>

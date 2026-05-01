@@ -22,11 +22,10 @@
 <li><a href="../intro/">Introduction</a></li>
 <li><a href="../llm/">How LLMs Work</a></li>
 <li><a href="../interact/">Interact with LLMs</a></li>
-<li><a href="../data/">Find and Fetch Data</a></li>
-<li><a href="../db/">Work with Databases</a></li>
+<li><a href="../manage/">Managing Data</a></li>
+<li><a href="../database/">Work with Databases</a></li>
 <li><a href="../analyze/">Clean and Analyze Data</a></li>
 <li><a class="active" href="../visualize/">Visualize Results</a></li>
-<li><a href="../records/">Keep Records</a></li>
 <li><a href="../finale/">Conclusion</a></li>
 </ul>
 </div>
@@ -99,6 +98,34 @@
 <li>Confirm that each facet contains only penguins from that island</li>
 </ul>
 </li>
+<li>Prompt Claude to generate a Q-Q plot of <code>body_mass_g</code> for Gentoo penguins
+    to check whether body mass is approximately normally distributed<ul>
+<li>Verify that both axes are labeled and that a diagonal reference line is drawn</li>
+<li>Generate a perfectly normal sample of the same size and confirm its Q-Q plot is straight</li>
+</ul>
+</li>
+<li>Use the squirrel census to count sightings per hectare, then prompt Claude
+    to generate a Lorenz curve showing how unevenly sightings are distributed across hectares<ul>
+<li>Verify that the curve starts at (0, 0) and ends at (1, 1)</li>
+<li>Verify that the curve bows noticeably below the diagonal line of perfect equality</li>
+<li>If the curve does not satisfy either condition, trace the bug in Claude's code</li>
+</ul>
+</li>
+<li>Download the NOAA GISTEMP global mean surface temperature anomaly dataset (a CSV
+    of annual values freely available from NOAA)<ul>
+<li>Prompt Claude to plot the time series and add a vertical marker line at 1988
+    (the year James Hansen testified to the US Senate about climate change)</li>
+<li>Verify that the marker falls on the correct year and is visible against the background</li>
+<li>Check that the x-axis labels show years, not integer indices</li>
+</ul>
+</li>
+<li>Prompt Claude to generate a 2D bin plot (heatmap) of <code>bill_length_mm</code> vs. <code>body_mass_g</code>
+    for all penguins, where color encodes the count of observations in each bin<ul>
+<li>Verify that the color scale increases with count</li>
+<li>Verify that the axis ranges cover all the data</li>
+<li>Check whether empty bins are shown as a neutral color rather than the lowest-count color</li>
+</ul>
+</li>
 </ol>
 </main>
 <footer aria-label="Page navigation">
@@ -112,7 +139,7 @@
 	  <a href="../#acknowledgments">the authors</a>
 </div>
 <div class="col-3 right">
-<a href="../records/">Keep Records</a> <span aria-hidden="true">⇒</span>
+<a href="../finale/">Conclusion</a> <span aria-hidden="true">⇒</span>
 </div>
 </div>
 </footer>

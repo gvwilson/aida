@@ -10,11 +10,10 @@
 1.  [Introduction](@/intro/)
 1.  [How LLMs Work](@/llm/)
 1.  [Interact with LLMs](@/interact/)
-1.  [Find and Fetch Data](@/data/)
-1.  [Work with Databases](@/db/)
+1.  [Managing Data](@/manage/)
+1.  [Work with Databases](@/database/)
 1.  [Clean and Analyze Data](@/analyze/)
 1.  [Visualize Results](@/visualize/)
-1.  [Keep Records](@/records/)
 1.  [Conclusion](@/finale/)
 
 </div>

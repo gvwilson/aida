@@ -22,11 +22,10 @@
 <li><a href="../intro/">Introduction</a></li>
 <li><a href="../llm/">How LLMs Work</a></li>
 <li><a href="../interact/">Interact with LLMs</a></li>
-<li><a href="../data/">Find and Fetch Data</a></li>
-<li><a href="../db/">Work with Databases</a></li>
+<li><a href="../manage/">Managing Data</a></li>
+<li><a href="../database/">Work with Databases</a></li>
 <li><a class="active" href="../analyze/">Clean and Analyze Data</a></li>
 <li><a href="../visualize/">Visualize Results</a></li>
-<li><a href="../records/">Keep Records</a></li>
 <li><a href="../finale/">Conclusion</a></li>
 </ul>
 </div>
@@ -115,12 +114,31 @@
 <li>Rewrite it to accurately reflect what the data show</li>
 </ul>
 </li>
+<li>Filter the penguins data to keep 90% Adelie and 10% Chinstrap penguins<ul>
+<li>Prompt Claude to evaluate how well the rule "classify as Adelie if <code>bill_length_mm &lt; 45</code>" performs</li>
+<li>Did its first response report accuracy alone? Prompt it specifically for precision and recall</li>
+<li>Check whether it flagged the class imbalance without being asked</li>
+</ul>
+</li>
+<li>Prompt Claude to fit a linear regression of <code>body_mass_g</code> on <code>bill_length_mm</code>
+    and interpret the slope<ul>
+<li>Did it report a confidence interval for the slope?</li>
+<li>Did it hedge about causation, or did it imply that longer bills cause heavier birds?</li>
+<li>Rewrite its interpretation to accurately reflect what the regression can and cannot show</li>
+</ul>
+</li>
+<li>Prompt Claude to add a column <code>mass_outlier</code> that is <code>True</code> where <code>body_mass_g</code> is
+    more than two standard deviations from the mean <em>for that species</em><ul>
+<li>Ask Claude whether it used the overall mean or the per-species mean, then check the code</li>
+<li>Count the flagged rows and spot-check two or three of them against the species statistics</li>
+</ul>
+</li>
 </ol>
 </main>
 <footer aria-label="Page navigation">
 <div class="row">
 <div class="col-3 left">
-<span aria-hidden="true">⇐</span> <a href="../db/">Work with Databases</a>
+<span aria-hidden="true">⇐</span> <a href="../database/">Work with Databases</a>
 </div>
 <div class="col-6 center">
 <a href="../">AI for Data Analysis</a>
