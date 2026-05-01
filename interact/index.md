@@ -104,7 +104,7 @@ Do not include any other text.
 -   [%g mcp "MCP" %] is an open standard for connecting LLM applications to external tools and data sources
 -   It uses JSON-RPC
     -    The LLM client sends a request describing a tool call
-	-    The MCP server executes it and returns a result
+    -    The MCP server executes it and returns a result
 -   An MCP server exposes a set of *tools*, each with a name, description, and JSON schema for its inputs
 -   The LLM sees tool descriptions in its context and can choose to call a tool
     -   The client executes the actual call

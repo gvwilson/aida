@@ -82,11 +82,6 @@
 
 ## R
 
-<span id="rag">retrieval-augmented generation (RAG)</span>
-:   A technique that retrieves relevant document chunks from an external source at query
-    time and inserts them into the prompt, grounding the model's response in accurate
-    source text and reducing hallucination.
-
 <span id="rate-limit">rate limit</span>
 :   A constraint imposed by an API provider on how many requests or tokens a client may
     submit per unit of time; exceeded limits return HTTP 429 errors and require retrying
@@ -96,6 +91,11 @@
 :   A fine-tuning technique in which human raters rank model outputs and the model is
     updated to produce higher-ranked responses; used to improve helpfulness and reduce
     harmful outputs.
+
+<span id="rag">retrieval-augmented generation (RAG)</span>
+:   A technique that retrieves relevant document chunks from an external source at query
+    time and inserts them into the prompt, grounding the model's response in accurate
+    source text and reducing hallucination.
 
 <span id="role-prompting">role prompting</span>
 :   A prompting technique that instructs the model to adopt a specific persona or area of
