@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Working with Databases</title>
+<title>Work with Databases</title>
 <meta content="AI for Data Analysis" name="description"/>
 <link href="../_static/favicon.ico" rel="icon" type="image/x-icon"/>
 <link href="../_static/pygments.css" rel="stylesheet" type="text/css"/>
@@ -21,12 +21,12 @@
 <ul class="dropdown-content" id="nav-lessons">
 <li><a href="../intro/">Introduction</a></li>
 <li><a href="../llm/">How LLMs Work</a></li>
-<li><a href="../interact/">Interacting with LLMs</a></li>
-<li><a href="../data/">Finding and Fetching Data</a></li>
-<li><a class="active" href="../db/">Working with Databases</a></li>
-<li><a href="../analyze/">Cleaning and Analyzing Data</a></li>
-<li><a href="../visualize/">Visualizing Results</a></li>
-<li><a href="../records/">Keeping Records</a></li>
+<li><a href="../interact/">Interact with LLMs</a></li>
+<li><a href="../data/">Find and Fetch Data</a></li>
+<li><a class="active" href="../db/">Work with Databases</a></li>
+<li><a href="../analyze/">Clean and Analyze Data</a></li>
+<li><a href="../visualize/">Visualize Results</a></li>
+<li><a href="../records/">Keep Records</a></li>
 <li><a href="../finale/">Conclusion</a></li>
 </ul>
 </div>
@@ -44,65 +44,62 @@
 </div>
 </nav>
 <main id="main-content">
-<h1>Working with Databases</h1>
+<h1>Work with Databases</h1>
+<h2>Connect to a SQLite database from a Marimo notebook using <code>sqlite3</code></h2>
+<h2>Prompt Claude to write queries</h2>
+<ol>
+<li>State the goal ("find all female penguins that weigh more than 3kg")</li>
+<li>Specify <code>select</code>, <code>where</code>, <code>order by</code>, <code>group by</code>, aggregation, <code>having</code>, <code>join</code> explicitly</li>
+<li>Compare results</li>
+</ol>
+<h2>Common errors in LLM-generated SQL</h2>
 <ul>
-<li>Connecting to a SQLite database from a Marimo notebook using the <code>sqlite3</code> module</li>
-<li>Asking Claude Code to write queries<ul>
-<li><code>select</code>, <code>where</code>, <code>order by</code>, <code>group by</code>, aggregation, <code>having</code>, <code>join</code>, subqueries</li>
-</ul>
-</li>
-<li>Verifying query results<ul>
-<li>Check row counts against known totals</li>
-<li>Spot-check individual values</li>
-<li>Confirm aggregates are in a plausible range</li>
-</ul>
-</li>
-<li>Common errors in Claude Code-generated SQL<ul>
 <li>Schema hallucination: inventing table or column names that do not exist</li>
 <li>Faulty joins: wrong type, missing or ambiguous conditions</li>
 <li>Aggregation mistakes: grouping errors, aggregating the wrong column</li>
 <li>Missing filters: omitting <code>where</code> conditions implied by the question</li>
-<li><code>null</code> sorting: mishandling nulls in <code>order by</code> or aggregation)</li>
+<li>Mishandling nulls in <code>order by</code> or aggregation</li>
 </ul>
-</li>
-<li>Iterating when the first query is wrong<ul>
-<li>Describe the error clearly and ask for a targeted fix</li>
+<h2>Verify query results</h2>
+<ul>
+<li>Check row counts against known totals</li>
+<li>Spot-check individual values</li>
+<li>Confirm aggregates are in a plausible range</li>
 </ul>
-</li>
-<li>Moving query results into Polars with <code>pl.read_database()</code></li>
-<li>Exercises<ul>
-<li>Use Claude Code to count the total number of rows in the penguins table<ul>
+<h2>Iterate when the first query is wrong</h2>
+<ul>
+<li>Describe the error clearly</li>
+<li>Explain what a correct answer looks like</li>
+</ul>
+<h2>Exercises</h2>
+<ol>
+<li>Prompt Claude to count the total number of rows in the penguins table<ul>
 <li>Verify the result matches <code>wc -l</code> on the CSV minus the header</li>
 </ul>
 </li>
-<li>Use Claude Code to compute average body mass by species<ul>
+<li>Prompt Claude to compute average body mass by species<ul>
 <li>Check whether each value is in a plausible range for that species</li>
 </ul>
 </li>
-<li>Use Claude Code to write a query that references a column name you slightly misspell in the prompt<ul>
+<li>Prompt Claude to write a query that references a column name you slightly misspell in the prompt<ul>
 <li>Does it hallucinate a column or flag the error?</li>
 </ul>
 </li>
-<li>Use Claude Code to write a join query<ul>
+<li>Prompt Claude to write a join query<ul>
 <li>How can you validate that the query is correct?</li>
 </ul>
 </li>
-<li>Prompt Claude to explain a clause you have not used before (e.g., <code>coalesce</code>, <code>like</code>, or a window function)<ul>
+<li>Prompt Claude to explain a clause you have not used before
+    (e.g., using <code>coalesce</code>, <code>like</code>, or a window function)<ul>
 <li>Write a query using it and verify the output</li>
 </ul>
 </li>
-<li>Give Claude Code an ambiguous table description<ul>
-<li>How does the ambiguity affect the generated query and its results?</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
+</ol>
 </main>
 <footer aria-label="Page navigation">
 <div class="row">
 <div class="col-3 left">
-<span aria-hidden="true">⇐</span> <a href="../data/">Finding and Fetching Data</a>
+<span aria-hidden="true">⇐</span> <a href="../data/">Find and Fetch Data</a>
 </div>
 <div class="col-6 center">
 <a href="../">AI for Data Analysis</a>
@@ -110,7 +107,7 @@
 	  <a href="../#acknowledgments">the authors</a>
 </div>
 <div class="col-3 right">
-<a href="../analyze/">Cleaning and Analyzing Data</a> <span aria-hidden="true">⇒</span>
+<a href="../analyze/">Clean and Analyze Data</a> <span aria-hidden="true">⇒</span>
 </div>
 </div>
 </footer>

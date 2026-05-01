@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Finding and Fetching Data</title>
+<title>Find and Fetch Data</title>
 <meta content="AI for Data Analysis" name="description"/>
 <link href="../_static/favicon.ico" rel="icon" type="image/x-icon"/>
 <link href="../_static/pygments.css" rel="stylesheet" type="text/css"/>
@@ -21,12 +21,12 @@
 <ul class="dropdown-content" id="nav-lessons">
 <li><a href="../intro/">Introduction</a></li>
 <li><a href="../llm/">How LLMs Work</a></li>
-<li><a href="../interact/">Interacting with LLMs</a></li>
-<li><a class="active" href="../data/">Finding and Fetching Data</a></li>
-<li><a href="../db/">Working with Databases</a></li>
-<li><a href="../analyze/">Cleaning and Analyzing Data</a></li>
-<li><a href="../visualize/">Visualizing Results</a></li>
-<li><a href="../records/">Keeping Records</a></li>
+<li><a href="../interact/">Interact with LLMs</a></li>
+<li><a class="active" href="../data/">Find and Fetch Data</a></li>
+<li><a href="../db/">Work with Databases</a></li>
+<li><a href="../analyze/">Clean and Analyze Data</a></li>
+<li><a href="../visualize/">Visualize Results</a></li>
+<li><a href="../records/">Keep Records</a></li>
 <li><a href="../finale/">Conclusion</a></li>
 </ul>
 </div>
@@ -44,42 +44,42 @@
 </div>
 </nav>
 <main id="main-content">
-<h1>Finding and Fetching Data</h1>
+<h1>Find and Fetch Data</h1>
+<h2>Where datasets live</h2>
 <ul>
-<li>Where datasets live<ul>
 <li>What we hope for: government data portals, Zenodo, GitHub repositories, institutional repositories</li>
 <li>Reality: other people's laptops and random cloud storage</li>
 </ul>
-</li>
-<li>Evaluating a dataset<ul>
+<h2>Evaluating a dataset</h2>
+<ul>
 <li>License and provenance</li>
 <li>Documentation</li>
 <li>Size</li>
 <li>Date last updated</li>
 </ul>
-</li>
-<li>Shell commands for inspection<ul>
+<h2>Shell commands for inspection</h2>
+<ul>
 <li><code>curl -O</code>, <code>head -n</code>, <code>wc -l</code>, <code>cut -d, -f</code>, and <code>file</code></li>
 </ul>
-</li>
-<li>Common format tradeoffs<ul>
+<h2>Common format tradeoffs</h2>
+<ul>
 <li>CSV: simple but fragile</li>
 <li>JSON: nested but verbose</li>
 <li>SQLite: queryable but not versionable</li>
 <li>Parquet: typed and efficient, also not versionable</li>
 </ul>
-</li>
-<li>Use Claude to <em>create</em> a data dictionary from a raw file<ul>
+<h2>Use Claude to <em>create</em> a data dictionary from a raw file</h2>
+<ul>
 <li>Ask for column names, infer types and units, summarize plausible value ranges</li>
 </ul>
-</li>
-<li>Use Claude to <em>verify</em> a data dictionary<ul>
+<h2>Use Claude to <em>verify</em> a data dictionary</h2>
+<ul>
 <li>Check its descriptions against actual column names, units, and value ranges in the file</li>
 <li>Cross-reference with the source documentation</li>
 <li>Confirm no columns are missing</li>
 </ul>
-</li>
-<li>Exercises<ul>
+<h2>Exercises</h2>
+<ol>
 <li>Prompt Claude to download the Palmer Penguins CSV and confirm that the file arrived intact<ul>
 <li>How does it check the latter?</li>
 </ul>
@@ -102,14 +102,12 @@
 <li>What do you do about the others?</li>
 </ul>
 </li>
-</ul>
-</li>
-</ul>
+</ol>
 </main>
 <footer aria-label="Page navigation">
 <div class="row">
 <div class="col-3 left">
-<span aria-hidden="true">⇐</span> <a href="../interact/">Interacting with LLMs</a>
+<span aria-hidden="true">⇐</span> <a href="../interact/">Interact with LLMs</a>
 </div>
 <div class="col-6 center">
 <a href="../">AI for Data Analysis</a>
@@ -117,7 +115,7 @@
 	  <a href="../#acknowledgments">the authors</a>
 </div>
 <div class="col-3 right">
-<a href="../db/">Working with Databases</a> <span aria-hidden="true">⇒</span>
+<a href="../db/">Work with Databases</a> <span aria-hidden="true">⇒</span>
 </div>
 </div>
 </footer>

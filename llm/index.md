@@ -161,15 +161,15 @@ assert abs(llm_answer - actual) < 0.1, f"Mismatch: LLM={llm_answer}, actual={act
 
 ## Exercises
 
--   Use the `anthropic` SDK to count tokens in the sentence "penguin bill length in millimeters"
+1.  Use the `anthropic` SDK to count tokens in the sentence "penguin bill length in millimeters"
     -   Then count tokens for the same sentence in another language and compare
--   Prompt Claude to describe the Polars `group_by` function
+1.  Prompt Claude to describe the Polars `group_by` function
     -   Check its claims against the current Polars documentation and log any discrepancies
--   Ask the same factual question twice with temperature 0 and then twice with temperature 1
+1.  Ask the same factual question twice with temperature 0 and then twice with temperature 1
     -   Record how often the high-temperature answers differ and what this implies for reproducibility
--   Prompt Claude to describe an event that occurred after its training cutoff
+1.  Prompt Claude to describe an event that occurred after its training cutoff
     -   Record how it signals (or fails to signal) uncertainty
--   Prompt Claude to cite three peer-reviewed papers on penguin bill morphology
+1.  Prompt Claude to cite three peer-reviewed papers on penguin bill morphology
     -   Look up the DOIs and/or titles it provides: do the papers exist? Are the citations accurate?
--   Prompt Claude to explain its own limitations regarding training data cutoffs
+1.  Prompt Claude to explain its own limitations regarding training data cutoffs
     -   Evaluate whether the explanation is accurate and complete based on what you have learned in this lesson

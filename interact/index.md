@@ -1,4 +1,4 @@
-# Interacting with LLMs
+# Interact with LLMs
 
 ## Command-line tools
 
@@ -20,16 +20,13 @@ $ cat results.txt | claude "Extract all numeric values and list them"
 
 ## Editor and notebook integrations
 
--   GitHub Copilot: in-editor inline completion and chat, available for VS Code, JetBrains, and Vim
--   Cursor: a VS Code fork with LLM assistance built into the editor core
-    -   Can edit multiple files in one prompt
--   Continue.dev: open-source VS Code extension that works with many models including local ones
--   Marimo has MCP server support, letting notebooks talk to LLM tools without leaving the notebook interface
-    -   marimo-pair can query the contents of Python's memory, which makes it very powerful for [%g eda "exploratory data analysis" %]
 -   Editor integrations see your open files as context
     -   They hallucinate less on code that is already on screen
 -   Inline completions are accepted with Tab and can be rejected with Escape
     -   Treat them like fancy autocomplete, not ground truth
+-   Marimo has MCP server support, letting notebooks talk to LLM tools without leaving the notebook interface
+    -   marimo-pair can query the contents of Python's memory,
+	    which makes it very powerful for [%g eda "exploratory data analysis" %]
 
 ## Writing effective prompts
 

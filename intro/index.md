@@ -22,12 +22,12 @@
     -   Note which parts of your work are LLM-assisted
     -   Keep a log: create dated Markdown files in `log/` to record prompts given and actions taken
 -   Exercises
-    -   Set up your project directory and verify that all required tools are installed and importable
-    -   Create your first log file and record the commands you ran during setup
-    -   Prompt Claude to explain what each tool in the stack does
+    1.  Set up your project directory and verify that all required tools are installed and importable
+    1.  Create your first log file and record the commands you ran during setup
+    1.  Prompt Claude to explain what each tool in the stack does
         -   Compare its answers to the official documentation and note discrepancies
-    -   Identify one concern about LLM use in research that is not listed above and explain why it matters
-    -   Find and read the license for the Palmer Penguins dataset
+    1.  Identify one concern about LLM use in research that is not listed above and explain why it matters
+    1.  Find and read the license for the Palmer Penguins dataset
         -   Record what it permits and prohibits
-    -   Write a prompt asking an LLM to summarize this workshop's goals
+    1.  Write a prompt asking an LLM to summarize this workshop's goals
         -   Evaluate whether the summary is accurate

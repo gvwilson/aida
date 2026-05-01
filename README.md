@@ -9,12 +9,12 @@
 
 1.  [Introduction](@/intro/)
 1.  [How LLMs Work](@/llm/)
-1.  [Interacting with LLMs](@/interact/)
-1.  [Finding and Fetching Data](@/data/)
-1.  [Working with Databases](@/db/)
-1.  [Cleaning and Analyzing Data](@/analyze/)
-1.  [Visualizing Results](@/visualize/)
-1.  [Keeping Records](@/records/)
+1.  [Interact with LLMs](@/interact/)
+1.  [Find and Fetch Data](@/data/)
+1.  [Work with Databases](@/db/)
+1.  [Clean and Analyze Data](@/analyze/)
+1.  [Visualize Results](@/visualize/)
+1.  [Keep Records](@/records/)
 1.  [Conclusion](@/finale/)
 
 </div>

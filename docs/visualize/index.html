@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Visualizing Results</title>
+<title>Visualize Results</title>
 <meta content="AI for Data Analysis" name="description"/>
 <link href="../_static/favicon.ico" rel="icon" type="image/x-icon"/>
 <link href="../_static/pygments.css" rel="stylesheet" type="text/css"/>
@@ -21,12 +21,12 @@
 <ul class="dropdown-content" id="nav-lessons">
 <li><a href="../intro/">Introduction</a></li>
 <li><a href="../llm/">How LLMs Work</a></li>
-<li><a href="../interact/">Interacting with LLMs</a></li>
-<li><a href="../data/">Finding and Fetching Data</a></li>
-<li><a href="../db/">Working with Databases</a></li>
-<li><a href="../analyze/">Cleaning and Analyzing Data</a></li>
-<li><a class="active" href="../visualize/">Visualizing Results</a></li>
-<li><a href="../records/">Keeping Records</a></li>
+<li><a href="../interact/">Interact with LLMs</a></li>
+<li><a href="../data/">Find and Fetch Data</a></li>
+<li><a href="../db/">Work with Databases</a></li>
+<li><a href="../analyze/">Clean and Analyze Data</a></li>
+<li><a class="active" href="../visualize/">Visualize Results</a></li>
+<li><a href="../records/">Keep Records</a></li>
 <li><a href="../finale/">Conclusion</a></li>
 </ul>
 </div>
@@ -44,37 +44,37 @@
 </div>
 </nav>
 <main id="main-content">
-<h1>Visualizing Results</h1>
+<h1>Visualize Results</h1>
+<h2>Altair's grammar of graphics: data, mark, and encoding</h2>
 <ul>
-<li>Altair's grammar of graphics: data, mark, and encoding<ul>
 <li>Common mark types: <code>.mark_point()</code>, <code>.mark_bar()</code>, <code>.mark_line()</code>, <code>.mark_rect()</code></li>
 <li>Encoding channels: <code>x</code>, <code>y</code>, <code>color</code>, <code>size</code>, <code>tooltip</code>, and <code>facet</code></li>
 <li>Interaction: selection</li>
 </ul>
-</li>
-<li>Prompt Claude for Altair code and check against the documentation before running<ul>
+<h2>Prompt Claude for Altair code and check against the documentation before running</h2>
+<ul>
 <li>LLMs frequently use outdated APIs</li>
 </ul>
-</li>
-<li>Verify a chart<ul>
+<h2>Verify a chart</h2>
+<ul>
 <li>Does it show the expected number of points?</li>
 <li>Do axis ranges match the data?</li>
 <li>Does the color legend list all categories?</li>
 </ul>
-</li>
-<li>Save charts as PNG or SVG with <code>.save()</code></li>
-<li>Iterating with Claude Code help<ul>
+<h2>Save charts as PNG or SVG with <code>.save()</code></h2>
+<h2>Iterat with Claude Code help</h2>
+<ul>
 <li>Add a regression line</li>
 <li>Change axis scale</li>
 <li>Facet by a categorical variable</li>
 </ul>
-</li>
-<li>Accessibility: colorblind-safe color schemes, meaningful axis labels, readable font sizes<ul>
+<h2>Accessibility: colorblind-safe color schemes, meaningful axis labels, readable font sizes</h2>
+<ul>
 <li>Prompt Claude to check charts against these criteria</li>
 <li>Prompt Claude to generate alt text describing a chart from code and from prompt plus code</li>
 </ul>
-</li>
-<li>Exercises<ul>
+<h2>Exercises</h2>
+<ol>
 <li>Use Claude Code to generate a histogram of body mass<ul>
 <li>Verify that the x-axis range matches the min and max from the Polars DataFrame</li>
 </ul>
@@ -99,14 +99,12 @@
 <li>Confirm that each facet contains only penguins from that island</li>
 </ul>
 </li>
-</ul>
-</li>
-</ul>
+</ol>
 </main>
 <footer aria-label="Page navigation">
 <div class="row">
 <div class="col-3 left">
-<span aria-hidden="true">⇐</span> <a href="../analyze/">Cleaning and Analyzing Data</a>
+<span aria-hidden="true">⇐</span> <a href="../analyze/">Clean and Analyze Data</a>
 </div>
 <div class="col-6 center">
 <a href="../">AI for Data Analysis</a>
@@ -114,7 +112,7 @@
 	  <a href="../#acknowledgments">the authors</a>
 </div>
 <div class="col-3 right">
-<a href="../records/">Keeping Records</a> <span aria-hidden="true">⇒</span>
+<a href="../records/">Keep Records</a> <span aria-hidden="true">⇒</span>
 </div>
 </div>
 </footer>
