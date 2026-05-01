@@ -44,24 +44,25 @@ the social and environmental impact of these tools in general.
     log file was created (as UTC timestamp down to the level of
     minutes); the second part (`some-slug`) is a multipart hyphenated
 	slug identifying the topic, such as `create-outline` or `define-terms`.
+	-   Use `date -u` to get the UTC time.
 -   If the topic of the work changes mid-session, prompt to see if a
     new log file should be created.
 -   Run shell commands that do not modify files without asking for permission.
 
 ## Style Rules
 
--   Lessons are written as point-form notes. See the 'change' workshop
-    for examples.
--   Each lesson should take about an hour to work through.
+-   Lessons are written as point-form notes.
+-   Each lesson should take about an hour to work through
+    (including exercises).
 -   Do not use **bold** in prose. Only use *italics* sparingly.
 -   Figures, code inclusions, citations, and glossary references are
     formatted using `mccole` shortcodes.
--   Do not attempt to be funny or offer generic positive feedback to
-    readers.
+-   Do not be funny or offer generic positive feedback to readers.
 -   Use `[text][key]` format for external links, and define `key` in
     `_extras/links.md`.
 -   Only use semi-colons and em-dashes rarely.
 -   Only use inline three-item lists rarely.
+-   *Never* put tab characters in Markdown files.
 
 ## Structure
 
