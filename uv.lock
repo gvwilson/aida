@@ -8,6 +8,7 @@ version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
     { name = "mccole" },
+    { name = "sqlite-utils" },
 ]
 
 [package.dev-dependencies]
@@ -19,7 +20,10 @@ dev = [
 ]
 
 [package.metadata]
-requires-dist = [{ name = "mccole", specifier = ">=2.15.0" }]
+requires-dist = [
+    { name = "mccole", specifier = ">=2.15.0" },
+    { name = "sqlite-utils", specifier = ">=3.39" },
+]
 
 [package.metadata.requires-dev]
 dev = [

@@ -47,12 +47,11 @@
 <h1>Finding and Fetching Data</h1>
 <ul>
 <li>Where datasets live<ul>
-<li>Government data portals, Zenodo, GitHub repositories, institutional repositories</li>
-<li>Other people's laptops</li>
-<li>Random cloud storage</li>
+<li>What we hope for: government data portals, Zenodo, GitHub repositories, institutional repositories</li>
+<li>Reality: other people's laptops and random cloud storage</li>
 </ul>
 </li>
-<li>Evaluating a dataset before using it<ul>
+<li>Evaluating a dataset<ul>
 <li>License and provenance</li>
 <li>Documentation</li>
 <li>Size</li>
@@ -66,37 +65,36 @@
 <li>Common format tradeoffs<ul>
 <li>CSV: simple but fragile</li>
 <li>JSON: nested but verbose</li>
-<li>SQLite: queryable</li>
-<li>Parquet: typed and efficient</li>
+<li>SQLite: queryable but not versionable</li>
+<li>Parquet: typed and efficient, also not versionable</li>
 </ul>
 </li>
-<li>Using Claude Code to <em>create</em> a data dictionary from a raw file<ul>
+<li>Use Claude to <em>create</em> a data dictionary from a raw file<ul>
 <li>Ask for column names, infer types and units, summarize plausible value ranges</li>
 </ul>
 </li>
-<li>Using Claude Code to <em>verify</em> a data dictionary<ul>
+<li>Use Claude to <em>verify</em> a data dictionary<ul>
 <li>Check its descriptions against actual column names, units, and value ranges in the file</li>
 <li>Cross-reference with the source documentation</li>
 <li>Confirm no columns are missing</li>
 </ul>
 </li>
 <li>Exercises<ul>
-<li>Use Claude Code to download the Palmer Penguins CSV and confirm that the file arrived intact<ul>
+<li>Prompt Claude to download the Palmer Penguins CSV and confirm that the file arrived intact<ul>
 <li>How does it check the latter?</li>
 </ul>
 </li>
-<li>Use Claude Code to extract one column and count how many distinct values it contains<ul>
+<li>Prompt Claude to extract one column and count how many distinct values it contains<ul>
 <li>Did Claude Code use shell commands, Python, or something else?</li>
 <li>Were you able to read and validate its method?</li>
 </ul>
 </li>
-<li>Use Claude Code to generate a data dictionary for the penguins CSV<ul>
-<li>Verify four of its claims against the actual file</li>
+<li>Prompt Claude to generate a data dictionary for the penguins CSV<ul>
+<li>Verify its claims against the actual file</li>
 </ul>
 </li>
-<li>Find a dataset on a government open data portal<ul>
-<li>Evaluate it against the criteria above</li>
-<li><em>Then</em> prompt Claude to evaluate it and compare answers</li>
+<li>Prompt Claude to describe the squirrels dataset<ul>
+<li>Then prompt it to evaluate its own answer</li>
 </ul>
 </li>
 <li>Prompt Claude to explain the tradeoffs between CSV and Parquet for a 10-million-row dataset<ul>

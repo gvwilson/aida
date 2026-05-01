@@ -1,3 +1,5 @@
+DB = example.db
+
 all: commands
 
 ## commands: show available commands (*)
@@ -21,6 +23,11 @@ clean:
 check:
 	@mccole check --src . --dst docs
 	@typos *.md */*.md
+
+## db: build SQLite database from CSV files
+db: _extras/example.sql _extras/penguins.csv _extras/islands.csv _extras/squirrels.csv
+	rm -f _extras/$(DB)
+	cd _extras && sqlite3 $(DB) < example.sql
 
 ## serve: serve generated HTML
 serve:

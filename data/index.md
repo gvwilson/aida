@@ -1,10 +1,9 @@
 # Finding and Fetching Data
 
 -   Where datasets live
-    -   Government data portals, Zenodo, GitHub repositories, institutional repositories
-    -   Other people's laptops
-    -   Random cloud storage
--   Evaluating a dataset before using it
+    -   What we hope for: government data portals, Zenodo, GitHub repositories, institutional repositories
+    -   Reality: other people's laptops and random cloud storage
+-   Evaluating a dataset
     -   License and provenance
     -   Documentation
     -   Size
@@ -14,25 +13,24 @@
 -   Common format tradeoffs
     -   CSV: simple but fragile
     -   JSON: nested but verbose
-    -   SQLite: queryable
-    -   Parquet: typed and efficient
--   Using Claude Code to *create* a data dictionary from a raw file
+    -   SQLite: queryable but not versionable
+    -   Parquet: typed and efficient, also not versionable
+-   Use Claude to *create* a data dictionary from a raw file
     -   Ask for column names, infer types and units, summarize plausible value ranges
--   Using Claude Code to *verify* a data dictionary
+-   Use Claude to *verify* a data dictionary
     -   Check its descriptions against actual column names, units, and value ranges in the file
     -   Cross-reference with the source documentation
     -   Confirm no columns are missing
 -   Exercises
-    -   Use Claude Code to download the Palmer Penguins CSV and confirm that the file arrived intact
+    -   Prompt Claude to download the Palmer Penguins CSV and confirm that the file arrived intact
         -   How does it check the latter?
-    -   Use Claude Code to extract one column and count how many distinct values it contains
+    -   Prompt Claude to extract one column and count how many distinct values it contains
         -   Did Claude Code use shell commands, Python, or something else?
         -   Were you able to read and validate its method?
-    -   Use Claude Code to generate a data dictionary for the penguins CSV
-        -   Verify four of its claims against the actual file
-    -   Find a dataset on a government open data portal
-        -   Evaluate it against the criteria above
-        -   *Then* prompt Claude to evaluate it and compare answers
+    -   Prompt Claude to generate a data dictionary for the penguins CSV
+        -   Verify its claims against the actual file
+    -   Prompt Claude to describe the squirrels dataset
+        -   Then prompt it to evaluate its own answer
     -   Prompt Claude to explain the tradeoffs between CSV and Parquet for a 10-million-row dataset
         -   How many of its claims can you confidently evaluate?
         -   What do you do about the others?
