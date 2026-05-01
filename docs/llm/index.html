@@ -5,7 +5,7 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>How LLMs Work</title>
-<meta content="AI Data Analysis" name="description"/>
+<meta content="AI for Data Analysis" name="description"/>
 <link href="../_static/favicon.ico" rel="icon" type="image/x-icon"/>
 <link href="../_static/pygments.css" rel="stylesheet" type="text/css"/>
 <link href="../_static/chota.css" rel="stylesheet" type="text/css"/>
@@ -15,7 +15,7 @@
 <a class="skip-link" href="#main-content">Skip to main content</a>
 <nav aria-label="Site navigation" class="nav">
 <div class="nav-left">
-<a class="brand" href="../">AI Data Analysis</a>
+<a class="brand" href="../">AI for Data Analysis</a>
 <div class="dropdown">
 <button aria-controls="nav-lessons" aria-haspopup="true">Lessons</button>
 <ul class="dropdown-content" id="nav-lessons">
@@ -62,11 +62,13 @@
 </ul>
 </li>
 </ul>
-<div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">tiktoken</span>  <span class="c1"># OpenAI's tokenizer library, also used for estimation</span>
-<span class="n">enc</span> <span class="o">=</span> <span class="n">tiktoken</span><span class="o">.</span><span class="n">get_encoding</span><span class="p">(</span><span class="s2">"cl100k_base"</span><span class="p">)</span>
-<span class="n">tokens</span> <span class="o">=</span> <span class="n">enc</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">"penguin bill length in millimeters"</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span>        <span class="c1"># list of integer token IDs</span>
-<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">tokens</span><span class="p">))</span>   <span class="c1"># 6</span>
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">anthropic</span>
+<span class="n">client</span> <span class="o">=</span> <span class="n">anthropic</span><span class="o">.</span><span class="n">Anthropic</span><span class="p">()</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">messages</span><span class="o">.</span><span class="n">count_tokens</span><span class="p">(</span>
+    <span class="n">model</span><span class="o">=</span><span class="s2">"claude-opus-4-6"</span><span class="p">,</span>
+    <span class="n">messages</span><span class="o">=</span><span class="p">[{</span><span class="s2">"role"</span><span class="p">:</span> <span class="s2">"user"</span><span class="p">,</span> <span class="s2">"content"</span><span class="p">:</span> <span class="s2">"penguin bill length in millimeters"</span><span class="p">}]</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">input_tokens</span><span class="p">)</span>   <span class="c1"># number of tokens</span>
 </code></pre></div>
 <ul>
 <li>Why token count matters: API pricing is per token (input and output priced separately)</li>
@@ -203,47 +205,60 @@
 </ul>
 <h2>Checking LLM output</h2>
 <ul>
-<li>Does the result have the right shape? (a list when a list was asked for, a number when a number was asked for)</li>
-<li>Are values in a plausible range? (a mean bill length of 4,600 mm is implausible for penguins)</li>
-<li>Does the output match an independent source? (cross-check a statistic against the original dataset)</li>
-<li>Does the code actually run without errors? (paste it into a notebook and execute it)</li>
+<li>Does the result have the right shape?<ul>
+<li>A list when a list was prompted for, a number when a number was prompted for, etc.</li>
+</ul>
+</li>
+<li>Are values in a plausible range?<ul>
+<li>A mean bill length of 4600 mm is implausible for penguins</li>
+</ul>
+</li>
+<li>Does the output match an independent source?<ul>
+<li>Cross-check a statistic against the original dataset</li>
+</ul>
+</li>
+<li>Does the code actually run without errors?<ul>
+<li>Try running it</li>
+</ul>
+</li>
 <li>Does the code produce the same result on a small test case you can compute by hand?</li>
 <li>Are all package names and function signatures correct for the installed version?</li>
 <li>These are the same questions to ask when checking any data analysis, LLM-generated or not</li>
-<li>Spot-checking is not sufficient for high-stakes decisions<ul>
-<li>Full verification is required</li>
-</ul>
-</li>
 </ul>
 <div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="c1"># Quick sanity check: does the generated summary statistic match direct computation?</span>
 <span class="n">llm_answer</span> <span class="o">=</span> <span class="mf">43.9</span>   <span class="c1"># LLM claimed this was mean bill length for Adelie penguins</span>
 <span class="n">actual</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">"species"</span><span class="p">)</span> <span class="o">==</span> <span class="s2">"Adelie"</span><span class="p">)[</span><span class="s2">"bill_length_mm"</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
 <span class="k">assert</span> <span class="nb">abs</span><span class="p">(</span><span class="n">llm_answer</span> <span class="o">-</span> <span class="n">actual</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">0.1</span><span class="p">,</span> <span class="sa">f</span><span class="s2">"Mismatch: LLM=</span><span class="si">{</span><span class="n">llm_answer</span><span class="si">}</span><span class="s2">, actual=</span><span class="si">{</span><span class="n">actual</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">"</span>
 </code></pre></div>
-<h2>Exercises</h2>
 <ul>
-<li>Tokenize the sentence "penguin bill length in millimeters" using an online tokenizer
-    and count the tokens it produces<ul>
-<li>Then tokenize the same sentence in French and compare token counts</li>
+<li>Spot-checking is not sufficient for high-stakes decisions<ul>
+<li>Full verification is required</li>
 </ul>
 </li>
-<li>Ask an LLM to describe the Polars <code>group_by</code> function<ul>
-<li>Check every claim against the current Polars documentation and log any discrepancies</li>
+</ul>
+<h2>Exercises</h2>
+<ul>
+<li>Use the <code>anthropic</code> SDK to count tokens in the sentence "penguin bill length in millimeters"<ul>
+<li>Then count tokens for the same sentence in another language and compare</li>
+</ul>
+</li>
+<li>Prompt Claude to describe the Polars <code>group_by</code> function<ul>
+<li>Check its claims against the current Polars documentation and log any discrepancies</li>
 </ul>
 </li>
 <li>Ask the same factual question twice with temperature 0 and then twice with temperature 1<ul>
 <li>Record how often the high-temperature answers differ and what this implies for reproducibility</li>
 </ul>
 </li>
-<li>Ask an LLM to describe an event that occurred after its training cutoff<ul>
+<li>Prompt Claude to describe an event that occurred after its training cutoff<ul>
 <li>Record how it signals (or fails to signal) uncertainty</li>
 </ul>
 </li>
-<li>Ask an LLM to cite a peer-reviewed paper on penguin bill morphology<ul>
-<li>Look up the DOI or title it provides and record whether the paper exists and the citation is accurate</li>
+<li>Prompt Claude to cite three peer-reviewed papers on penguin bill morphology<ul>
+<li>Look up the DOIs and/or titles it provides: do the papers exist? Are the citations accurate?</li>
 </ul>
 </li>
-<li>Ask an LLM to explain its own limitations regarding training data cutoffs<ul>
+<li>Prompt Claude to explain its own limitations regarding training data cutoffs<ul>
 <li>Evaluate whether the explanation is accurate and complete based on what you have learned in this lesson</li>
 </ul>
 </li>
@@ -255,7 +270,7 @@
 <span aria-hidden="true">⇐</span> <a href="../intro/">Introduction</a>
 </div>
 <div class="col-6 center">
-<a href="../">AI Data Analysis</a>
+<a href="../">AI for Data Analysis</a>
 	  ©
 	  <a href="../#acknowledgments">the authors</a>
 </div>

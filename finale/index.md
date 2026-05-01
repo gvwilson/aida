@@ -4,9 +4,9 @@
 -   Environmental and social impact revisited
 -   Where to go next
 -   Exercises
-    -   Name one task from today where the LLM saved significant time
+    -   Name one task from today where Claude Code saved significant time
         -   Estimate how long it would have taken without it
-    -   Name one task from today where you had to correct the LLM
+    -   Name one task from today where you had to correct Claude Code
         -   Describe what you needed to know in order to spot the error
     -   Find an energy cost estimate for a single LLM API call
         -   Compare it to the cost of sending an email or running a SQL query

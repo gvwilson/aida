@@ -2,25 +2,21 @@
 
 ## Command-line tools
 
--   Several CLI tools let you send prompts and receive responses without opening a browser
--   `claude` is Anthropic's official CLI (Claude Code); `openai` is OpenAI's
--   Simon Willison's `llm` package provides a unified interface to many providers
+-   Claude Code is a CLI tool that lets you send prompts and receive responses without opening a browser
+-   Authenticate once with `claude login` before first use
 
 ```bash
-pip install llm
-llm keys set openai          # store API key once
-llm "Summarize this file" < data/penguins.csv
+$ claude "Summarize this file" < data/penguins.csv
 ```
 
--   Piping text through stdin lets you chain LLM calls with other shell tools
+-   Piping text through stdin lets you chain Claude Code calls with other shell tools
 
 ```bash
-cat results.txt | llm "Extract all numeric values and list them"
+$ cat results.txt | claude "Extract all numeric values and list them"
 ```
 
--   CLIs are useful for quick one-off queries, batch processing in shell scripts, and working in environments without a GUI
--   Each vendor CLI uses its own auth and model selection flags
-    -   Check `--help` for options
+-   The CLI is useful for quick one-off queries, batch processing in shell scripts, and working in environments without a GUI
+-   Use `--help` to see available flags for model selection and output format
 
 ## Editor and notebook integrations
 
@@ -29,47 +25,11 @@ cat results.txt | llm "Extract all numeric values and list them"
     -   Can edit multiple files in one prompt
 -   Continue.dev: open-source VS Code extension that works with many models including local ones
 -   Marimo has MCP server support, letting notebooks talk to LLM tools without leaving the notebook interface
+    -   marimo-pair can query the contents of Python's memory, which makes it very powerful for [%g eda "exploratory data analysis" %]
 -   Editor integrations see your open files as context
     -   They hallucinate less on code that is already on screen
 -   Inline completions are accepted with Tab and can be rejected with Escape
-    -   Treat them like autocomplete, not ground truth
-
-## The API
-
--   Use the API when you need to call an LLM from Python code: inside a notebook, a script, or a pipeline
--   Authentication is done via an environment variable, not hardcoded in source files
-
-```bash
-export ANTHROPIC_API_KEY="sk-ant-..."   # add to ~/.zshrc or ~/.bashrc
-```
-
-```python
-import anthropic
-client = anthropic.Anthropic()   # reads ANTHROPIC_API_KEY automatically
-response = client.messages.create(
-    model="claude-opus-4-6",
-    max_tokens=512,
-    messages=[{"role": "user", "content": "How many rows are in a 10x10 grid?"}]
-)
-print(response.content[0].text)
-```
-
--   The response object contains `content` (a list of content blocks), `usage` (token counts), and `stop_reason`
--   Cost is `(input_tokens * input_price) + (output_tokens * output_price)`
-    -   Check the provider's pricing page
--   [%g rate-limit "Rate limits" %] apply: requests per minute and tokens per minute
-    -   Exceeded limits raise HTTP 429 errors
--   Use exponential back-off when retrying rate-limited requests
-
-```python
-import time
-for attempt in range(5):
-    try:
-        response = client.messages.create(...)
-        break
-    except anthropic.RateLimitError:
-        time.sleep(2 ** attempt)
-```
+    -   Treat them like fancy autocomplete, not ground truth
 
 ## Writing effective prompts
 
@@ -99,21 +59,58 @@ Do not include any other text.
 -   Iterative refinement: send a follow-up prompt correcting or extending the previous response rather than starting over
 -   Long, complex prompts can be broken into smaller prompts that build on each other
 
-## Model Context Protocol (MCP)
+## The API
 
--   [%g mcp "MCP" %] is an open standard for connecting LLM applications to external tools and data sources
+-   Use the API when you need to call an LLM from Python code inside a notebook, a script, or a pipeline
+-   Authentication is done via an environment variable, not hardcoded in source files
+
+```bash
+export ANTHROPIC_API_KEY="sk-ant-..."   # add to ~/.zshrc or ~/.bashrc
+```
+
+```python
+import anthropic
+client = anthropic.Anthropic()   # reads ANTHROPIC_API_KEY automatically
+response = client.messages.create(
+    model="claude-opus-4-6",
+    max_tokens=512,
+    messages=[{"role": "user", "content": "How many rows are in a 10x10 grid?"}]
+)
+print(response.content[0].text)
+```
+
+-   The response object contains `content` (a list of content blocks), `usage` (token counts), and `stop_reason`
+-   Cost is `(input_tokens * input_price) + (output_tokens * output_price)`
+    -   Check the provider's pricing page
+-   [%g rate-limit "Rate limits" %] apply: requests per minute and tokens per minute
+    -   Exceeded limits raise HTTP 429 errors
+-   Use [%g exponential_backoff "exponential back-off" %] when retrying rate-limited requests
+
+```python
+import time
+for attempt in range(5):
+    try:
+        response = client.messages.create(...)
+        break
+    except anthropic.RateLimitError:
+        time.sleep(2 ** attempt)
+```
+
+## Model Context Protocol
+
+-   [%g mcp "Model context protocol" %] (MCP) is an open standard for connecting LLM applications to external tools and data sources
 -   It uses JSON-RPC
     -    The LLM client sends a request describing a tool call
     -    The MCP server executes it and returns a result
--   An MCP server exposes a set of *tools*, each with a name, description, and JSON schema for its inputs
+-   An MCP server exposes a set of tools, each with a name, description, and [%g json_schema "JSON schema" %] for its inputs
 -   The LLM sees tool descriptions in its context and can choose to call a tool
     -   The client executes the actual call
 -   Common MCP servers: filesystem access, SQLite databases, web search, GitHub, and calendar
 -   MCP decouples the LLM from the tool implementation: the same server works with any MCP-compatible client
 -   The server runs as a local process
-    -   It does not require sending your data to a third-party service
+    -   It does not need to send your data to a third-party service (though it can)
 
-## Worked MCP example
+## MCP example
 
 -   Install the SQLite MCP server: `uvx mcp-server-sqlite --db-path penguins.db`
 -   Add it to your Claude Code config so Claude knows it is available:
@@ -134,14 +131,14 @@ Do not include any other text.
 
 ```
 User: How many distinct species are in the penguins table?
-Claude: [calls query tool with SELECT COUNT(DISTINCT species) FROM penguins]
+Claude: [calls query tool with select count(distinct species) from penguins]
 Result: 3
 ```
 
 -   Verify by running the SQL yourself:
 
 ```bash
-sqlite3 penguins.db "SELECT COUNT(DISTINCT species) FROM penguins;"
+sqlite3 penguins.db "select count(distinct species) from penguins;"
 ```
 
 -   The LLM constructs the SQL
@@ -152,11 +149,11 @@ sqlite3 penguins.db "SELECT COUNT(DISTINCT species) FROM penguins;"
 
 -   A single prompt produces one response
     -   An [%g agent "agent" %] runs a loop: observe → plan → act → observe → ...
--   Agents use tool calls (web search, code execution, file read/write) to gather information and take actions
+-   Agents use tool calls to gather information and take actions: web search, code execution, file read/write
 -   The agent loop continues until the model decides the task is complete or a maximum step count is reached
 -   Agents can take irreversible actions: deleting files, sending requests to external APIs, committing code
 -   Risk compounds with step count: an error in step 2 can cause every subsequent step to be wrong
--   Human-in-the-loop checkpoints (requiring approval before certain tool calls) reduce the blast radius of mistakes
+-   Human-in-the-loop checkpoints (requiring approval before certain tool calls) reduce the damage done by mistakes
 -   Agents work well for tasks with clear success criteria that can be verified programmatically
 -   Agents work poorly for tasks requiring subjective judgment or where the environment is ambiguous
 -   Always review the full list of actions an agent took before accepting its output
@@ -170,12 +167,12 @@ sqlite3 penguins.db "SELECT COUNT(DISTINCT species) FROM penguins;"
 -   Installing a skill: copy the `.md` file to `~/.claude/` and reference it by name in a prompt or config
 
 ```bash
-# Example skill file: ~/.claude/check-docs.md
-# ---
-# name: check-docs
-# ---
-# Before generating any Python code that uses an external library,
-# state the library version and confirm the API against the official docs.
+$ cat ~/.claude/check-docs.md
+
+# Check Python documentation before using external library
+
+Before generating any Python code that uses an external library,
+state the library version and confirm the API against the official docs.
 ```
 
 -   Writing a skill automates a prompt pattern you would otherwise repeat by hand in every session
@@ -183,7 +180,7 @@ sqlite3 penguins.db "SELECT COUNT(DISTINCT species) FROM penguins;"
 ## Exercises
 
 -   Use Claude Code in the terminal to ask a question about a CSV file in your project
-    -   Compare the answer to what you get from piping the same file through the `llm` CLI
+    -   Check its answer against the result of a direct shell command on the same file
 -   Install an MCP SQLite server, connect to the penguins database, and ask how many distinct species there are
     -   Verify the answer with a direct SQLite query run from the shell
 -   Write a two-sentence skill that instructs an LLM to always check Polars documentation before generating code
@@ -191,8 +188,8 @@ sqlite3 penguins.db "SELECT COUNT(DISTINCT species) FROM penguins;"
 -   Call the Anthropic API from a short Python script to summarize a dataset
     -   Print the `usage` field of the response
     -   Record how many input and output tokens the call consumed and estimate its cost
--   Ask an agent to find and fix a syntax error in a short Python script
+-   Prompt an agent to find and fix a syntax error in a short Python script
     -   Review every tool call it made
     -   Note which changes were correct and which introduced new problems
--   Identify one task from this workshop where an agent would be helpful and one where it would be risky
-    -   Write a one-sentence justification for each, focusing on reversibility and verifiability
+-   Identify one task from your daily workflow where an agent would be helpful and one where it would be risky
+    -   Focus on reversibility and verifiability

@@ -9,33 +9,33 @@
     -   Wrong data types
     -   Inconsistent string values
     -   Implausible outliers
--   Ask an LLM for Polars code and check that it doesn't use Pandas
+-   Prompt Claude for Polars code and check that it doesn't use Pandas
     -   Llms frequently mix the two
 -   Common cleaning operations
     -   `.drop_nulls()`, `.fill_null()`, `.cast()`, `.str.strip_chars()`, `.with_columns()`
 -   Verify cleaning
     -   Compare null counts and dataframe shape before and after
     -   Spot check that no valid rows were dropped
--   Use an LLM to find and correct code smells
+-   Use Claude Code to find and correct code smells
     -   Ask it to review a script for repeated logic, hardcoded values, and readability problems
--   Use `ruff` to lint LLM-generated Python code before running it
+-   Use `ruff` to lint Claude Code-generated Python code before running it
     -   Catch unused imports, undefined variables, and style violations
 -   Group statistics and correlation
     -   `.group_by().agg()`, `pl.pearson_corr()`
--   Identify unreliable LLM interpretations
+-   Identify unreliable Claude Code interpretations
     -   Invented significance levels
     -   Wrong direction of effect
     -   Conflating correlation with causation
 -   Exercises
     -   Load the penguins data into Polars and confirm that row and column counts match the original file
-    -   Ask an LLM to generate code that fills missing body mass values with the species median
+    -   Use Claude Code to generate code that fills missing body mass values with the species median
         -   Verify that the null count decreases by the expected amount
-    -   Ask an LLM for a cleaning script
-        -   Run `ruff` on it and fix every warning, using the LLM to explain any you do not understand
-    -   Ask an LLM to review a ten-line Polars script for code smells
+    -   Use Claude Code to generate a cleaning script
+        -   Run `ruff` on it and fix every warning, using Claude Code to explain any you do not understand
+    -   Prompt Claude to review a ten-line Polars script for code smells
         -   Apply one suggested improvement and confirm the output is unchanged
     -   Compute the Pearson correlation between bill length and body mass
-        -   Ask an LLM to interpret the result
+        -   Prompt Claude to interpret the result
         -   Evaluate whether its interpretation is justified by the number alone
-    -   Identify an LLM interpretation of a group statistic that overstates certainty
+    -   Identify a Claude Code interpretation of a group statistic that overstates certainty
         -   Rewrite it to accurately reflect what the data show

@@ -1,4 +1,4 @@
-# AI Data Analysis
+# AI for Data Analysis
 
 <div class="row" markdown="1">
 <div class="col-6" markdown="1">

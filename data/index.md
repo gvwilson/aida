@@ -16,23 +16,23 @@
     -   JSON: nested but verbose
     -   SQLite: queryable
     -   Parquet: typed and efficient
--   Using an LLM to *create* a data dictionary from a raw file
+-   Using Claude Code to *create* a data dictionary from a raw file
     -   Ask for column names, infer types and units, summarize plausible value ranges
--   Using an LLM to *verify* a data dictionary
+-   Using Claude Code to *verify* a data dictionary
     -   Check its descriptions against actual column names, units, and value ranges in the file
     -   Cross-reference with the source documentation
     -   Confirm no columns are missing
 -   Exercises
-    -   Ask LLM to download the Palmer Penguins CSV and confirm that the file arrived intact
+    -   Use Claude Code to download the Palmer Penguins CSV and confirm that the file arrived intact
         -   How does it check the latter?
-    -   Ask LLM to extract one column and count how many distinct values it contains
-        -   Did the LLM use shell commands, Python, or something else?
+    -   Use Claude Code to extract one column and count how many distinct values it contains
+        -   Did Claude Code use shell commands, Python, or something else?
         -   Were you able to read and validate its method?
-    -   Ask an LLM to generate a data dictionary for the penguins CSV
+    -   Use Claude Code to generate a data dictionary for the penguins CSV
         -   Verify four of its claims against the actual file
     -   Find a dataset on a government open data portal
         -   Evaluate it against the criteria above
-        -   *Then* ask the LLM to evaluate it and compare answers
-    -   Ask an LLM to explain the tradeoffs between CSV and Parquet for a 10-million-row dataset
+        -   *Then* prompt Claude to evaluate it and compare answers
+    -   Prompt Claude to explain the tradeoffs between CSV and Parquet for a 10-million-row dataset
         -   How many of its claims can you confidently evaluate?
         -   What do you do about the others?

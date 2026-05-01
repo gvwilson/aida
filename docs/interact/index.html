@@ -5,7 +5,7 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Interacting with LLMs</title>
-<meta content="AI Data Analysis" name="description"/>
+<meta content="AI for Data Analysis" name="description"/>
 <link href="../_static/favicon.ico" rel="icon" type="image/x-icon"/>
 <link href="../_static/pygments.css" rel="stylesheet" type="text/css"/>
 <link href="../_static/chota.css" rel="stylesheet" type="text/css"/>
@@ -15,7 +15,7 @@
 <a class="skip-link" href="#main-content">Skip to main content</a>
 <nav aria-label="Site navigation" class="nav">
 <div class="nav-left">
-<a class="brand" href="../">AI Data Analysis</a>
+<a class="brand" href="../">AI for Data Analysis</a>
 <div class="dropdown">
 <button aria-controls="nav-lessons" aria-haspopup="true">Lessons</button>
 <ul class="dropdown-content" id="nav-lessons">
@@ -47,25 +47,19 @@
 <h1>Interacting with LLMs</h1>
 <h2>Command-line tools</h2>
 <ul>
-<li>Several CLI tools let you send prompts and receive responses without opening a browser</li>
-<li><code>claude</code> is Anthropic's official CLI (Claude Code); <code>openai</code> is OpenAI's</li>
-<li>Simon Willison's <code>llm</code> package provides a unified interface to many providers</li>
+<li>Claude Code is a CLI tool that lets you send prompts and receive responses without opening a browser</li>
+<li>Authenticate once with <code>claude login</code> before first use</li>
 </ul>
-<div class="codehilite"><pre class="" tabindex="0"><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>llm
-llm<span class="w"> </span>keys<span class="w"> </span><span class="nb">set</span><span class="w"> </span>openai<span class="w">          </span><span class="c1"># store API key once</span>
-llm<span class="w"> </span><span class="s2">"Summarize this file"</span><span class="w"> </span>&lt;<span class="w"> </span>data/penguins.csv
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code>$<span class="w"> </span>claude<span class="w"> </span><span class="s2">"Summarize this file"</span><span class="w"> </span>&lt;<span class="w"> </span>data/penguins.csv
 </code></pre></div>
 <ul>
-<li>Piping text through stdin lets you chain LLM calls with other shell tools</li>
+<li>Piping text through stdin lets you chain Claude Code calls with other shell tools</li>
 </ul>
-<div class="codehilite"><pre class="" tabindex="0"><span></span><code>cat<span class="w"> </span>results.txt<span class="w"> </span><span class="p">|</span><span class="w"> </span>llm<span class="w"> </span><span class="s2">"Extract all numeric values and list them"</span>
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code>$<span class="w"> </span>cat<span class="w"> </span>results.txt<span class="w"> </span><span class="p">|</span><span class="w"> </span>claude<span class="w"> </span><span class="s2">"Extract all numeric values and list them"</span>
 </code></pre></div>
 <ul>
-<li>CLIs are useful for quick one-off queries, batch processing in shell scripts, and working in environments without a GUI</li>
-<li>Each vendor CLI uses its own auth and model selection flags<ul>
-<li>Check <code>--help</code> for options</li>
-</ul>
-</li>
+<li>The CLI is useful for quick one-off queries, batch processing in shell scripts, and working in environments without a GUI</li>
+<li>Use <code>--help</code> to see available flags for model selection and output format</li>
 </ul>
 <h2>Editor and notebook integrations</h2>
 <ul>
@@ -75,52 +69,19 @@ llm<span class="w"> </span><span class="s2">"Summarize this file"</span><span cl
 </ul>
 </li>
 <li>Continue.dev: open-source VS Code extension that works with many models including local ones</li>
-<li>Marimo has MCP server support, letting notebooks talk to LLM tools without leaving the notebook interface</li>
+<li>Marimo has MCP server support, letting notebooks talk to LLM tools without leaving the notebook interface<ul>
+<li>marimo-pair can query the contents of Python's memory, which makes it very powerful for <a class="gl-ref" href="../glossary/#eda">exploratory data analysis</a></li>
+</ul>
+</li>
 <li>Editor integrations see your open files as context<ul>
 <li>They hallucinate less on code that is already on screen</li>
 </ul>
 </li>
 <li>Inline completions are accepted with Tab and can be rejected with Escape<ul>
-<li>Treat them like autocomplete, not ground truth</li>
+<li>Treat them like fancy autocomplete, not ground truth</li>
 </ul>
 </li>
 </ul>
-<h2>The API</h2>
-<ul>
-<li>Use the API when you need to call an LLM from Python code: inside a notebook, a script, or a pipeline</li>
-<li>Authentication is done via an environment variable, not hardcoded in source files</li>
-</ul>
-<div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">ANTHROPIC_API_KEY</span><span class="o">=</span><span class="s2">"sk-ant-..."</span><span class="w">   </span><span class="c1"># add to ~/.zshrc or ~/.bashrc</span>
-</code></pre></div>
-<div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">anthropic</span>
-<span class="n">client</span> <span class="o">=</span> <span class="n">anthropic</span><span class="o">.</span><span class="n">Anthropic</span><span class="p">()</span>   <span class="c1"># reads ANTHROPIC_API_KEY automatically</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">messages</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
-    <span class="n">model</span><span class="o">=</span><span class="s2">"claude-opus-4-6"</span><span class="p">,</span>
-    <span class="n">max_tokens</span><span class="o">=</span><span class="mi">512</span><span class="p">,</span>
-    <span class="n">messages</span><span class="o">=</span><span class="p">[{</span><span class="s2">"role"</span><span class="p">:</span> <span class="s2">"user"</span><span class="p">,</span> <span class="s2">"content"</span><span class="p">:</span> <span class="s2">"How many rows are in a 10x10 grid?"</span><span class="p">}]</span>
-<span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">content</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
-</code></pre></div>
-<ul>
-<li>The response object contains <code>content</code> (a list of content blocks), <code>usage</code> (token counts), and <code>stop_reason</code></li>
-<li>Cost is <code>(input_tokens * input_price) + (output_tokens * output_price)</code><ul>
-<li>Check the provider's pricing page</li>
-</ul>
-</li>
-<li><a class="gl-ref" href="../glossary/#rate-limit">Rate limits</a> apply: requests per minute and tokens per minute<ul>
-<li>Exceeded limits raise HTTP 429 errors</li>
-</ul>
-</li>
-<li>Use exponential back-off when retrying rate-limited requests</li>
-</ul>
-<div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
-<span class="k">for</span> <span class="n">attempt</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">messages</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
-        <span class="k">break</span>
-    <span class="k">except</span> <span class="n">anthropic</span><span class="o">.</span><span class="n">RateLimitError</span><span class="p">:</span>
-        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span> <span class="o">**</span> <span class="n">attempt</span><span class="p">)</span>
-</code></pre></div>
 <h2>Writing effective prompts</h2>
 <ul>
 <li>Be specific: vague prompts produce vague answers<ul>
@@ -149,15 +110,51 @@ Do not include any other text.
 <li>Iterative refinement: send a follow-up prompt correcting or extending the previous response rather than starting over</li>
 <li>Long, complex prompts can be broken into smaller prompts that build on each other</li>
 </ul>
-<h2>Model Context Protocol (MCP)</h2>
+<h2>The API</h2>
 <ul>
-<li><a class="gl-ref" href="../glossary/#mcp">MCP</a> is an open standard for connecting LLM applications to external tools and data sources</li>
+<li>Use the API when you need to call an LLM from Python code inside a notebook, a script, or a pipeline</li>
+<li>Authentication is done via an environment variable, not hardcoded in source files</li>
+</ul>
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">ANTHROPIC_API_KEY</span><span class="o">=</span><span class="s2">"sk-ant-..."</span><span class="w">   </span><span class="c1"># add to ~/.zshrc or ~/.bashrc</span>
+</code></pre></div>
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">anthropic</span>
+<span class="n">client</span> <span class="o">=</span> <span class="n">anthropic</span><span class="o">.</span><span class="n">Anthropic</span><span class="p">()</span>   <span class="c1"># reads ANTHROPIC_API_KEY automatically</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">messages</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+    <span class="n">model</span><span class="o">=</span><span class="s2">"claude-opus-4-6"</span><span class="p">,</span>
+    <span class="n">max_tokens</span><span class="o">=</span><span class="mi">512</span><span class="p">,</span>
+    <span class="n">messages</span><span class="o">=</span><span class="p">[{</span><span class="s2">"role"</span><span class="p">:</span> <span class="s2">"user"</span><span class="p">,</span> <span class="s2">"content"</span><span class="p">:</span> <span class="s2">"How many rows are in a 10x10 grid?"</span><span class="p">}]</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">content</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+</code></pre></div>
+<ul>
+<li>The response object contains <code>content</code> (a list of content blocks), <code>usage</code> (token counts), and <code>stop_reason</code></li>
+<li>Cost is <code>(input_tokens * input_price) + (output_tokens * output_price)</code><ul>
+<li>Check the provider's pricing page</li>
+</ul>
+</li>
+<li><a class="gl-ref" href="../glossary/#rate-limit">Rate limits</a> apply: requests per minute and tokens per minute<ul>
+<li>Exceeded limits raise HTTP 429 errors</li>
+</ul>
+</li>
+<li>Use <a class="gl-ref" href="../glossary/#exponential_backoff">exponential back-off</a> when retrying rate-limited requests</li>
+</ul>
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="k">for</span> <span class="n">attempt</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">messages</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+        <span class="k">break</span>
+    <span class="k">except</span> <span class="n">anthropic</span><span class="o">.</span><span class="n">RateLimitError</span><span class="p">:</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span> <span class="o">**</span> <span class="n">attempt</span><span class="p">)</span>
+</code></pre></div>
+<h2>Model Context Protocol</h2>
+<ul>
+<li><a class="gl-ref" href="../glossary/#mcp">Model context protocol</a> (MCP) is an open standard for connecting LLM applications to external tools and data sources</li>
 <li>It uses JSON-RPC<ul>
 <li>The LLM client sends a request describing a tool call</li>
 <li>The MCP server executes it and returns a result</li>
 </ul>
 </li>
-<li>An MCP server exposes a set of <em>tools</em>, each with a name, description, and JSON schema for its inputs</li>
+<li>An MCP server exposes a set of tools, each with a name, description, and <a class="gl-ref" href="../glossary/#json_schema">JSON schema</a> for its inputs</li>
 <li>The LLM sees tool descriptions in its context and can choose to call a tool<ul>
 <li>The client executes the actual call</li>
 </ul>
@@ -165,11 +162,11 @@ Do not include any other text.
 <li>Common MCP servers: filesystem access, SQLite databases, web search, GitHub, and calendar</li>
 <li>MCP decouples the LLM from the tool implementation: the same server works with any MCP-compatible client</li>
 <li>The server runs as a local process<ul>
-<li>It does not require sending your data to a third-party service</li>
+<li>It does not need to send your data to a third-party service (though it can)</li>
 </ul>
 </li>
 </ul>
-<h2>Worked MCP example</h2>
+<h2>MCP example</h2>
 <ul>
 <li>Install the SQLite MCP server: <code>uvx mcp-server-sqlite --db-path penguins.db</code></li>
 <li>Add it to your Claude Code config so Claude knows it is available:</li>
@@ -190,13 +187,13 @@ Do not include any other text.
 </li>
 </ul>
 <div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="n">User</span><span class="p">:</span><span class="w"> </span><span class="n">How</span><span class="w"> </span><span class="n">many</span><span class="w"> </span><span class="n">distinct</span><span class="w"> </span><span class="n">species</span><span class="w"> </span><span class="n">are</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">penguins</span><span class="w"> </span><span class="n">table</span><span class="err">?</span>
-<span class="n">Claude</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="n">calls</span><span class="w"> </span><span class="n">query</span><span class="w"> </span><span class="k">tool</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">SELECT</span><span class="w"> </span><span class="n">COUNT</span><span class="p">(</span><span class="n">DISTINCT</span><span class="w"> </span><span class="n">species</span><span class="p">)</span><span class="w"> </span><span class="n">FROM</span><span class="w"> </span><span class="n">penguins</span><span class="p">]</span>
+<span class="n">Claude</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="n">calls</span><span class="w"> </span><span class="n">query</span><span class="w"> </span><span class="k">tool</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">select</span><span class="w"> </span><span class="n">count</span><span class="p">(</span><span class="n">distinct</span><span class="w"> </span><span class="n">species</span><span class="p">)</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="n">penguins</span><span class="p">]</span>
 <span class="n">Result</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span>
 </code></pre></div>
 <ul>
 <li>Verify by running the SQL yourself:</li>
 </ul>
-<div class="codehilite"><pre class="" tabindex="0"><span></span><code>sqlite3<span class="w"> </span>penguins.db<span class="w"> </span><span class="s2">"SELECT COUNT(DISTINCT species) FROM penguins;"</span>
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code>sqlite3<span class="w"> </span>penguins.db<span class="w"> </span><span class="s2">"select count(distinct species) from penguins;"</span>
 </code></pre></div>
 <ul>
 <li>The LLM constructs the SQL<ul>
@@ -211,11 +208,11 @@ Do not include any other text.
 <li>An <a class="gl-ref" href="../glossary/#agent">agent</a> runs a loop: observe → plan → act → observe → ...</li>
 </ul>
 </li>
-<li>Agents use tool calls (web search, code execution, file read/write) to gather information and take actions</li>
+<li>Agents use tool calls to gather information and take actions: web search, code execution, file read/write</li>
 <li>The agent loop continues until the model decides the task is complete or a maximum step count is reached</li>
 <li>Agents can take irreversible actions: deleting files, sending requests to external APIs, committing code</li>
 <li>Risk compounds with step count: an error in step 2 can cause every subsequent step to be wrong</li>
-<li>Human-in-the-loop checkpoints (requiring approval before certain tool calls) reduce the blast radius of mistakes</li>
+<li>Human-in-the-loop checkpoints (requiring approval before certain tool calls) reduce the damage done by mistakes</li>
 <li>Agents work well for tasks with clear success criteria that can be verified programmatically</li>
 <li>Agents work poorly for tasks requiring subjective judgment or where the environment is ambiguous</li>
 <li>Always review the full list of actions an agent took before accepting its output</li>
@@ -228,12 +225,12 @@ Do not include any other text.
 <li>Finding community skills: the Claude Code documentation and GitHub list commonly used skills</li>
 <li>Installing a skill: copy the <code>.md</code> file to <code>~/.claude/</code> and reference it by name in a prompt or config</li>
 </ul>
-<div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="c1"># Example skill file: ~/.claude/check-docs.md</span>
-<span class="c1"># ---</span>
-<span class="c1"># name: check-docs</span>
-<span class="c1"># ---</span>
-<span class="c1"># Before generating any Python code that uses an external library,</span>
-<span class="c1"># state the library version and confirm the API against the official docs.</span>
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code>$<span class="w"> </span>cat<span class="w"> </span>~/.claude/check-docs.md
+
+<span class="c1"># Check Python documentation before using external library</span>
+
+Before<span class="w"> </span>generating<span class="w"> </span>any<span class="w"> </span>Python<span class="w"> </span>code<span class="w"> </span>that<span class="w"> </span>uses<span class="w"> </span>an<span class="w"> </span>external<span class="w"> </span>library,
+state<span class="w"> </span>the<span class="w"> </span>library<span class="w"> </span>version<span class="w"> </span>and<span class="w"> </span>confirm<span class="w"> </span>the<span class="w"> </span>API<span class="w"> </span>against<span class="w"> </span>the<span class="w"> </span>official<span class="w"> </span>docs.
 </code></pre></div>
 <ul>
 <li>Writing a skill automates a prompt pattern you would otherwise repeat by hand in every session</li>
@@ -241,7 +238,7 @@ Do not include any other text.
 <h2>Exercises</h2>
 <ul>
 <li>Use Claude Code in the terminal to ask a question about a CSV file in your project<ul>
-<li>Compare the answer to what you get from piping the same file through the <code>llm</code> CLI</li>
+<li>Check its answer against the result of a direct shell command on the same file</li>
 </ul>
 </li>
 <li>Install an MCP SQLite server, connect to the penguins database, and ask how many distinct species there are<ul>
@@ -257,13 +254,13 @@ Do not include any other text.
 <li>Record how many input and output tokens the call consumed and estimate its cost</li>
 </ul>
 </li>
-<li>Ask an agent to find and fix a syntax error in a short Python script<ul>
+<li>Prompt an agent to find and fix a syntax error in a short Python script<ul>
 <li>Review every tool call it made</li>
 <li>Note which changes were correct and which introduced new problems</li>
 </ul>
 </li>
-<li>Identify one task from this workshop where an agent would be helpful and one where it would be risky<ul>
-<li>Write a one-sentence justification for each, focusing on reversibility and verifiability</li>
+<li>Identify one task from your daily workflow where an agent would be helpful and one where it would be risky<ul>
+<li>Focus on reversibility and verifiability</li>
 </ul>
 </li>
 </ul>
@@ -274,7 +271,7 @@ Do not include any other text.
 <span aria-hidden="true">⇐</span> <a href="../llm/">How LLMs Work</a>
 </div>
 <div class="col-6 center">
-<a href="../">AI Data Analysis</a>
+<a href="../">AI for Data Analysis</a>
 	  ©
 	  <a href="../#acknowledgments">the authors</a>
 </div>

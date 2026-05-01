@@ -27,6 +27,16 @@
     semantically similar texts have similar vectors; used in retrieval-augmented generation
     to find relevant documents.
 
+<span id="eda">exploratory data analysis</span>
+:   The process of summarizing, visualizing, and investigating a dataset to understand
+    its structure, identify anomalies, and uncover patterns before formal modeling or
+    hypothesis testing.
+
+<span id="exponential_backoff">exponential backoff</span>
+:   A retry strategy in which the delay between successive attempts increases
+    exponentially (e.g., 1s, 2s, 4s, 8s) to reduce load on a service that has returned
+    a rate-limit or server error.
+
 ## F
 
 <span id="few-shot">few-shot prompting</span>
@@ -50,6 +60,11 @@
 ## I
 
 ## J
+
+<span id="json_schema">JSON schema</span>
+:   A vocabulary for describing the structure and constraints of JSON documents,
+    including required fields, data types, and allowed values; used in MCP tool
+    definitions to specify the expected format of inputs and outputs.
 
 ## K
 

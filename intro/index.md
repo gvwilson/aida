@@ -24,7 +24,7 @@
 -   Exercises
     -   Set up your project directory and verify that all required tools are installed and importable
     -   Create your first log file and record the commands you ran during setup
-    -   Ask Claude Code to explain what each tool in the stack does
+    -   Prompt Claude to explain what each tool in the stack does
         -   Compare its answers to the official documentation and note discrepancies
     -   Identify one concern about LLM use in research that is not listed above and explain why it matters
     -   Find and read the license for the Palmer Penguins dataset

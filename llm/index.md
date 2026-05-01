@@ -14,11 +14,13 @@
     -   The model never sees raw characters
 
 ```python
-import tiktoken  # OpenAI's tokenizer library, also used for estimation
-enc = tiktoken.get_encoding("cl100k_base")
-tokens = enc.encode("penguin bill length in millimeters")
-print(tokens)        # list of integer token IDs
-print(len(tokens))   # 6
+import anthropic
+client = anthropic.Anthropic()
+response = client.messages.count_tokens(
+    model="claude-opus-4-6",
+    messages=[{"role": "user", "content": "penguin bill length in millimeters"}]
+)
+print(response.input_tokens)   # number of tokens
 ```
 
 -   Why token count matters: API pricing is per token (input and output priced separately)
@@ -135,15 +137,17 @@ df.group_by("species").agg(...)
 
 ## Checking LLM output
 
--   Does the result have the right shape? (a list when a list was asked for, a number when a number was asked for)
--   Are values in a plausible range? (a mean bill length of 4,600 mm is implausible for penguins)
--   Does the output match an independent source? (cross-check a statistic against the original dataset)
--   Does the code actually run without errors? (paste it into a notebook and execute it)
+-   Does the result have the right shape?
+    -   A list when a list was prompted for, a number when a number was prompted for, etc.
+-   Are values in a plausible range?
+    -   A mean bill length of 4600 mm is implausible for penguins
+-   Does the output match an independent source?
+    -   Cross-check a statistic against the original dataset
+-   Does the code actually run without errors?
+    -   Try running it
 -   Does the code produce the same result on a small test case you can compute by hand?
 -   Are all package names and function signatures correct for the installed version?
 -   These are the same questions to ask when checking any data analysis, LLM-generated or not
--   Spot-checking is not sufficient for high-stakes decisions
-    -   Full verification is required
 
 ```python
 # Quick sanity check: does the generated summary statistic match direct computation?
@@ -152,18 +156,20 @@ actual = df.filter(pl.col("species") == "Adelie")["bill_length_mm"].mean()
 assert abs(llm_answer - actual) < 0.1, f"Mismatch: LLM={llm_answer}, actual={actual:.1f}"
 ```
 
+-   Spot-checking is not sufficient for high-stakes decisions
+    -   Full verification is required
+
 ## Exercises
 
--   Tokenize the sentence "penguin bill length in millimeters" using an online tokenizer
-    and count the tokens it produces
-    -   Then tokenize the same sentence in French and compare token counts
--   Ask an LLM to describe the Polars `group_by` function
-    -   Check every claim against the current Polars documentation and log any discrepancies
+-   Use the `anthropic` SDK to count tokens in the sentence "penguin bill length in millimeters"
+    -   Then count tokens for the same sentence in another language and compare
+-   Prompt Claude to describe the Polars `group_by` function
+    -   Check its claims against the current Polars documentation and log any discrepancies
 -   Ask the same factual question twice with temperature 0 and then twice with temperature 1
     -   Record how often the high-temperature answers differ and what this implies for reproducibility
--   Ask an LLM to describe an event that occurred after its training cutoff
+-   Prompt Claude to describe an event that occurred after its training cutoff
     -   Record how it signals (or fails to signal) uncertainty
--   Ask an LLM to cite a peer-reviewed paper on penguin bill morphology
-    -   Look up the DOI or title it provides and record whether the paper exists and the citation is accurate
--   Ask an LLM to explain its own limitations regarding training data cutoffs
+-   Prompt Claude to cite three peer-reviewed papers on penguin bill morphology
+    -   Look up the DOIs and/or titles it provides: do the papers exist? Are the citations accurate?
+-   Prompt Claude to explain its own limitations regarding training data cutoffs
     -   Evaluate whether the explanation is accurate and complete based on what you have learned in this lesson

@@ -5,7 +5,7 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Working with Databases</title>
-<meta content="AI Data Analysis" name="description"/>
+<meta content="AI for Data Analysis" name="description"/>
 <link href="../_static/favicon.ico" rel="icon" type="image/x-icon"/>
 <link href="../_static/pygments.css" rel="stylesheet" type="text/css"/>
 <link href="../_static/chota.css" rel="stylesheet" type="text/css"/>
@@ -15,7 +15,7 @@
 <a class="skip-link" href="#main-content">Skip to main content</a>
 <nav aria-label="Site navigation" class="nav">
 <div class="nav-left">
-<a class="brand" href="../">AI Data Analysis</a>
+<a class="brand" href="../">AI for Data Analysis</a>
 <div class="dropdown">
 <button aria-controls="nav-lessons" aria-haspopup="true">Lessons</button>
 <ul class="dropdown-content" id="nav-lessons">
@@ -47,7 +47,7 @@
 <h1>Working with Databases</h1>
 <ul>
 <li>Connecting to a SQLite database from a Marimo notebook using the <code>sqlite3</code> module</li>
-<li>Asking an LLM to write queries<ul>
+<li>Asking Claude Code to write queries<ul>
 <li><code>select</code>, <code>where</code>, <code>order by</code>, <code>group by</code>, aggregation, <code>having</code>, <code>join</code>, subqueries</li>
 </ul>
 </li>
@@ -57,7 +57,7 @@
 <li>Confirm aggregates are in a plausible range</li>
 </ul>
 </li>
-<li>Common errors in LLM-generated SQL<ul>
+<li>Common errors in Claude Code-generated SQL<ul>
 <li>Schema hallucination: inventing table or column names that do not exist</li>
 <li>Faulty joins: wrong type, missing or ambiguous conditions</li>
 <li>Aggregation mistakes: grouping errors, aggregating the wrong column</li>
@@ -71,27 +71,27 @@
 </li>
 <li>Moving query results into Polars with <code>pl.read_database()</code></li>
 <li>Exercises<ul>
-<li>Ask an LLM to count the total number of rows in the penguins table<ul>
+<li>Use Claude Code to count the total number of rows in the penguins table<ul>
 <li>Verify the result matches <code>wc -l</code> on the CSV minus the header</li>
 </ul>
 </li>
-<li>Ask an LLM to compute average body mass by species<ul>
+<li>Use Claude Code to compute average body mass by species<ul>
 <li>Check whether each value is in a plausible range for that species</li>
 </ul>
 </li>
-<li>Ask an LLM to write a query that references a column name you slightly misspell in the prompt<ul>
+<li>Use Claude Code to write a query that references a column name you slightly misspell in the prompt<ul>
 <li>Does it hallucinate a column or flag the error?</li>
 </ul>
 </li>
-<li>Ask an LLM to write a join query<ul>
+<li>Use Claude Code to write a join query<ul>
 <li>How can you validate that the query is correct?</li>
 </ul>
 </li>
-<li>Ask an LLM to explain a clause you have not used before (e.g., <code>coalesce</code>, <code>like</code>, or a window function)<ul>
+<li>Prompt Claude to explain a clause you have not used before (e.g., <code>coalesce</code>, <code>like</code>, or a window function)<ul>
 <li>Write a query using it and verify the output</li>
 </ul>
 </li>
-<li>Give an LLM an ambiguous table description<ul>
+<li>Give Claude Code an ambiguous table description<ul>
 <li>How does the ambiguity affect the generated query and its results?</li>
 </ul>
 </li>
@@ -105,7 +105,7 @@
 <span aria-hidden="true">⇐</span> <a href="../data/">Finding and Fetching Data</a>
 </div>
 <div class="col-6 center">
-<a href="../">AI Data Analysis</a>
+<a href="../">AI for Data Analysis</a>
 	  ©
 	  <a href="../#acknowledgments">the authors</a>
 </div>
