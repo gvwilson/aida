@@ -186,6 +186,12 @@
     application's behavior for a recurring task. Claude Code stores
     skills in `~/.claude/` and are available across all projects.
 
+<span id="sycophancy">sycophancy</span>
+:   The tendency of an LLM to agree with or flatter the user rather than
+    provide accurate information; a side effect of training with reinforcement
+    learning from human feedback, where raters tend to prefer agreeable
+    responses over correct but contradictory ones.
+
 ## T
 
 <span id="temperature">temperature</span>

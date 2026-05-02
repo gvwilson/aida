@@ -14,6 +14,7 @@
 1.  [Coding](@/coding/)
 1.  [Visualizing Results](@/visualize/)
 1.  [Writing](@/writing/)
+1.  [Learning](@/learning/)
 1.  [Conclusion](@/finale/)
 
 </div>
