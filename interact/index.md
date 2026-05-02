@@ -1,21 +1,25 @@
 # Interact with LLMs
 
+-   FIXME: this references Claude specifically - can it be made generic?
+
 ## Command-line tools
 
--   Claude Code is a CLI tool that lets you send prompts and receive responses without opening a browser
--   Authenticate once with `claude login` before first use
+-   [llm][llm] is a CLI tool that lets you send prompts and receive responses without opening a browser
+-   Authenticate once on first use
 
 ```bash
-$ claude "Summarize this file" < data/penguins.csv
+$ llm "Tell me a science joke"
 ```
 
--   Piping text through stdin lets you chain Claude Code calls with other shell tools
+-   Piping text through stdin lets you chain llm calls with other shell tools
 
 ```bash
-$ cat results.txt | claude "Extract all numeric values and list them"
+$ cat results.txt | llm "Extract all numeric values and list them"
 ```
 
--   The CLI is useful for quick one-off queries, batch processing in shell scripts, and working in environments without a GUI
+-   llm is useful for quick one-off queries,
+    batch processing in shell scripts,
+    and working in environments without a GUI
 -   Use `--help` to see available flags for model selection and output format
 
 ## Editor and notebook integrations
@@ -24,7 +28,8 @@ $ cat results.txt | claude "Extract all numeric values and list them"
     -   They hallucinate less on code that is already on screen
 -   Inline completions are accepted with Tab and can be rejected with Escape
     -   Treat them like fancy autocomplete, not ground truth
--   Marimo has MCP server support, letting notebooks talk to LLM tools without leaving the notebook interface
+-   Marimo has MCP server support,
+    letting notebooks talk to LLM tools without leaving the notebook interface
     -   marimo-pair can query the contents of Python's memory,
         which makes it very powerful for [%g eda "exploratory data analysis" %]
 
@@ -34,9 +39,12 @@ $ cat results.txt | claude "Extract all numeric values and list them"
     -   Weak: "Analyze my data"
     -   Stronger: "Given this CSV of penguin measurements, compute the mean bill length per species"
 -   Provide context: include relevant column names, file formats, or domain vocabulary
--   Ask for step-by-step reasoning: "Think step by step before giving your final answer" often improves accuracy
--   [%g role-prompting "Role prompting" %]: starting with "You are an expert in ..." can improve domain-specific responses
--   [%g few-shot "Few-shot examples" %]: show the model one or two input-output pairs before your actual query
+-   Ask for step-by-step reasoning:
+    "Write a step-by-step plan before taking action" often improves accuracy
+-   [%g role_prompting "Role prompting" %]:
+    starting with "You are an expert in…" can improve domain-specific responses
+-   [%g few_shot "Few-shot examples" %]:
+    show the model one or two input-output pairs before your actual query
 
 ```
 Convert species codes to full names. Examples:
@@ -52,8 +60,10 @@ Return your answer as JSON with keys "species", "mean_bill_mm", and "sample_size
 Do not include any other text.
 ```
 
--   Negative constraints help: "Do not include code comments", "Do not summarize the question back to me"
--   Iterative refinement: send a follow-up prompt correcting or extending the previous response rather than starting over
+-   Negative constraints help
+    -   E.g., "Do not include code comments", "Do not summarize the question back to me"
+-   Iterative refinement
+    -   Send a follow-up prompt correcting or extending the previous response rather than starting over
 -   Long, complex prompts can be broken into smaller prompts that build on each other
 
 ## The API
@@ -76,10 +86,12 @@ response = client.messages.create(
 print(response.content[0].text)
 ```
 
--   The response object contains `content` (a list of content blocks), `usage` (token counts), and `stop_reason`
+-   The response object contains `content` (a list of content blocks),
+    `usage` (token counts),
+    and `stop_reason`
 -   Cost is `(input_tokens * input_price) + (output_tokens * output_price)`
     -   Check the provider's pricing page
--   [%g rate-limit "Rate limits" %] apply: requests per minute and tokens per minute
+-   [%g rate_limit "Rate limits" %] apply: requests per minute and tokens per minute
     -   Exceeded limits raise HTTP 429 errors
 -   Use [%g exponential_backoff "exponential back-off" %] when retrying rate-limited requests
 
@@ -95,11 +107,13 @@ for attempt in range(5):
 
 ## Model Context Protocol
 
--   [%g mcp "Model context protocol" %] (MCP) is an open standard for connecting LLM applications to external tools and data sources
--   It uses JSON-RPC
+-   [%g mcp "Model context protocol" %] (MCP) is
+    an open standard for connecting LLM applications to external tools and data sources
+-   It uses [%g json_rpc "JSON-RPC" %]
     -    The LLM client sends a request describing a tool call
     -    The MCP server executes it and returns a result
--   An MCP server exposes a set of tools, each with a name, description, and [%g json_schema "JSON schema" %] for its inputs
+-   An MCP server exposes a set of tools,
+    each with a name, description, and [%g json_schema "JSON schema" %] for its inputs
 -   The LLM sees tool descriptions in its context and can choose to call a tool
     -   The client executes the actual call
 -   Common MCP servers: filesystem access, SQLite databases, web search, GitHub, and calendar
@@ -110,7 +124,8 @@ for attempt in range(5):
 ## MCP example
 
 -   Install the SQLite MCP server: `uvx mcp-server-sqlite --db-path penguins.db`
--   Add it to your Claude Code config so Claude knows it is available:
+-   Add it to your config so your LLM knows it is available
+    -   FIXME: how to do this for llm as opposed to Claude?
 
 ```json
 {
@@ -123,7 +138,7 @@ for attempt in range(5):
 }
 ```
 
--   Ask a natural-language question in Claude Code
+-   Ask a natural-language question
     -   The model calls the `query` tool automatically:
 
 ```
@@ -149,19 +164,27 @@ sqlite3 penguins.db "select count(distinct species) from penguins;"
 -   Agents use tool calls to gather information and take actions: web search, code execution, file read/write
 -   The agent loop continues until the model decides the task is complete or a maximum step count is reached
 -   Agents can take irreversible actions: deleting files, sending requests to external APIs, committing code
--   Risk compounds with step count: an error in step 2 can cause every subsequent step to be wrong
--   Human-in-the-loop checkpoints (requiring approval before certain tool calls) reduce the damage done by mistakes
+-   Risk compounds with step count:
+    an error in step 2 can cause every subsequent step to be wrong
+-   Human-in-the-loop checkpoints (requiring approval before certain tool calls)
+    reduce the damage done by mistakes
 -   Agents work well for tasks with clear success criteria that can be verified programmatically
 -   Agents work poorly for tasks requiring subjective judgment or where the environment is ambiguous
 -   Always review the full list of actions an agent took before accepting its output
 
 ## Skills and extensions
 
--   A [%g skill "skill" %] is a Markdown file containing a system prompt that specializes the model's behavior for a task
+-   A [%g skill "skill" %] is a Markdown file containing a system prompt
+    that specializes the model's behavior for a task
 -   Skills are stored in `~/.claude/` and are available across projects
--   A skill can instruct the model to always check documentation before generating code, always output JSON, or always log its reasoning
--   Finding community skills: the Claude Code documentation and GitHub list commonly used skills
--   Installing a skill: copy the `.md` file to `~/.claude/` and reference it by name in a prompt or config
+-   A skill can instruct the model to always check documentation before generating code,
+    always output JSON,
+    or always log its reasoning
+-   Finding community skills:
+    the Claude Code documentation and GitHub list commonly used skills
+-   Installing a skill
+    -   Copy the `.md` file to `~/.claude/`
+    -   Reference it by name in a prompt or config
 
 ```bash
 $ cat ~/.claude/check-docs.md
@@ -176,13 +199,13 @@ state the library version and confirm the API against the official docs.
 
 ## Exercises
 
--   Use Claude Code in the terminal to ask a question about a CSV file in your project
+-   Use an LLM in the terminal to ask a question about a CSV file in your project
     -   Check its answer against the result of a direct shell command on the same file
 -   Install an MCP SQLite server, connect to the penguins database, and ask how many distinct species there are
     -   Verify the answer with a direct SQLite query run from the shell
 -   Write a two-sentence skill that instructs an LLM to always check Polars documentation before generating code
     -   Test it on a data-loading task and record whether it changed the output
--   Call the Anthropic API from a short Python script to summarize a dataset
+-   Call the LLM API from a short Python script to summarize a dataset
     -   Print the `usage` field of the response
     -   Record how many input and output tokens the call consumed and estimate its cost
 -   Prompt an agent to find and fix a syntax error in a short Python script

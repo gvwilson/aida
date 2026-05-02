@@ -11,9 +11,9 @@
 1.  [How LLMs Work](@/llm/)
 1.  [Interact with LLMs](@/interact/)
 1.  [Managing Data](@/manage/)
-1.  [Work with Databases](@/database/)
-1.  [Clean and Analyze Data](@/analyze/)
-1.  [Visualize Results](@/visualize/)
+1.  [Coding](@/coding/)
+1.  [Visualizing Results](@/visualize/)
+1.  [Writing](@/writing/)
 1.  [Conclusion](@/finale/)
 
 </div>

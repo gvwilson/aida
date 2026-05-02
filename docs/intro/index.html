@@ -23,9 +23,9 @@
 <li><a href="../llm/">How LLMs Work</a></li>
 <li><a href="../interact/">Interact with LLMs</a></li>
 <li><a href="../manage/">Managing Data</a></li>
-<li><a href="../database/">Work with Databases</a></li>
-<li><a href="../analyze/">Clean and Analyze Data</a></li>
-<li><a href="../visualize/">Visualize Results</a></li>
+<li><a href="../coding/">Coding</a></li>
+<li><a href="../visualize/">Visualizing Results</a></li>
+<li><a href="../writing/">Writing</a></li>
 <li><a href="../finale/">Conclusion</a></li>
 </ul>
 </div>
@@ -44,40 +44,46 @@
 </nav>
 <main id="main-content">
 <h1>Introduction</h1>
+<h2>What the workshop covers</h2>
 <ul>
-<li>What the workshop covers: the full data analysis pipeline from finding data to sharing results</li>
-<li>The tool stack<ul>
-<li>Marimo: computational notebook</li>
-<li>Polars: dataframes</li>
-<li>Altair: visualization</li>
-<li>SQLite: database</li>
+<li>The full data analysis pipeline from finding data to sharing results</li>
+</ul>
+<h2>The tool stack</h2>
+<ul>
 <li>bash: shell</li>
+<li><a href="https://docs.astral.sh/uv/">uv</a>: package and project management</li>
+<li><a href="https://marimo.io/">Marimo</a>: computational notebook</li>
+<li><a href="https://pola.rs/">Polars</a>: dataframes</li>
+<li><a href="https://altair-viz.github.io/">Altair</a>: visualization</li>
+<li><a href="https://sqlite.org/">SQLite</a>: database</li>
 <li>Git: version control</li>
-<li>Command-line LLM tool such as Claude Code</li>
+<li><a href="https://llm.datasette.io/">llm</a>: command-line tool for interacting with LLMs</li>
 </ul>
-</li>
-<li>Setting up the environment<ul>
-<li>Check the <code>uv</code> virtual environment</li>
-<li>Launch Marimo</li>
+<h2>Setup</h2>
+<ul>
+<li>Create the <code>uv</code> virtual environment</li>
+<li>Install software</li>
+<li>Create directory structure</li>
 </ul>
-</li>
-<li>Concerns about LLMs<ul>
+<h2>Concerns about LLMs</h2>
+<ul>
 <li>Hallucination and confabulation</li>
 <li>Environmental cost</li>
 <li>Labor issues in training data</li>
 <li>Effects on research employment</li>
 </ul>
-</li>
-<li>Ground rules<ul>
+<h2>Ground rules</h2>
+<ul>
 <li>Always verify LLM output</li>
-<li>Note which parts of your work are LLM-assisted</li>
-<li>Keep a log: create dated Markdown files in <code>log/</code> to record prompts given and actions taken</li>
+<li>Keep a log</li>
+<li>Report which parts of your work are LLM-assisted</li>
+<li>Learn as you go</li>
 </ul>
-</li>
-<li>Exercises<ol>
+<h2>Exercises</h2>
+<ol>
 <li>Set up your project directory and verify that all required tools are installed and importable</li>
 <li>Create your first log file and record the commands you ran during setup</li>
-<li>Prompt Claude to explain what each tool in the stack does<ul>
+<li>Prompt an LLM to explain what each tool in the stack does<ul>
 <li>Compare its answers to the official documentation and note discrepancies</li>
 </ul>
 </li>
@@ -91,8 +97,6 @@
 </ul>
 </li>
 </ol>
-</li>
-</ul>
 </main>
 <footer aria-label="Page navigation">
 <div class="row">

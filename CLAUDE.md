@@ -31,11 +31,15 @@ work, but would like to. They are nervous that these tools are going
 to deskill or eliminate research jobs, and are very concerned about
 the social and environmental impact of these tools in general.
 
+## Style
+
 -   Each lesson should take 30-60 minutes to present.
 -   Each lesson should have 4-6 exercises.
 -   Exercises must mention specific datasets or tools rather than
     generic ones (*not* "a dataset").  Prompt for datasets and tools
 	as needed while working.
 -   Use lower case for SQL keywords, not upper case.
+-   Refer to the AI as "LLM", not "Claude" or any other proprietary name
+    unless specifically prompted otherwise.
 
 @~/.claude/mccole.md

@@ -14,9 +14,9 @@
 
 ## Exercises
 
-1.  Name one task from today where Claude saved significant time
+1.  Name one task from today where an LLM saved significant time
     -   Estimate how long it would have taken without it
-1.  Name one task from today where you had to correct Claude
+1.  Name one task from today where you had to correct the LLM
     -   Describe what you needed to know in order to spot the error
 1.  Find an energy cost estimate for a single LLM API call
     -   Compare it to the cost of sending an email or running a SQL query

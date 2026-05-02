@@ -1,0 +1,10 @@
+[altair]: https://altair-viz.github.io/
+[brief]: https://github.com/git-pkgs/brief
+[gistemp]: https://data.giss.nasa.gov/gistemp/data_v4.html
+[llm]: https://llm.datasette.io/
+[marimo]: https://marimo.io/
+[parquet]: https://parquet.apache.org/
+[polars]: https://pola.rs/
+[sqlite]: https://sqlite.org/
+[uv]: https://docs.astral.sh/uv/
+[zenodo]: https://zenodo.org/
