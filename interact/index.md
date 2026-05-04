@@ -1,4 +1,4 @@
-# Interact with LLMs
+# Interacting with LLMs
 
 -   FIXME: this references Claude specifically - can it be made generic?
 
@@ -65,45 +65,6 @@ Do not include any other text.
 -   Iterative refinement
     -   Send a follow-up prompt correcting or extending the previous response rather than starting over
 -   Long, complex prompts can be broken into smaller prompts that build on each other
-
-## The API
-
--   Use the API when you need to call an LLM from Python code inside a notebook, a script, or a pipeline
--   Authentication is done via an environment variable, not hardcoded in source files
-
-```bash
-export ANTHROPIC_API_KEY="sk-ant-..."   # add to ~/.zshrc or ~/.bashrc
-```
-
-```python
-import anthropic
-client = anthropic.Anthropic()   # reads ANTHROPIC_API_KEY automatically
-response = client.messages.create(
-    model="claude-opus-4-6",
-    max_tokens=512,
-    messages=[{"role": "user", "content": "How many rows are in a 10x10 grid?"}]
-)
-print(response.content[0].text)
-```
-
--   The response object contains `content` (a list of content blocks),
-    `usage` (token counts),
-    and `stop_reason`
--   Cost is `(input_tokens * input_price) + (output_tokens * output_price)`
-    -   Check the provider's pricing page
--   [%g rate_limit "Rate limits" %] apply: requests per minute and tokens per minute
-    -   Exceeded limits raise HTTP 429 errors
--   Use [%g exponential_backoff "exponential back-off" %] when retrying rate-limited requests
-
-```python
-import time
-for attempt in range(5):
-    try:
-        response = client.messages.create(...)
-        break
-    except anthropic.RateLimitError:
-        time.sleep(2 ** attempt)
-```
 
 ## Model Context Protocol
 
@@ -205,9 +166,6 @@ state the library version and confirm the API against the official docs.
     -   Verify the answer with a direct SQLite query run from the shell
 -   Write a two-sentence skill that instructs an LLM to always check Polars documentation before generating code
     -   Test it on a data-loading task and record whether it changed the output
--   Call the LLM API from a short Python script to summarize a dataset
-    -   Print the `usage` field of the response
-    -   Record how many input and output tokens the call consumed and estimate its cost
 -   Prompt an agent to find and fix a syntax error in a short Python script
     -   Review every tool call it made
     -   Note which changes were correct and which introduced new problems

@@ -57,7 +57,7 @@
 -   Especially when you start work on someone else's project
 -   Useful in conjunction with tools like [brief][brief]
 
-## Translating between CSV and JSON
+## Example: translating between CSV and JSON
 
 -   Most datasets arrive as CSV, but many web APIs return JSON, and some tools expect one format or the other
 -   Translating between them by hand is tedious and error-prone,
@@ -99,17 +99,6 @@
     sampling, bootstrapping, or splitting data into training and test sets
 -   Without a seed, two runs of the same script can produce different results,
     making it impossible to confirm that a change actually fixed a problem
-
-## Document LLM use for research integrity
-
--   Model identification
--   Prompts (e.g., include the log files with your datasets and results)
--   How you verified its work
-
-> ChatGPT-4o (OpenAI, accessed March 2025) was used to assist with
-> initial coding of interview transcripts. All AI-generated codes were
-> reviewed and revised by the authors. Prompts used are provided in
-> Supplement S2.
 
 ## Exercises
 

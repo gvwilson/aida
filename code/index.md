@@ -2,7 +2,7 @@
 
 ## Prompting an LLM to write code
 
--   When asking an LLM to write code, be as specific as possible:
+-   When prompting an LLM to write code, be as specific as possible:
     -   State the goal in plain language before asking for code
     -   Name the library or tool you want it to use
     -   Say what the input looks like and what the output should be
@@ -11,6 +11,13 @@
     -   Describe what is wrong, not just that it is wrong
     -   Explain what a correct answer would look like
     -   Ask it to explain what its code does before asking it to fix anything
+-   FIXME: example session
+
+## Code quality
+
+-   Use `ruff` to [%g linter "lint" %] LLM-generated Python code before running it
+    -   Catches unused imports, undefined variables, and style violations
+-   Prompt the LLM to review code for repeated logic, hardcoded values, and readability problems
 
 ## Common LLM errors in generated code
 
@@ -47,14 +54,19 @@
 -   Confirm aggregates are in a plausible range
 -   Check that subgroup counts sum to the total and fractions sum to 1.0
 
-## Reading and inspecting data with Polars
+### Validating an analysis
 
--   `pl.read_csv()`, `pl.read_database()`, `pl.scan_csv()` for large files
--   Inspect with `.schema`, `.head()`, `.describe()`, `.null_count()`
--   `.drop_nulls()`, `.fill_null()`, `.cast()`, `.str.strip_chars()`, `.with_columns()`
--   Prompt explicitly for Polars: LLMs frequently produce Pandas syntax instead
+-   Generate synthetic data with a known answer and confirm the analysis recovers it
+    -   If the method cannot recover the true value from clean synthetic data, the code is wrong
+    -   Make the synthetic data realistically noisy: if it is too clean, the test is not useful
+-   Fit the same model two different ways and check that the results agree
+    -   Compute a mean with `.mean()` and again with `.sum()` divided by `.len()` and confirm they match
+    -   If two valid approaches disagree, at least one is wrong
+-   Vary a parameter you are uncertain about and check whether your main conclusion changes
+    -   If swapping a threshold from 2.0 to 2.5 standard deviations flips your result,
+        you need more data or a clearer criterion
 
-## Identifying problems
+## Identifying problems in analysis
 
 -   Missing values
 -   Wrong data types
@@ -68,24 +80,6 @@
 -   Wrong direction of effect
 -   Conflating correlation with causation
 -   Overstating certainty about group differences
-
-## Code quality
-
--   Use `ruff` to [%g linter "lint" %] LLM-generated Python code before running it
-    -   Catches unused imports, undefined variables, and style violations
--   Ask the LLM to review code for repeated logic, hardcoded values, and readability problems
-
-### Validating an analysis
-
--   Generate synthetic data with a known answer and confirm the analysis recovers it
-    -   If the method cannot recover the true value from clean synthetic data, the code is wrong
-    -   Make the synthetic data realistically noisy: if it is too clean, the test is not useful
--   Fit the same model two different ways and check that the results agree
-    -   Compute a mean with `.mean()` and again with `.sum()` divided by `.len()` and confirm they match
-    -   If two valid approaches disagree, at least one is wrong
--   Vary a parameter you are uncertain about and check whether your main conclusion changes
-    -   If swapping a threshold from 2.0 to 2.5 standard deviations flips your result,
-        you need more data or a clearer criterion
 
 ## Exercises
 

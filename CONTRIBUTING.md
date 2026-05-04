@@ -4,7 +4,7 @@ Contributions are very welcome;
 please contact us [by email][email] or by filing an issue in [our repository][repo].
 All contributors must abide by our Code of Conduct.
 
-## Contributors
+## Contributors {: #contributors}
 
 [*Greg Wilson*][wilson-greg] is a programmer, author, and educator based in Toronto.
 He was the co-founder and first Executive Director of Software Carpentry

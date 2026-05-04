@@ -181,9 +181,12 @@ df.group_by("species").agg(...)
     -   A cleaning step should not change the total row count unless rows were explicitly dropped
     -   A normalization step should produce values that sum to 1.0
     -   A reformatting step should not change the number of records
--   When deciding whether a number is "close enough," ask whether the difference is smaller than the natural variation in the data
-    -   A discrepancy of 0.1 mm in penguin bill length means something different from a discrepancy of 0.1 in a probability
-    -   If the discrepancy is smaller than the measurement error in your data, it is probably not worth worrying about
+-   When deciding whether a number is "close enough,"
+    ask whether the difference is smaller than the natural variation in the data
+    -   A discrepancy of 0.1 mm in penguin bill length means something different that
+	    a discrepancy of 0.1 in a probability
+    -   If the discrepancy is smaller than the measurement error in your data,
+	    it is probably not worth worrying about
 -   Are all package names and function signatures correct for the installed version?
 -   These are the same questions to ask when checking any data analysis, LLM-generated or not
 
