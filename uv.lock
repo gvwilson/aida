@@ -459,7 +459,7 @@ wheels = [
 
 [[package]]
 name = "mccole"
-version = "3.0.0"
+version = "3.1.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "beautifulsoup4" },
@@ -470,14 +470,14 @@ dependencies = [
     { name = "python-frontmatter" },
     { name = "tomli" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/2f/5a/b154179a6759f9eab13bde150fd964b093a9b95e0d0d2eb3b7f13c57809e/mccole-3.0.0.tar.gz", hash = "sha256:55cdc3c892422e0a0c9d27c7171f7cb8432832e75f0442a6c00415bb01e4c85e", size = 705092, upload-time = "2026-05-03T21:08:54.241Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/80/28/537ae31ee63fdb63f1196910d20e217d322455bf972168cbee4bb7b63fd5/mccole-3.1.0.tar.gz", hash = "sha256:8d5b1ecf94d46f3edcc2d49e7b2dad1c06ba1fe7b36383ae0a252df07de57c68", size = 705519, upload-time = "2026-05-04T20:38:08.394Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/af/4c/ba7d64218512be7ab87682ca4de8cb7489c4553d11eb98102084b6d687db/mccole-3.0.0-py3-none-any.whl", hash = "sha256:6764002e0cc0706785910091cf00847231594bcdc1fa8b2f3e8cfc9393cf261a", size = 37689, upload-time = "2026-05-03T21:08:52.989Z" },
+    { url = "https://files.pythonhosted.org/packages/9e/62/cbb6d5efeab09a655b8b2e42914f4ad4a44c4a97eefde95946cf89b67287/mccole-3.1.0-py3-none-any.whl", hash = "sha256:289cb4924eef193594a3aaab8986f1cbf1d6424c9235a3253211a17d6b607a32", size = 38033, upload-time = "2026-05-04T20:38:06.863Z" },
 ]
 
 [[package]]
 name = "openai"
-version = "2.33.0"
+version = "2.34.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "anyio" },
@@ -489,9 +489,9 @@ dependencies = [
     { name = "tqdm" },
     { name = "typing-extensions" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/f0/ee/d056c82f63c05f06baac0cffb4a90952d8274f90c49dfe244f20497b9bbd/openai-2.33.0.tar.gz", hash = "sha256:f850c435e2a4685bba3295bd54912dd26315d9c1b7733068186134d6e0599f9a", size = 693254, upload-time = "2026-04-28T14:04:42.428Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/7b/89/f1e78f5f828f4e97a6ebca8f45c6b35667da12b074ac490dc8362b882279/openai-2.34.0.tar.gz", hash = "sha256:828b4efcbb126352c2b5eb97d33ae890c92a71ab72511aefc1b7fe64aeccb07b", size = 759556, upload-time = "2026-05-04T17:34:08.721Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/7d/32/37734d769bc8b42e4938785313cc05aade6cb0fa72479d3220a0d61a4e78/openai-2.33.0-py3-none-any.whl", hash = "sha256:03ac37d70e8c9e3a8124214e3afa785e2cbc12e627fbd98177a086ef2fd87ad5", size = 1162695, upload-time = "2026-04-28T14:04:40.482Z" },
+    { url = "https://files.pythonhosted.org/packages/f2/40/f090499f10514515081d09cb9da09f25b821eb20497e9423afe4f07b4ecf/openai-2.34.0-py3-none-any.whl", hash = "sha256:c996a71b1a210f3569844572ad4c609307e978515fb76877cf449b72596e549e", size = 1316535, upload-time = "2026-05-04T17:34:06.773Z" },
 ]
 
 [[package]]
@@ -505,11 +505,11 @@ wheels = [
 
 [[package]]
 name = "pip"
-version = "26.1"
+version = "26.1.1"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/73/7e/d2b04004e1068ad4fdfa2f227b839b5d03e602e47cdbbf49de71137c9546/pip-26.1.tar.gz", hash = "sha256:81e13ebcca3ffa8cc85e4deff5c27e1ee26dea0aa7fc2f294a073ac208806ff3", size = 1840316, upload-time = "2026-04-26T21:00:05.406Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/b6/48/cb9b7a682f6fe01a4221e1728941dd4ac3cd9090a17db3779d6ff490b602/pip-26.1.1.tar.gz", hash = "sha256:d36762751d156a4ee895de8af39aa0abeeeb577f93a2eca6ab62467bbf0f8a78", size = 1840400, upload-time = "2026-05-04T19:02:21.248Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/70/7a/be4bd8bcbb24ea475856dd68159d78b03b2bb53dae369f69c9606b8888f5/pip-26.1-py3-none-any.whl", hash = "sha256:4e8486d821d814b77319acb7b9e8bf5a4ee7590a643e7cb21029f209be8573c1", size = 1812804, upload-time = "2026-04-26T21:00:03.194Z" },
+    { url = "https://files.pythonhosted.org/packages/3a/eb/fea4d1d51c49832120f7f285d07306db3960f423a2612c6057caf3e8196f/pip-26.1.1-py3-none-any.whl", hash = "sha256:99cb1c2899893b075ff56e4ed0af55669a955b49ad7fb8d8603ecdaf4ed653fb", size = 1812777, upload-time = "2026-05-04T19:02:18.9Z" },
 ]
 
 [[package]]

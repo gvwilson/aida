@@ -24,7 +24,7 @@
 <li><a class="active" href="../manage/">Managing Data</a></li>
 <li><a href="../code/">Coding</a></li>
 <li><a href="../communicate/">Communicating</a></li>
-<li><a href="../learning/">Learning</a></li>
+<li><a href="../learn/">Learning</a></li>
 <li><a href="../finale/">Conclusion</a></li>
 </ul>
 </div>
@@ -105,50 +105,6 @@
 <li>Especially when you start work on someone else's project</li>
 <li>Useful in conjunction with tools like <a href="https://github.com/git-pkgs/brief">brief</a></li>
 </ul>
-<h2>Example: translating between CSV and JSON</h2>
-<ul>
-<li>Most datasets arrive as CSV, but many web APIs return JSON, and some tools expect one format or the other</li>
-<li>Translating between them by hand is tedious and error-prone,
-    which makes it a good job for LLM<ul>
-<li>As long as you check what it produces</li>
-</ul>
-</li>
-<li>CSV is a flat table: every row has the same columns, and values cannot be nested</li>
-<li>JSON can represent hierarchies, lists within lists, and fields that only exist in some records</li>
-<li>Converting CSV to JSON is usually straightforward,
-    but going the other way requires decisions about how to flatten nested structures,
-    and those decisions are easy to get wrong</li>
-<li>Sample prompt:</li>
-</ul>
-<blockquote>
-<p>Convert <code>penguins.csv</code> to <code>penguins.json</code>.  Preserve all column
-names exactly as they appear in the header row.  Use an array of
-objects, one per row.  Do not invent or drop fields.</p>
-</blockquote>
-<ul>
-<li>Without explicit instructions,
-    LLM might silently rename columns to match some assumed convention,
-    drop rows it considers malformed,
-    or produce a single object instead of an array</li>
-<li>Verify the converted file:<ul>
-<li>Count the records: <code>wc -l penguins.csv</code> (minus the header) should equal
-    the length of the JSON array.</li>
-<li>Spot-check a few rows by comparing the CSV and JSON values side by side for the
-    same record.</li>
-<li>Confirm that column names in the JSON match the CSV header exactly — casing matters
-    for most tools.</li>
-<li>If the CSV had missing values, check how they appear in the JSON: as <code>null</code>,
-    as empty strings, or as absent keys.  Pick one and make LLM be consistent.</li>
-</ul>
-</li>
-<li>Going from JSON to CSV:<ul>
-<li>You need to decide what the columns are</li>
-<li>If the JSON is a flat array of uniform objects, LLM can infer them</li>
-<li>If the objects have different keys or nested values, tell LLM explicitly how to handle each case</li>
-<li>Verify that no data was silently dropped in the flattening</li>
-</ul>
-</li>
-</ul>
 <h2>Random seeds</h2>
 <ul>
 <li>Set random seeds explicitly in any analysis that involves randomness:
@@ -217,7 +173,7 @@ objects, one per row.  Do not invent or drop fields.</p>
 <div class="col-6 center">
 <a href="../">AI for Data Analysis</a>
 	  ©
-	  <a href="../contributing/#contributors">the authors</a>
+	  <a href="../#acknowledgments">the authors</a>
 </div>
 <div class="col-3 right">
 <a href="../code/">Coding</a> <span aria-hidden="true">⇒</span>

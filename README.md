@@ -12,7 +12,7 @@
 1.  [Managing Data](@/manage/)
 1.  [Coding](@/code/)
 1.  [Communicating](@/communicate/)
-1.  [Learning](@/learning/)
+1.  [Learning](@/learn/)
 1.  [Conclusion](@/finale/)
 
 </div>
