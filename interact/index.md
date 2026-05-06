@@ -1,11 +1,9 @@
 # Interacting with LLMs
 
--   FIXME: this references Claude specifically - can it be made generic?
-
 ## Command-line tools
 
 -   [llm][llm] is a CLI tool that lets you send prompts and receive responses without opening a browser
--   Authenticate once on first use
+-   Authenticate once on first use and then check that it works:
 
 ```bash
 $ llm "Tell me a science joke"
@@ -20,6 +18,7 @@ $ cat results.txt | llm "Extract all numeric values and list them"
 -   llm is useful for quick one-off queries,
     batch processing in shell scripts,
     and working in environments without a GUI
+-   [Claude Code][claude_code] is more sophisticated but vendor-specific
 -   Use `--help` to see available flags for model selection and output format
 
 ## Editor and notebook integrations
@@ -28,9 +27,9 @@ $ cat results.txt | llm "Extract all numeric values and list them"
     -   They hallucinate less on code that is already on screen
 -   Inline completions are accepted with Tab and can be rejected with Escape
     -   Treat them like fancy autocomplete, not ground truth
--   Marimo has MCP server support,
+-   [marimo][marimo] has MCP server support,
     letting notebooks talk to LLM tools without leaving the notebook interface
-    -   marimo-pair can query the contents of Python's memory,
+    -   `marimo-pair` can query the contents of Python's memory,
         which makes it very powerful for [%g eda "exploratory data analysis" %]
 
 ## Writing effective prompts
@@ -41,6 +40,7 @@ $ cat results.txt | llm "Extract all numeric values and list them"
 -   Provide context: include relevant column names, file formats, or domain vocabulary
 -   Ask for step-by-step reasoning:
     "Write a step-by-step plan before taking action" often improves accuracy
+    -   And gives you a chance to say "no" before something disastrous happens
 -   [%g role_prompting "Role prompting" %]:
     starting with "You are an expert in…" can improve domain-specific responses
 -   [%g few_shot "Few-shot examples" %]:
@@ -50,7 +50,6 @@ $ cat results.txt | llm "Extract all numeric values and list them"
 Convert species codes to full names. Examples:
 Input: "Adel" -> Output: "Adelie"
 Input: "Chin" -> Output: "Chinstrap"
-Input: "Gent" -> Output:
 ```
 
 -   Ask for structured output when you need to parse the response programmatically
@@ -61,7 +60,7 @@ Do not include any other text.
 ```
 
 -   Negative constraints help
-    -   E.g., "Do not include code comments", "Do not summarize the question back to me"
+    -   E.g., "Do not include code comments" or "Do not summarize the question back to me"
 -   Iterative refinement
     -   Send a follow-up prompt correcting or extending the previous response rather than starting over
 -   Long, complex prompts can be broken into smaller prompts that build on each other
@@ -73,7 +72,7 @@ Do not include any other text.
 -   It uses [%g json_rpc "JSON-RPC" %]
     -    The LLM client sends a request describing a tool call
     -    The MCP server executes it and returns a result
--   An MCP server exposes a set of tools,
+-   An [%g mcp_server MCP server %]] exposes a set of tools,
     each with a name, description, and [%g json_schema "JSON schema" %] for its inputs
 -   The LLM sees tool descriptions in its context and can choose to call a tool
     -   The client executes the actual call
@@ -86,7 +85,7 @@ Do not include any other text.
 
 -   Install the SQLite MCP server: `uvx mcp-server-sqlite --db-path penguins.db`
 -   Add it to your config so your LLM knows it is available
-    -   FIXME: how to do this for llm as opposed to Claude?
+    -   This is LLM-specific, so the Claude configuration is shown below
 
 ```json
 {
@@ -137,19 +136,18 @@ sqlite3 penguins.db "select count(distinct species) from penguins;"
 
 -   A [%g skill "skill" %] is a Markdown file containing a system prompt
     that specializes the model's behavior for a task
--   Skills are stored in `~/.claude/` and are available across projects
+-   Skills are stored in (for example) `~/.claude/` and are available across projects
 -   A skill can instruct the model to always check documentation before generating code,
     always output JSON,
     or always log its reasoning
 -   Finding community skills:
-    the Claude Code documentation and GitHub list commonly used skills
+    the [Claude Code][claude_code] documentation and GitHub list commonly used skills
 -   Installing a skill
     -   Copy the `.md` file to `~/.claude/`
     -   Reference it by name in a prompt or config
 
 ```bash
 $ cat ~/.claude/check-docs.md
-
 # Check Python documentation before using external library
 
 Before generating any Python code that uses an external library,

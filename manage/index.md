@@ -1,36 +1,29 @@
 # Managing Data
 
-## Where datasets live
+## Starting point
 
--   What we hope for:
-    government data portals,
-    [Zenodo][zenodo],
-    GitHub repositories,
-    institutional repositories
--   Reality: other people's laptops and random cloud storage
-
-## Project directory structure
-
--   `data/`, `scripts/`, `notebooks/`, `results/`, `figures/`, `log/`
--   `.gitignore` patterns for analysis projects
-
-## Evaluating a dataset
-
--   License and provenance
--   Documentation
--   Size
--   Date last updated
-
-## Shell commands for inspection
-
--   `curl -O`, `head -n`, `wc -l`, `cut -d, -f`, and `file`
-
-## Common format tradeoffs
-
--   CSV: simple but fragile
--   JSON: nested but verbose
--   [SQLite][sqlite]: queryable but not versionable
--   [Parquet][parquet]: typed and efficient, also not versionable
+-   Where datasets live
+    -   What we hope for:
+        government data portals,
+        [Zenodo][zenodo],
+        GitHub repositories,
+        institutional repositories
+    -   Reality: other people's laptops and random cloud storage
+-   Project directory structure
+    -   `data/`, `scripts/`, `notebooks/`, `results/`, `figures/`, `log/`
+    -   `.gitignore` patterns for analysis projects
+-   Evaluating a dataset
+    -   License and provenance
+    -   Documentation
+    -   Size
+    -   Date last updated
+-   Shell commands for inspection
+    -   `curl -O`, `head -n`, `wc -l`, `cut -d, -f`, and `file`
+-   Common formats and tradeoffs
+    -   CSV: simple but fragile
+    -   JSON: nested but verbose
+    -   [SQLite][sqlite]: queryable but not versionable
+    -   [Parquet][parquet]: typed and efficient, also not versionable
 
 ## Data dictionaries
 
@@ -40,12 +33,6 @@
     -   Check its descriptions against actual column names, units, and value ranges in the file
     -   Cross-reference with the source documentation
     -   Confirm no columns are missing
-
-## What to put in log files
-
--   Prompts
--   Which LLM outputs were used vs. discarded
--   What corrections were made and why
 
 ## Prompt an LLM to *write* a project README
 
@@ -64,17 +51,22 @@
 -   Without a seed, two runs of the same script can produce different results,
     making it impossible to confirm that a change actually fixed a problem
 
+## What to put in log files
+
+-   Prompts
+-   Which LLM outputs were used vs. discarded
+-   What corrections were made and why
+
 ## Examples
 
 ### Generate a data dictionary for the penguins CSV {: #manage-data-dict}
 
-You have just downloaded a CSV file and want to understand what it contains before
-analyzing it.
+You have just downloaded a CSV file and want to understand what it contains before analyzing it.
 Rather than reading each column yourself,
 you can give an LLM the first few lines and ask it to draft a
-[%g data_dictionary "data dictionary" %]:
-a table that names each column, guesses its data type and units,
-and describes the range of values you should expect.
+data dictionary that describes each column,
+its data type and units,
+and the range of values you should expect.
 You must then check that dictionary against the actual file.
 
 <details class="explanation" markdown="1">
@@ -88,7 +80,7 @@ The LLM answers from its training data, not from the file in front of you.
 It may describe a version of the dataset that differs from yours,
 invent column names or units that do not exist,
 or report statistics that do not match your file.
-The giveaway is that the answer sounds authoritative but you cannot verify any of it
+The answer will sound authoritative but you cannot verify any of it
 without checking the original source yourself, at which point you did not need the LLM.
 Fix it by pasting the actual file contents into the prompt.
 
@@ -157,7 +149,7 @@ Before opening a data file in Python, you can learn a great deal from the comman
 Asking an LLM to write the shell commands that reveal encoding, line count, and first few rows
 is faster than remembering the exact flags yourself,
 and running those commands confirms the file is what it claims to be
-before you invest time analyzing it.
+before you start analyzing it.
 
 <details class="explanation" markdown="1">
 <summary>A prompt that sends the LLM in the wrong direction</summary>
@@ -176,11 +168,10 @@ Fix it by naming the file and the specific properties you want to know.
 <details class="explanation" markdown="1">
 <summary>A prompt that works</summary>
 
-> Write three shell commands for `_extras/squirrels.csv`:
+> Write and run three shell commands for `_extras/squirrels.csv`:
 > one to report its encoding,
 > one to count the number of lines,
 > and one to show the first three rows.
-> Use only `file`, `wc`, and `head`.
 
 A typical response:
 
@@ -190,7 +181,8 @@ wc -l _extras/squirrels.csv
 head -3 _extras/squirrels.csv
 ```
 
-Running these shows the encoding (`UTF-8 Unicode text`), the total line count,
+Running these shows the encoding (`UTF-8 Unicode text`),
+the total line count,
 and the header plus the first two data rows.
 
 </details>
@@ -208,7 +200,8 @@ the file may contain characters outside the ASCII range that will raise errors w
 
 ### Count distinct values in a column {: #manage-distinct-values}
 
-Before running any analysis on the squirrels dataset, you want to know how many distinct hectares appear in the data.
+Before running any analysis on the squirrels dataset,
+you want to know how many distinct hectares appear in the data.
 A single shell pipeline answers this without loading the file,
 but the exact flags for `cut`, `sort`, and `wc` are easy to misremember.
 An LLM writes the pipeline in seconds; you verify the result against the documentation.
@@ -230,9 +223,8 @@ Fix it by naming the file, the column position, and the tools.
 <details class="explanation" markdown="1">
 <summary>A prompt that works</summary>
 
-> Write a shell pipeline that counts the number of distinct values in column 4
+> Write and run a shell pipeline that counts the number of distinct values in column 4
 > of `_extras/squirrels.csv`, excluding the header row.
-> Use `tail`, `cut`, `sort`, and `wc`.
 
 A typical response:
 
@@ -249,18 +241,22 @@ Running this returns `339`.
 
 The official squirrels census documentation says there are 339 hectares.
 If your count is 340, the header was not excluded despite `tail -n +2`.
-If it is 338, run `tail -n +2 _extras/squirrels.csv | cut -d, -f4 | sort -u | head -5`
+If it is 338,
+run `tail -n +2 _extras/squirrels.csv | cut -d, -f4 | sort -u | head -5`
 to inspect the first few values for inconsistent formatting
-that might split one logical hectare into two distinct strings.
+that might split one logical hectare into two distinct strings,
+or tell the LLM that its answer is wrong,
+explain *how* it is wrong,
+and prompt it to try again.
 
 </details>
 
 ### Compare a SQLite schema to the original CSV {: #manage-schema-vs-csv}
 
-The penguins data is available both as a CSV and as a SQLite database,
-and the two should describe the same data.
-But a database schema encodes type information that a CSV header cannot,
-and checking both side by side can reveal mismatches before they cause silent errors.
+The penguins data is available both as a CSV and as a SQLite database.
+The two should describe the same data,
+but a database schema encodes type information that a CSV header cannot.
+Checking them against each other can reveal mismatches before they cause silent errors.
 
 <details class="explanation" markdown="1">
 <summary>A prompt that works</summary>
@@ -283,8 +279,8 @@ that the CSV header does not provide.
 <details class="explanation" markdown="1">
 <summary>Checking the output</summary>
 
-Compare every column name in the schema to the CSV header from `head -1 _extras/penguins.csv`.
-They should match exactly, including capitalization and underscores.
+Compare every column name in the schema to the CSV header from `head -1 _extras/penguins.csv`;
+they should match exactly, including capitalization and underscores.
 Then check the declared types against the values you see in the file:
 if `flipper_length_mm` is declared as `integer` in the schema
 but the CSV contains decimal values in some rows,
@@ -301,11 +297,12 @@ but you must verify its summary against the actual license text before you rely 
 <details class="explanation" markdown="1">
 <summary>A prompt that sends the LLM in the wrong direction</summary>
 
-A prompt like this cannot be answered usefully:
+A prompt like this isn't useful:
 
 > Can I use this dataset in my paper?
 
-The LLM does not know which dataset, which license, or what "use" means in your context.
+The LLM does not know which dataset, or whether your concern is the license,
+the file permissions, the format, the content, or something else entirely.
 Fix it by naming the license and describing your intended use in specific terms.
 
 </details>
@@ -314,10 +311,9 @@ Fix it by naming the license and describing your intended use in specific terms.
 <summary>A prompt that works</summary>
 
 > The Palmer Penguins dataset is released under a CC0 1.0 Universal license.
-> I want to use the data in a published paper,
+> Does this license allow me to use the data in a published paper,
 > include it as a downloadable supplement,
-> and publish a cleaned version as a separate dataset.
-> What does this license allow me to do in each case?
+> and publish a cleaned version as a separate dataset?
 
 A typical response explains that CC0 releases data into the public domain,
 allowing all three uses without any attribution requirement,
@@ -328,19 +324,20 @@ though citing the original authors remains good practice.
 <details class="explanation" markdown="1">
 <summary>Checking the output</summary>
 
-Read the actual CC0 license at creativecommons.org and confirm the LLM's summary for each use case.
+Read the actual CC0 license at <https://creativecommons.org>
+and confirm the LLM's summary for each use case.
 Then ask: if the dataset were CC-BY-NC instead of CC0,
 which of your three uses would be restricted?
 Verify that answer against the CC-BY-NC license text as well.
 
 </details>
 
-### Assess whether a dataset is current enough for your question {: #manage-staleness}
+### Assess whether a dataset is current enough {: #manage-staleness}
 
 The squirrels dataset was collected in 2018.
 Whether that makes it adequate depends entirely on your research question.
 An LLM can help you think through the implications,
-but the judgment about relevance is yours to make.
+but the final judgment remains yours.
 
 <details class="explanation" markdown="1">
 <summary>A prompt that sends the LLM in the wrong direction</summary>
@@ -350,7 +347,8 @@ A prompt like this cannot be answered:
 > Is the squirrels dataset up to date?
 
 "Up to date" means nothing without knowing what question you are trying to answer.
-Fix it by stating your research question and asking whether the dataset's collection date affects your ability to answer it.
+Fix it by stating your research question
+and asking whether the dataset's collection date affects your ability to answer it.
 
 </details>
 
@@ -371,7 +369,7 @@ and notes that an earlier squirrel census was conducted in 2012 using similar me
 
 Verify the claim about the 2012 census independently before designing a study around it.
 If no 2012 census exists, or its methodology is too different to compare,
-the LLM's suggestion collapses your research design.
+the LLM's suggestion doesn't help you.
 Specific-sounding claims about the existence of external datasets are exactly
 what LLMs hallucinate most confidently.
 
@@ -390,7 +388,7 @@ A prompt like this produces a generic template rather than a useful record:
 
 > Write a log entry for my squirrel analysis.
 
-The LLM knows nothing about what you actually did,
+The LLM doesn't know what details you want recorded,
 so it will invent plausible-sounding steps.
 Fix it by giving the LLM the specific facts and asking it only to format them.
 
@@ -399,11 +397,10 @@ Fix it by giving the LLM the specific facts and asking it only to format them.
 <details class="explanation" markdown="1">
 <summary>A prompt that works</summary>
 
-> I asked an LLM to write a shell command to count squirrel sightings by primary fur color.
-> It produced `cut -d, -f9 _extras/squirrels.csv | sort | uniq -c | sort -rn`,
-> which I modified by adding `tail -n +2` before `cut` to skip the header.
+> I asked you to write a shell command to count squirrel sightings by primary fur color.
 > The output showed gray as the most common color.
-> Write a log entry with five fields: date, prompt sent, tool used, output kept (yes/no), corrections made.
+> Write a log entry based on our conversation in this session
+> with five fields: date, prompt sent, tool used, output kept (yes/no), corrections made.
 
 A typical response produces a structured entry with all five fields,
 recording the exact prompt text and the specific correction rather than a paraphrase.
@@ -414,10 +411,9 @@ recording the exact prompt text and the specific correction rather than a paraph
 <summary>Checking the output</summary>
 
 Confirm the log entry contains the exact prompt you sent, not a reworded version.
-Check that "corrections made" describes what you actually changed (adding `tail -n +2`),
-not what you might have considered changing.
-Then ask a colleague who was not present whether they could reproduce your shell command
-from the log entry alone.
+(Remember, LLMs can hallucinate about themselves…)
+If you can,
+ask a colleague whether they could reproduce your steps from the log entry alone.
 
 </details>
 
@@ -425,7 +421,7 @@ from the log entry alone.
 
 A script that loads a CSV and proceeds without checking its shape will silently produce wrong results
 if the file is truncated, gains an extra column, or is replaced by a different dataset.
-A two-line assertion catches these problems immediately at the point of loading.
+A two-line assertion can catch these problems immediately at the point of loading.
 
 <details class="explanation" markdown="1">
 <summary>A prompt that sends the LLM in the wrong direction</summary>
@@ -434,7 +430,7 @@ A prompt like this is too vague to produce a useful assertion:
 
 > Make my data loading script safer.
 
-"Safer" could mean adding error handling, type checks, logging, or retries.
+"Safer" could mean any number of things.
 Fix it by naming the specific conditions you want to catch and the exact expected values.
 
 </details>
@@ -526,9 +522,9 @@ A prompt like this produces a textbook comparison:
 
 > What is the difference between CSV and Parquet?
 
-The LLM lists the standard advantages and disadvantages without connecting them to how you will actually use the data.
-Fix it by describing your workflow:
-who will use the file, how you will share it, and what operations matter most.
+The LLM lists the standard advantages and disadvantages
+without connecting them to how you will actually use the data.
+Fix it by describing your workflow.
 
 </details>
 
@@ -536,30 +532,22 @@ who will use the file, how you will share it, and what operations matter most.
 <summary>A prompt that works</summary>
 
 > I have a dataset with 10 million rows that I will share with two collaborators who use Python.
-> I will version it in git.
+> I will version it in Git.
 > Most analyses filter by date and by a categorical column.
-> Give one concrete reason to prefer CSV, one to prefer Parquet, and one to prefer SQLite for this workflow.
+> Give one concrete reason to prefer CSV and one to prefer Parquet.
 
-A typical response notes that CSV is easiest to share and inspect manually but too large for git;
-Parquet is compact and fast to filter but requires a compatible reader;
-SQLite supports queries natively but is a binary format that does not diff well in version control.
+A typical response notes that CSV is easiest to share and inspect manually but too large for Git,
+while Parquet is compact and fast to filter but requires a compatible reader.
 
 </details>
 
 <details class="explanation" markdown="1">
 <summary>Checking the output</summary>
 
-Verify the size claim on a small scale.
-Convert `_extras/penguins.csv` to Parquet:
-
-```python
-import polars as pl
-pl.read_csv("_extras/penguins.csv").write_parquet("penguins.parquet")
-```
-
-Compare sizes with `ls -lh _extras/penguins.csv penguins.parquet`.
-If the LLM claimed Parquet is always smaller, check whether that holds for this 344-row file.
-For small datasets, the format overhead can make Parquet larger than the equivalent CSV.
+There is no easy way to check a claim like this if you don't already know the answer.
+A web search might be helpful, but an increasing number of "answers" are LLM-generated,
+and just as likely to be wrong as the one you get by prompting the LLM directly.
+In cases like this, you must rely on your own logic or ask a more knowledgeable colleague.
 
 </details>
 

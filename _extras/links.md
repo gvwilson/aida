@@ -1,5 +1,6 @@
 [altair]: https://altair-viz.github.io/
 [brief]: https://github.com/git-pkgs/brief
+[claude_code]: https://claude.com/product/claude-code
 [gistemp]: https://data.giss.nasa.gov/gistemp/data_v4.html
 [llm]: https://llm.datasette.io/
 [marimo]: https://marimo.io/

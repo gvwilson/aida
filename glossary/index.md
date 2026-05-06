@@ -113,6 +113,11 @@
 
 ## M
 
+<span id="mcp_server">MCP server</span>
+:   A program that exposes tools, data sources, or services to AI
+    models in a standardized way, allowing the model to interact with
+    external systems like databases and APIs.
+
 <span id="mcp">Model Context Protocol</span> (MCP)
 :   An open standard using JSON-RPC that allows LLM applications to
     connect to external tools and data sources — such as databases,
