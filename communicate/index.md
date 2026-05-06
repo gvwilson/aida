@@ -1,12 +1,10 @@
 # Communicating
 
--  Writing and visualization
-
 ## Why use an LLM for scientific writing
 
 -   Scientists have used spell checkers and citation managers since they were invented
 -   LLMs are "just" a more powerful version of these
-    -   The word "just" is doing a lot of work in that sentence
+    -   But the word "just" is doing a lot of work in that sentence
 -   If you stop thinking about what you are saying,
     you stop saying anything worth reading
 
@@ -21,6 +19,7 @@
 ## What LLMs get wrong
 
 -   Fabricating citations: producing plausible-sounding but nonexistent references
+    -   ISBNs and DOIs are particularly likely to be hallucinated
 -   Overstating confidence: removing hedges and qualifications that matter in scientific prose
 -   Losing precision: substituting near-synonyms that change the meaning of a claim
 -   Generic phrasing: producing sentences that sound polished but say nothing specific
@@ -74,24 +73,20 @@
 -   Interaction: selection
 -   Save charts as PNG or SVG with `.save()`
 
-## Verify a chart
+## Iterate and verify
 
--   Does it show the expected number of points?
+-   Just as you would with code
+-   Does the chart show the expected number of points?
 -   Do axis ranges match the data?
 -   Does the color legend list all categories?
-
-## Iterate with LLM help
-
--   Add a regression line
--   Change axis scale
--   Facet by a categorical variable
 
 ## Accessibility
 
 -   Colorblind-safe color schemes, meaningful axis labels, readable font sizes, alt text
-    -   An LLMs can do the tedious work, so no longer any excuse *not* to do all this
+    -   An LLM can do most of the tedious work, so no longer any excuse *not* to do all this
 -   Prompt an LLM to check charts against these criteria
 -   Prompt an LLM to generate alt text describing a chart from code and from prompt plus code
+    -   *Check the alt text*
 
 ## Examples
 
@@ -112,7 +107,7 @@ A vague prompt like this produces text that sounds like a methods section but is
 > Write a methods section for my penguin analysis.
 
 The LLM has no idea what methods you actually used,
-so it will invent plausible-sounding ones.
+so it will invent ones that sound plausible.
 It might claim you removed outliers when you did not,
 or report a sample size that is wrong.
 The prose will be fluent and the passive voice will be impeccable,
@@ -125,13 +120,11 @@ The fix is to give it the specific facts first and ask it only to arrange them i
 <summary>A prompt that works</summary>
 
 > I cleaned a CSV file for a penguin morphology analysis.
-> The original file had 344 rows and 7 columns
-> (species, island, bill_length_mm, bill_depth_mm, flipper_length_mm, body_mass_g, sex).
+> The original file had 344 rows and 7 columns.
 > I dropped all rows where any measurement column was missing,
 > which removed 11 rows and left 333 rows with complete measurements.
-> I standardized the `sex` column to uppercase (`MALE`, `FEMALE`, or `NA`).
 > Write one paragraph suitable for a biology journal methods section
-> describing these two cleaning steps.
+> describing these cleaning steps.
 > Use the passive voice and be specific about the numbers.
 
 A typical response:
@@ -141,8 +134,6 @@ A typical response:
 > Records with missing values in any of the four morphological measurement columns
 > (bill length, bill depth, flipper length, and body mass) were excluded,
 > reducing the dataset to 333 complete cases.
-> The sex variable was standardized to uppercase
-> to ensure consistent encoding across all records.
 
 </details>
 
@@ -152,14 +143,14 @@ A typical response:
 Verify every number against your actual data.
 The paragraph claims 344 original rows: run `wc -l _extras/penguins.csv`
 and subtract one for the header to confirm.
-It claims 333 rows after cleaning: run your cleaning script,
-print the shape of the resulting dataframe, and confirm.
+It claims 333 rows after cleaning:
+run your cleaning script, print the shape of the resulting dataframe, and confirm.
 
 Read the paragraph aloud and ask whether every sentence could only apply to your data
 or whether it could describe any dataset.
 "Records with missing values were excluded" applies to thousands of projects;
 "11 rows were excluded because at least one morphological measurement was missing" is specific.
-Generic sentences are a sign that the LLM padded the paragraph with nothing.
+Generic sentences are a sign that the LLM padded the paragraph.
 
 Finally, check whether the paragraph describes only what you told it.
 If the LLM added a step you did not mention,
@@ -170,8 +161,10 @@ it invented that step and you must remove it.
 
 ### Reformat a citation from author-date to numbered style {: #communicate-citation-reformat}
 
-Different journals require different citation formats, and reformatting a reference by hand is tedious and error-prone.
-An LLM can reformat citations quickly, but it occasionally transposes author names, garbles titles, or invents page numbers.
+Different journals require different citation formats,
+and reformatting a reference by hand is tedious and error-prone.
+An LLM can reformat citations quickly,
+but may transpose author names, garble titles, or invent page numbers.
 Every field of the result must be verified against the original source.
 
 <details class="explanation" markdown="1">
@@ -181,7 +174,7 @@ A prompt like this leaves too much to chance:
 
 > Reformat this citation for a journal.
 
-The LLM does not know which journal, which citation style, or which reference you mean.
+The LLM does not know which journal you mean or which citation style to use.
 It may produce something that looks plausible but uses the wrong style entirely.
 Fix it by naming the citation style and pasting the full reference text.
 
@@ -197,8 +190,9 @@ Fix it by naming the citation style and pasting the full reference text.
 
 A typical response:
 
-> 1. Gorman KB, Williams TD, Fraser WR. Ecological sexual dimorphism and environmental variability
->    within a community of Antarctic penguins. PLoS ONE. 2014;9(3):e90081.
+> 1. Gorman KB, Williams TD, Fraser WR. Ecological sexual dimorphism and
+>    environmental variability within a community of Antarctic penguins.
+>    PLoS ONE. 2014;9(3):e90081.
 
 </details>
 
@@ -207,8 +201,11 @@ A typical response:
 
 Look up the paper and check every field: author order, year, full title, journal name,
 volume number, issue number, and article identifier.
-Pay particular attention to author initials, which LLMs frequently swap.
-If PLOS ONE has publicly available author guidelines, confirm the citation format against those
+Pay particular attention to author initials, which LLMs frequently swap,
+and to DOIs or ISBNs:
+they are essentially random numbers,
+which means statistical engines are particularly likely to get them wrong.
+Confirm the citation format against PLOS ONE's published guidelines
 rather than assuming the LLM used the correct style.
 
 </details>
@@ -216,12 +213,12 @@ rather than assuming the LLM used the correct style.
 ### Write alt text for a data visualization {: #communicate-alt-text}
 
 Alt text allows screen reader users to understand what a chart shows.
-Most researchers omit it entirely because writing good alt text is harder than it looks.
-An LLM can draft it from chart code alone,
+Most researchers omit it entirely because writing good alt text hard.
+An LLM can draft it from the code that creates the chart,
 but the draft must be checked against the actual rendered chart.
 
 <details class="explanation" markdown="1">
-<summary>A prompt that sends the LLM in the wrong direction</summary>
+<summary>A poorly-written prompt</summary>
 
 A prompt like this produces alt text that could apply to any histogram:
 
@@ -236,15 +233,15 @@ Fix it by pasting the chart code so the LLM can read the actual variables, units
 <details class="explanation" markdown="1">
 <summary>A prompt that works</summary>
 
-> Here is Altair code that generates a histogram of `body_mass_g` for all penguins.
+> This Altair code that generates a histogram of `body_mass_g` for all penguins.
 > Write one sentence of alt text that describes what the chart shows,
 > including the variable name, its units, and the approximate shape of the distribution.
 > [paste the chart code]
 
 A typical response:
-"Histogram of penguin body mass in grams (range approximately 2700--6300 g),
+"Histogram of penguin body mass in grams (range approximately 2700-6300 g),
 showing a roughly bell-shaped distribution with a slight right skew
-and a peak near 3500--4000 g."
+and a peak near 3500-4000 g."
 
 </details>
 
@@ -253,10 +250,11 @@ and a peak near 3500--4000 g."
 
 Render the chart and compare its actual x-axis range and distribution shape
 to what the alt text claims.
-Verify the range against the Polars DataFrame:
+(Is the peak *actually* near 3500-4000 g?)
+Verify the range against the Polars dataframe:
 `pl.read_csv("_extras/penguins.csv")["body_mass_g"].drop_nulls().min()` and `.max()`.
 If the LLM described the shape as "roughly symmetric" but the chart shows a clear skew,
-the alt text is misleading and must be corrected.
+the alt text must be corrected.
 
 </details>
 
@@ -265,14 +263,15 @@ the alt text is misleading and must be corrected.
 A scatter plot of two continuous variables becomes more informative when it includes a regression line
 showing the direction and approximate slope of the relationship.
 An LLM can add this to existing Altair code,
-but you must confirm that the line goes in the direction the data actually support.
+but you must confirm that the line goes in the right direction.
 
 <details class="explanation" markdown="1">
 <summary>A prompt that works</summary>
 
 > I have an Altair scatter plot of `bill_length_mm` on the x-axis versus `body_mass_g` on the y-axis
 > for all penguins, with points colored by `species`.
-> Add a single linear regression line across all penguins (ignoring species) using Altair's `transform_regression`.
+> Add a single linear regression line across all penguins (ignoring species)
+> using Altair's `transform_regression`.
 > Draw the line in gray so it does not conflict with the species colors.
 
 A typical response adds a second layer to the existing chart:
@@ -300,8 +299,10 @@ Also check that the line extends across the full range of the data, not just a s
 
 ### Add descriptive axis labels and a title {: #communicate-axis-labels}
 
-Altair uses column names as default axis labels, which are often machine-readable rather than human-readable.
-A chart labeled `bill_length_mm` communicates less than one labeled "Bill length (mm)."
+Altair uses column names as default axis labels,
+but column names are often chosen to be machine-friendly rather than human-readable.
+For example,
+a label `bill_length_mm` communicates less than the label "Bill length (mm)."
 An LLM can replace default labels in seconds,
 but you must confirm that each label is accurate and includes units.
 
@@ -335,10 +336,11 @@ and adds `.properties(title="Distribution of penguin body mass")`.
 <details class="explanation" markdown="1">
 <summary>Checking the output</summary>
 
-Render the chart and read each label aloud.
-Confirm the x-axis label includes units.
-Ask whether the title describes what the chart shows or just what data it uses:
-"Penguin body mass" is a data label; "Distribution of penguin body mass across three species" is a chart description.
+Render the chart and check each label.
+Confirm the labels include units,
+and that the title describes what the chart shows,
+not just what data it uses:
+"Distribution of penguin body mass across three species" is a good chart description.
 If the title could apply equally to a table or a list of numbers, it is not specific enough.
 
 </details>
@@ -369,7 +371,7 @@ and noting that the relationship was observed across all three species combined.
 
 Read both paragraphs and mark every hedge or qualifier present in the original sentence.
 Check whether each survived the expansion.
-"Positively correlated" should not become "birds with longer bills tend to be heavier"
+"Positively correlated" should *not* become "birds with longer bills tend to be heavier"
 if that phrasing implies a directional relationship not supported by the correlation alone.
 Also check whether the LLM added any claim that goes beyond what a correlation coefficient can show,
 such as predicting body mass from bill length without fitting an explicit regression.
@@ -391,9 +393,9 @@ A prompt like this produces a generic template:
 
 > Write an LLM disclosure statement for my paper.
 
-The LLM knows nothing about which tool you used, how you used it, or how you verified the output.
-It will write a statement that could describe anyone's use of any tool.
-Fix it by providing the specific details.
+The LLM will write a statement that could describe anyone's use of any tool.
+Fix it by providing the specific details,
+either explicitly or by telling it to look at the history of your conversation with it.
 
 </details>
 
@@ -416,7 +418,6 @@ and summarizes the verification steps.
 
 Check that the statement includes all four elements a journal is likely to require:
 model name and version, access date, description of use, and description of verification.
-Ask a colleague to read it and identify any claim they would want to verify before submitting the paper.
 If the statement says you "reviewed" the draft but does not say what you checked,
 it is not specific enough to be useful.
 
@@ -426,7 +427,7 @@ it is not specific enough to be useful.
 
 A log scale makes it easier to see proportional differences across a wide range of values
 and harder to see absolute differences.
-An LLM can add a log scale to a chart in seconds,
+An LLM can change a chart's scale in seconds,
 but whether that choice helps or hinders depends on the data,
 and you must make that judgment yourself.
 
@@ -434,8 +435,8 @@ and you must make that judgment yourself.
 <summary>A prompt that works</summary>
 
 > I have an Altair bar chart showing mean bill length per penguin species.
-> Render it with a linear y-axis and again with a log-scale y-axis.
-> Then explain in one sentence when a log scale is appropriate and when it is not.
+> Render it with a linear y-axis and again with a log-scale y-axis,
+> then explain in one sentence whether a log scale is appropriate or not.
 
 A typical response adds `.scale(type="log")` to the y encoding
 and explains that a log scale is appropriate when values span several orders of magnitude
@@ -452,7 +453,7 @@ so the log-scale version will look nearly identical to the linear version.
 The LLM's explanation of when to use a log scale may be correct in general
 but inapplicable to this specific dataset.
 If it recommended the log scale without noting that the data do not span multiple orders of magnitude,
-the recommendation is not grounded in the actual values.
+you should mistrust its recommendations in other cases.
 
 </details>
 
@@ -470,7 +471,7 @@ and an LLM will sometimes remove a hedge that changes the scientific meaning of 
 > (Pearson r = 0.59, p < 0.001, n = 333)."
 > Do not introduce any causal claim not present in the original.
 
-A typical response produces something like:
+A typical response is something like:
 "Across the 333 penguins in the dataset, birds with longer bills tended to be heavier,
 and this pattern was unlikely to be due to chance."
 
@@ -512,8 +513,8 @@ penguin dataset, leaving 333 complete cases with the sex variable standardized t
 <details class="explanation" markdown="1">
 <summary>Checking the output</summary>
 
-Read the summary and ask: if this were the only description a collaborator had,
-could they reproduce the cleaning exactly?
+Read the summary and ask: if this were the only description you had,
+could you reproduce the cleaning exactly?
 Check whether the summary mentions the number of rows removed (11),
 the remaining count (333),
 and the specific columns that were checked for missing values.
