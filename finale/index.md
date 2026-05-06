@@ -3,14 +3,11 @@
 ## Personal
 
 -   When LLMs accelerate analysis vs. when they substitute for understanding you need to develop yourself
-
-## Environmental and social impact revisited
-
--   FIXME
+-   Fatigue
 
 ## Where to go next
 
--   FIXME
+-   We wish we knew…
 
 ## Exercises
 

@@ -1,5 +1,28 @@
 # Learning
 
+## Evidence-based learning
+
+-   Spaced practice
+    -   5x2 hours is better than 2x5 hours
+    -   Include some older material in every new lesson
+    -   One of the few advantages of traditional lecture-based classes over just-in-time online courses
+-   Retrieval practice
+    -   Practice using information in the context in which it will actually be used
+    -   Repeated testing improves recall
+-   Elaboration
+    -   Explain things in detail to yourself or to others
+    -   Writing a good prompt is like asking a good question: it sometimes answers itself
+-   Interleaving
+    -   Randomize the order in which you practice things
+	    to avoid training yourself to recall them in only one order
+    -   A-B-C-A-B-C is better than A-A-B-B-C-C, and A-C-B-C-A-B is better still
+-   Concrete examples
+    -   Novices don’t know enough yet to make generalizations concrete
+    -   So ask for examples, and ask for specifics about the general principles each one embodies
+-   Dual coding
+    -   Combine words and visuals
+    -   Today's LLMs struggle with visuals
+
 ## LLMs as tutors
 
 -   The appeal is obvious
@@ -37,7 +60,7 @@
 -   An example you can run is more useful than one you can only read
     -   Paste the code into a notebook and make sure it actually does what the LLM claimed
 
-## Testing your own understanding
+## Test your own understanding
 
 -   Explaining something is harder than recognizing a correct explanation
     -   Write a short paragraph in your own words, then prompt the LLM to check it
@@ -51,33 +74,15 @@
 ## What LLMs get wrong as tutors
 
 -   Hallucination in explanations: technically fluent but factually wrong
-    -   Particularly common for specialist or niche topics
--   [%g sycophancy "Sycophancy" %]: telling you what you want to hear
+    -   Particularly common in specialist or niche topics
+-   Reminder: sycophancy is telling you what you want to hear
     -   If you say "so it's basically the same as X, right?", the LLM is inclined to agree
     -   Ask "Is there anything wrong with this description?" rather than "Is this right?"
-
-<div class="callout" markdown="1">
-
-Why does the wording of that question matter?
-LLMs are trained using reinforcement learning from human feedback (RLHF),
-where human raters rank model responses.
-Raters tend to prefer responses that are agreeable and helpful-sounding,
-so the model learns that confirming what the user said
-is more likely to be rated positively than contradicting them.
-This is called *sycophancy*: optimizing for approval rather than accuracy.
-Asking "Is there anything wrong with this?" explicitly invites disagreement
-and shifts the model toward a more critical mode.
-A quick test: tell an LLM something subtly wrong
-("the p-value is the probability that the null hypothesis is true, right?")
-and compare what you get from "Is this right?" versus "Is there anything wrong with this description?"
-
-</div>
-
 -   Skipping steps
     -   LLMs often omit the step they consider obvious,
         which is often exactly the step you are confused about
     -   Ask "Walk me through this step by step and don't skip anything, even the trivial parts"
--   Overlong answers that bury the key point
+-   Alternatively, give overlong answers that bury the key point
     -   Ask for a one-sentence version before the full explanation
 -   No memory across sessions
     -   A new conversation starts with no record of what you covered before
@@ -146,7 +151,7 @@ A typical response:
 > most penguins have bills within roughly 2 mm of 38 mm,
 > and very few are more than 4 mm away.
 >
-> A larger standard deviation means the measurements are spread more widely around the mean.
+> A larger standard deviation indicates the measurements are spread more widely around the mean.
 > If Gentoo penguins had a standard deviation of 5 mm in bill length,
 > you would find many more Gentoos whose bills are 7 or 8 mm from the average
 > than you would among Adelies.
@@ -158,23 +163,11 @@ A typical response:
 <details class="explanation" markdown="1">
 <summary>Checking the explanation</summary>
 
-Compute the standard deviation yourself and see whether the example numbers hold up.
-In Python, `import polars as pl` and then
-`pl.read_csv("_extras/penguins.csv").filter(pl.col("species") == "Adelie")["bill_length_mm"].std()`
-gives the actual standard deviation for Adelie bill lengths.
-If the LLM claimed "most penguins are within 2 mm of the mean" but the actual standard deviation
-is 3 mm, the example was wrong.
-
-Then ask the LLM a deliberately skeptical follow-up:
+Ask the LLM a deliberately skeptical follow-up:
 "Is there anything misleading about that explanation?"
-Compare what it says to a textbook definition.
-LLMs often gloss over the fact that standard deviation specifically measures
-spread around the *arithmetic* mean and is sensitive to outliers,
-which matters when a few extreme values are present.
-
-Finally, ask the LLM "Where does the analogy break down?"
-to see whether it can identify the limits of its own explanation.
-An LLM that cannot critique its explanation is a less reliable tutor than one that can.
+Compare what it says to a Wikipedia definition.
+Finally, ask the LLM "Where does your explanation break down?"
+to see whether it can identify its own limits.
 
 </details>
 
@@ -219,10 +212,9 @@ and explains why it is wrong without replacing the student's own language.
 <details class="explanation" markdown="1">
 <summary>Checking the output</summary>
 
-After getting the LLM's feedback, revise your paragraph and ask it to check the revision.
-Then look up the definition of a confidence interval in a statistics textbook
-and compare the textbook definition to your revised version.
-If your revised version matches the LLM's feedback but not the textbook,
+After getting the LLM's feedback, revise your paragraph and ask it to check the revision,
+then look up the definition of a confidence interval on Wikipedia.
+If your revised version matches the LLM's feedback but not Wikipedia,
 the LLM's feedback may have introduced a different error.
 
 </details>
@@ -254,8 +246,7 @@ The 3-bin version should make the distribution look nearly flat;
 the 30-bin version should show many individual spikes.
 Then ask the LLM: "How would I choose the number of bins for a dataset I have never seen before?"
 A good answer mentions rules of thumb such as the square root of sample size or Sturges' formula,
-but notes that these are starting points, not definitive answers.
-Verify one of these rules by computing the recommended bin count for 152 Adelie penguins.
+but notes that these are not definitive answers.
 
 </details>
 
@@ -287,7 +278,7 @@ while a p-value is a continuous number:
 a p-value of 0.049 and one of 0.051 describe nearly identical evidence,
 but the analogy suggests they mean completely different things.
 If the LLM did not mention this, ask it explicitly:
-"What happens to the analogy when p = 0.049 versus p = 0.051?"
+"What happens to the analogy when p=0.049 versus p=0.051?"
 
 </details>
 
@@ -296,7 +287,8 @@ If the LLM did not mention this, ask it explicitly:
 Knowing what you are likely to get wrong is as useful as knowing what is correct.
 An LLM can list common misconceptions about a concept,
 but you must verify those descriptions against a reliable source,
-because the LLM can describe a misconception incorrectly.
+because the LLM can describe a misconception incorrectly
+(i.e., it can be wrong about why it's wrong).
 
 <details class="explanation" markdown="1">
 <summary>A prompt that works</summary>
@@ -306,9 +298,9 @@ because the LLM can describe a misconception incorrectly.
 > List two misconceptions and explain why each one is wrong.
 
 A typical response notes that students often believe a 95% confidence interval contains 95% of the data
-(it does not; a prediction interval does),
+(it does not—a prediction interval does),
 and that students often treat confidence intervals as probability statements about a fixed parameter
-(a Bayesian credible interval does this; a frequentist confidence interval does not).
+(a Bayesian credible interval does this—a frequentist confidence interval does not).
 
 </details>
 
@@ -316,25 +308,23 @@ and that students often treat confidence intervals as probability statements abo
 <summary>Checking the output</summary>
 
 Look up one of the two misconceptions in a statistics textbook or the relevant Wikipedia article
-and confirm that the LLM's description of it is accurate.
-Then compute a 95% confidence interval for the mean Adelie bill length using the penguins dataset
-and a 95% prediction interval for the bill length of a single new Adelie penguin.
-Confirm that the prediction interval is wider,
-as a correct understanding of the difference would predict.
+and confirm that the LLM's description of it.
+Send yourself an email reminder to re-check your understanding the next day.
 
 </details>
 
 ### Ask for a brief explanation before the full one {: #learn-brief-first}
 
-A one-sentence explanation of a concept is more useful than it looks.
-If you cannot summarize it in one sentence, you do not understand it well enough to apply it.
+A one-sentence explanation of a concept is more useful than it looks:
+if you cannot summarize it in one sentence,
+you probably do not understand it well enough to apply it.
 Asking for the brief version first also gives you something to check the longer explanation against.
 
 <details class="explanation" markdown="1">
 <summary>A prompt that works</summary>
 
 > Explain linear regression in exactly one sentence.
-> Then give the full explanation in two paragraphs using the relationship between
+> Then give the full explanation in one paragraph using the relationship between
 > bill length and body mass in the penguins dataset as the example.
 
 A typical one-sentence response:
@@ -346,18 +336,18 @@ vertical distances from each point to the line."
 <details class="explanation" markdown="1">
 <summary>Checking the output</summary>
 
-Read the one-sentence explanation and ask: does it contain enough information to be useful on its own?
-Can you use it to identify whether linear regression is the right tool for a new problem?
+Read the one-sentence explanation and ask if it contains enough information to be useful on its own.
+Can you use it to identify whether linear regression is the right tool for a problem?
 Then read the full explanation and check whether every claim in it is consistent with the one-sentence version.
-If the full explanation introduces something that contradicts or cannot be reconciled with the one-sentence version,
+If the full explanation introduces something that contradicts
+or cannot be reconciled with the one-sentence version,
 one of the two is wrong.
 
 </details>
 
 ### Re-establish context in a new session {: #learn-new-session}
 
-LLMs have no memory across sessions.
-Starting a new conversation is like starting over with a collaborator who has forgotten everything you discussed.
+LLMs have no memory across sessions (unless you save and reload log files yourself).
 Understanding how much context you need to re-establish makes you a more effective user of these tools.
 
 <details class="explanation" markdown="1">
@@ -389,10 +379,10 @@ and consider whether there is a more efficient way to establish context at the s
 
 </details>
 
-### Test for sycophancy with a wrong statement {: #learn-sycophancy-test}
+### Test for sycophancy {: #learn-sycophancy-test}
 
 LLMs are trained to produce responses that humans rate positively.
-This makes them inclined to agree with you, even when you are wrong.
+This makes them inclined to agree with you, even (or especially) when you are wrong.
 Testing this directly with a statement you know is false shows you how much to trust agreement.
 
 <details class="explanation" markdown="1">
@@ -413,11 +403,12 @@ Compare the two responses.
 <details class="explanation" markdown="1">
 <summary>Checking the output</summary>
 
-The first prompt often produces agreement or mild qualification ("they are related...").
+The first prompt often produces agreement or mild qualification ("they are related…").
 The second prompt, which explicitly invites disagreement, more often produces a clear correction:
-standard deviation is the square root of variance, they have different units,
-and substituting one for the other in an interpretation will be wrong by a factor of the standard deviation itself.
-If both responses agreed with the false statement, the LLM is exhibiting strong sycophancy
+standard deviation is the square root of variance,
+and substituting one for the other in an interpretation will be wrong.
+If both responses agreed with the false statement,
+the LLM is exhibiting strong sycophancy
 and you should treat its confirmations of your understanding with more skepticism.
 
 </details>
@@ -425,7 +416,8 @@ and you should treat its confirmations of your understanding with more skepticis
 ### Ask about a function then verify with a query {: #learn-verify-with-query}
 
 An LLM's explanation of how a function works is only as useful as your ability to run it.
-Reading an explanation is passive; running a query that should fail if the explanation is wrong
+Reading an explanation is passive;
+running a query that should fail if the explanation is wrong
 makes the learning active and the verification concrete.
 
 <details class="explanation" markdown="1">
@@ -461,8 +453,9 @@ If the two counts differ, the `coalesce` expression is not doing what the LLM de
 ### Compute a concept before deciding you understand it {: #learn-compute-first}
 
 Reading that "the median is the middle value" is not the same as understanding
-how the median behaves when the data are skewed, what happens with an even number of values,
-or how it differs from the mean in practice.
+how the median behaves when the data are skewed,
+what happens with an even number of values,
+or how it differs from the mean.
 Computing the concept on real data reveals details that a verbal explanation leaves out.
 
 <details class="explanation" markdown="1">
@@ -496,7 +489,7 @@ the bill length distribution is roughly symmetric within each species.
 If they differ by more than 0.5 mm for any species,
 ask the LLM whether that species' distribution is skewed,
 and confirm by looking at a histogram.
-This is the kind of detail that "median is less sensitive to outliers" does not make concrete on its own.
+This is the kind of detail that "the median is less sensitive to outliers" does not make concrete on its own.
 
 </details>
 

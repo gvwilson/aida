@@ -65,6 +65,23 @@ Do not include any other text.
     -   Send a follow-up prompt correcting or extending the previous response rather than starting over
 -   Long, complex prompts can be broken into smaller prompts that build on each other
 
+<div class="callout" markdown="1">
+
+Why does the wording of that question matter?
+LLMs are trained using reinforcement learning from human feedback (RLHF),
+where human raters rank model responses.
+Raters tend to prefer responses that are agreeable and helpful-sounding,
+so the model learns that confirming what the user said
+is more likely to be rated positively than contradicting them.
+This is called [%g sycophancy "sycophancy" %]: optimizing for approval rather than accuracy.
+Asking "Is there anything wrong with this?" explicitly invites disagreement
+and shifts the model toward a more critical mode.
+A quick test: tell an LLM something subtly wrong
+("the p-value is the probability that the null hypothesis is true, right?")
+and compare what you get from "Is this right?" versus "Is there anything wrong with this description?"
+
+</div>
+
 ## Model Context Protocol
 
 -   [%g mcp "Model context protocol" %] (MCP) is

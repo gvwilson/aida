@@ -119,6 +119,20 @@ Do not include any other text.
 </li>
 <li>Long, complex prompts can be broken into smaller prompts that build on each other</li>
 </ul>
+<div class="callout">
+<p>Why does the wording of that question matter?
+LLMs are trained using reinforcement learning from human feedback (RLHF),
+where human raters rank model responses.
+Raters tend to prefer responses that are agreeable and helpful-sounding,
+so the model learns that confirming what the user said
+is more likely to be rated positively than contradicting them.
+This is called <a class="gl-ref" href="../glossary/#sycophancy">sycophancy</a>: optimizing for approval rather than accuracy.
+Asking "Is there anything wrong with this?" explicitly invites disagreement
+and shifts the model toward a more critical mode.
+A quick test: tell an LLM something subtly wrong
+("the p-value is the probability that the null hypothesis is true, right?")
+and compare what you get from "Is this right?" versus "Is there anything wrong with this description?"</p>
+</div>
 <h2>Model Context Protocol</h2>
 <ul>
 <li><a class="gl-ref" href="../glossary/#mcp">Model context protocol</a> (MCP) is
