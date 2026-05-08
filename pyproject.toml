@@ -6,6 +6,7 @@ requires-python = ">=3.12"
 dependencies = [
     "mccole>=3.1.0",
     "sqlite-utils>=3.39",
+    "taskipy>=1.14.1",
 ]
 
 [dependency-groups]
@@ -15,6 +16,14 @@ dev = [
     "pytest>=9.0.2",
     "ruff>=0.14.10",
 ]
+
+[tool.taskipy.tasks]
+bib = {cmd = "mccole bib", help = "Check bibliography entries."}
+clean = {cmd = "find . -type f -name '*~' -exec rm {} \\; && find . -type d -name __pycache__ | xargs rm -rf && find . -type d -name .ruff_cache | xargs rm -rf", help = "Clean up generated and cache files."}
+db = {cmd = "cd _extras && rm -f example.db && sqlite3 example.db < example.sql", help = "make databases"}
+check = {cmd = "mccole check --src . --dst docs && typos *.md */*.md", help = "Check code and project."}
+serve = {cmd = "python -m http.server -d docs 8000", help = "Serve generated HTML on port 8000."}
+site = {cmd = "mccole build --src . --dst docs && touch docs/.nojekyll", help = "Build HTML."}
 
 [tool.mccole]
 skips = [

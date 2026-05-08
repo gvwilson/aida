@@ -2,8 +2,25 @@
 
 ## Personal
 
--   When LLMs accelerate analysis vs. when they substitute for understanding you need to develop yourself
--   Fatigue
+-   Fatigue is real and the industry mostly pretends otherwise
+    -   Faster individual tasks lead to more tasks, not fewer
+    -   Your manager's expectations and your own will both adjust upward to fill the new capacity
+-   Using an LLM shifts you from creator to reviewer
+    -   Evaluative work (judging output, spotting errors, deciding what to trust)
+        drains you faster than generative work does
+    -   If you outsource your first-draft thinking long enough,
+        your ability to reason from scratch degrades,
+        much like navigating without GPS after years of relying on it
+    -   So spend some time each day working through problems without the LLM
+-   The prompt spiral is real
+    -   If you cannot get something 70% usable in two or three attempts,
+        write it yourself
+    -   The goal is to finish the analysis, not to get the LLM to produce perfect output
+    -   Treat every LLM response as a draft the moment it appears
+        -   Perfectionism plus probabilistic output is an exhausting combination
+        -   "Good enough to work from" is a legitimate bar
+-   Keeping a log for two weeks---task, used LLM (yes/no), time spent, confidence in result---will
+        tell you more than any general advice
 
 ## Where to go next
 
